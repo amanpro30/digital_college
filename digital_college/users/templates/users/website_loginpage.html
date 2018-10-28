@@ -1,0 +1,24 @@
+{% extends 'users/base_login_signup.html' %}
+{% block content %}
+<h3>Login</h3>
+<form action="">
+	<label class="container">College Admin
+		<input type="radio" checked="checked" name="radio">
+		<span class="checkmark"></span>
+	</label>
+	<label class="container">Faculty
+		<input type="radio" name="radio">
+		<span class="checkmark"></span>
+	</label>
+	<label class="container">Student
+		<input type="radio" name="radio">
+		<span class="checkmark"></span>
+	</label>
+	<p>E-mail</p>
+	<input type="email" placeholder="enter your email">
+	<p>Password</p>
+	<input type="password" placeholder="enter your password">
+	<input type="submit" value="Sign in" >
+	<a href="#">Forgot Password?</a>
+</form>
+{% endblock content %}
