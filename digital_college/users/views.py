@@ -59,6 +59,12 @@ class College_Registration_Form(ModelForm):
         fields=['Name_Of_College','Password','Email_Id','College_Registration_Number',
         'City','State']
 
+def Sign_Up_Form(UserCreationForm):
+    email=forms.CharField(widget=forms.EmailInput)
+    class Meta:
+        model=UserCreationForm
+        fields=['username','first_name','last_name','email','password1','password2']
+
 def User_Registration(request):
     forms={}
     if request.method == 'POST':
@@ -112,3 +118,6 @@ def website_homepage(request):
 
 def website_register(request):
     return render(request,'users/website_register.html')
+
+def base(request):
+    return render(request,'users/base.html')
