@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from django.shortcuts import redirect
-from .forms import User_Registration_Form,College_Registration_Form
+from django.forms import ModelForm
 from .models import Registered_User,Registered_College
+from django.contrib.auth.models import User
+from django import forms
+from django.shortcuts import HttpResponseRedirect,HttpResponse
+from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -12,7 +15,7 @@ def User_Registration(request):
         forms['User_Creation_Form']=UserCreationForm(request.POST)
         forms['User_Registration_Form']=User_Registration_Form(request.POST)
         if forms['User_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
-            current_user=forms['User_from django.contrib.auth.forms import UserCreationFormCreation_Form'].save(commit=False)
+            current_user=forms['User_Creation_Form'].save(commit=False)
             username=forms['User_Creation_Form'].cleaned_data.get('username')
             password=forms['User_Creation_Form'].cleaned_data.get('password1')
             user=current_user
