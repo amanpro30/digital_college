@@ -2,51 +2,83 @@ from django.db import models
 from django.contrib.auth.models import User
 from django import forms
 
+
 class Registered_College(models.Model):
+<<<<<<< HEAD
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     Name_Of_College = models.CharField(max_length=100)
     email = models.EmailField(max_length=50)
     College_Registration_Number = models.IntegerField()
     City = models.CharField(max_length=25)
     State = models.CharField(max_length=25)
+=======
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    Name_Of_College = models.CharField(max_length=100)
+    Email_Id = models.EmailField()
+    College_Registration_Number = models.IntegerField()
+    City = models.CharField(max_length=25)
+    State = models.CharField(max_length=25)
+
+>>>>>>> 3f0413f9b4211a60f1de94aafb241ed117c21401
     def __str__(self):
         return self.Name_Of_College
 
+
 class Registered_User(models.Model):
+<<<<<<< HEAD
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     activation_key = models.CharField(max_length=255)
     email_validated = models.BooleanField(default=False)
     email = models.EmailField(max_length=50)
     ROLE_CHOICES=[
+=======
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    activation_key = models.CharField(max_length=255)
+    email_validated = models.BooleanField(default=False)
+    email = models.EmailField(max_length=50)
+    ROLE_CHOICES = [
+>>>>>>> 3f0413f9b4211a60f1de94aafb241ed117c21401
         ('F', 'faculty'),
         ('S', 'student'),
     ]
     role = models.CharField(max_length=1, choices=ROLE_CHOICES)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE, default=0)
+<<<<<<< HEAD
     def __str__(self):
         return self.user.username
     image=models.ImageField(default='default.jpg', upload_to='profile_pics')
 
+=======
+
+    def __str__(self):
+        return self.user.username
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+>>>>>>> 3f0413f9b4211a60f1de94aafb241ed117c21401
 
 
 class Clubs(models.Model):
-    club_name=models.CharField(max_length=100)
-    club_head=models.ForeignKey(Registered_User,on_delete=models.CASCADE)
-    college_id=models.ForeignKey(Registered_College,on_delete=models.CASCADE)
+    club_name = models.CharField(max_length=100)
+    club_head = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+    college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.club_name
 
+
 class Courses(models.Model):
-    course_name=models.CharField(max_length=100)
-    faculty_id=models.ForeignKey(Registered_User,on_delete=models.CASCADE)
-    college_id=models.ForeignKey(Registered_College,on_delete=models.CASCADE)
+    course_name = models.CharField(max_length=100)
+    faculty_id = models.ForeignKey(Registered_User,on_delete=models.CASCADE)
+    college_id = models.ForeignKey(Registered_College,on_delete=models.CASCADE)
+
     def __str__(self):
         return self.course_name
 
+
 class ClubEnrollment(models.Model):
-    club_id=models.ForeignKey(Clubs,on_delete=models.CASCADE)
-    student_id=models.ForeignKey(Registered_User,on_delete=models.CASCADE)
+    club_id = models.ForeignKey(Clubs, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+
 
 class CourseEnrollment(models.Model):
-    course_id=models.ForeignKey(Courses,on_delete=models.CASCADE)
-    student_id=models.ForeignKey(Registered_User,on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
