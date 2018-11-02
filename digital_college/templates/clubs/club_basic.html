@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'clubs/club_main.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'>
+
+</head>
+
+<body>
+<div class="navbar-fixed">
+    <nav class="teal">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#profile">Profile</a></li>
+                    <li><a href="#classroom">Classroom</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-nav">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#classroom">Classroom</a></li>
+    </ul>
+</div>
+<div class="slider">
+    <ul class="slides">
+        <li>
+            <img src="https://lorempixel.com/580/250/nature/1"> <!-- random image -->
+            <div class="caption center-align">
+                <h3>Photography Club</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+        <li>
+            <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+            <div class="caption left-align">
+                <h3>Left Aligned Caption</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+        <li>
+            <img src="https://lorempixel.com/580/250/nature/3"> <!-- random image -->
+            <div class="caption right-align">
+                <h3>Right Aligned Caption</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+        <li>
+            <img src="https://lorempixel.com/580/250/nature/4"> <!-- random image -->
+            <div class="caption center-align">
+                <h3>This is our big Tagline!</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+    </ul>
+    <!--<div class="svg">
+      <svg viewBox="0 186.5 1920 113.5" x="0px" y="0px">
+      <polygon points="-30,300 355.167,210.5 1432.5,290 1920,198.5 1920,300"></polygon>
+      </svg>
+    </div>-->
+</div>
+<div class="fixed-action-btn right">
+    <div class="li_float">
+        <a class="btn-floating btn-large red anchor">
+            <i class="large material-icons">menu</i>
+        </a>
+        <p class="message red lighter-2 right"
+           style="position:absolute; color: white;display:none;top:40px;border-radius: 5px;">Menu</p>
+    </div>
+    <ul>
+        <li class="li_float"><a class="btn-floating red anchor" href="{% url 'clubs:post' %}"><i class="material-icons">create</i></a>
+            <p class="message red lighter-2 right"
+               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Post</p>
+        </li>
+        <li class="li_float"><a class="btn-floating yellow darken-1 anchor" href="{% url 'clubs:forum' %}"><i
+                class="material-icons">forum</i></a>
+            <p class="message yellow lighter-2 right"
+               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Forum</p>
+        </li>
+        <li class="li_float"><a class="btn-floating green anchor" href="{% url 'clubs:gallery' %}"><i
+                class="material-icons">photo</i></a>
+            <p class="message green lighter-2 right"
+               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Gallery</p>
+        </li>
+        <li class="li_float"><a class="btn-floating blue anchor" href="{% url 'clubs:contacts' %}"><i
+                class="material-icons">contacts</i></a>
+            <p class="message blue lighter-2 right"
+               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Students</p>
+        </li>
+    </ul>
+</div>
+<div class="container" style="width:90%;padding:15px; height:500px;margin-top: 10px;">
+{% block content %}
+{% endblock %}
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{% static 'clubs/club_main.js' %}"></script>
+</body>
+</html>
+        
