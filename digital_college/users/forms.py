@@ -51,13 +51,11 @@ class College_Registration_Form(ModelForm):
         ('UP','Uttar Pradesh'),
         ('WB','West Bengal')
     )
-    Password=forms.CharField(widget=forms.PasswordInput)
-    Email_Id=forms.CharField(widget=forms.EmailInput)
+    email=forms.CharField(widget=forms.EmailInput)
     State=forms.ChoiceField(choices=STATE_CHOICES)
     class Meta:
-        model=Registered_College
-        fields=['Name_Of_College','Password','Email_Id','College_Registration_Number',
-        'City','State']
+        model = Registered_College
+        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State']
 
 def Sign_Up_Form(UserCreationForm):
     email=forms.CharField(widget=forms.EmailInput)

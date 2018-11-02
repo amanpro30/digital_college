@@ -3,29 +3,29 @@ from django.contrib.auth.models import User
 from django import forms
 
 class Registered_College(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    Name_Of_College=models.CharField(max_length=100)
-    Email_Id=models.EmailField()
-    College_Registration_Number=models.IntegerField()
-    City=models.CharField(max_length=25)
-    State=models.CharField(max_length=25)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    Name_Of_College = models.CharField(max_length=100)
+    email = models.EmailField(max_length=50)
+    College_Registration_Number = models.IntegerField()
+    City = models.CharField(max_length=25)
+    State = models.CharField(max_length=25)
     def __str__(self):
         return self.Name_Of_College
 
 class Registered_User(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    activation_key=models.CharField(max_length=255)
-    email_validated=models.BooleanField(default=False)
-    email=models.EmailField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    activation_key = models.CharField(max_length=255)
+    email_validated = models.BooleanField(default=False)
+    email = models.EmailField(max_length=50)
     ROLE_CHOICES=[
-        ('F','faculty'),
-        ('S','student'),
+        ('F', 'faculty'),
+        ('S', 'student'),
     ]
-    role=models.CharField(max_length=1,choices=ROLE_CHOICES)
-    college_id=models.ForeignKey(Registered_College,on_delete=models.CASCADE,default=0)
+    role = models.CharField(max_length=1, choices=ROLE_CHOICES)
+    college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE, default=0)
     def __str__(self):
         return self.user.username
-    image=models.ImageField(default='default.jpg',upload_to='profile_pics')
+    image=models.ImageField(default='default.jpg', upload_to='profile_pics')
 
 
 
