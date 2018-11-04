@@ -6,3 +6,16 @@ hello {{user.username}}
 {% for club in clubs %}
     <a href="#">{{club}}</a>
 {% endfor %}
+
+{% ifequal user.registered_user.role 'S' %}
+    <p>hello student</p>
+{% endifequal %}
+
+
+{% ifequal user.registered_user.role 'F' %}
+    <p>hello faculty</p>
+{% endifequal %}
+
+{% if user.registered_college %}
+    <p>hello college</p>
+{% endif %}
