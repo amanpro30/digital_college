@@ -82,7 +82,7 @@
            style="position:absolute; color: white;display:none;top:40px;border-radius: 5px;">Menu</p>
     </div>
     <ul>
-        <li class="li_float"><a class="btn-floating red anchor" href="{% url 'clubs:post' %}"><i class="material-icons">create</i></a>
+        <li class="li_float"><a class="btn-floating red anchor modal-trigger" href="#modal1"><i class="material-icons">create</i></a>
             <p class="message red lighter-2 right"
                style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Post</p>
         </li>
@@ -103,9 +103,36 @@
         </li>
     </ul>
 </div>
+
 <div class="container" style="width:90%;padding:15px; height:500px;margin-top: 10px;">
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
+</div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h2 class="center-align">Add a Public Post</h2>
+        <form class="container" style="width:80%;" action="{% url 'clubs:post' %}" method="POST"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="center-align file-field input-field">
+                <input type="file" id="images" multiple>
+                <div class="file-path-wrapper">
+                    <i class="material-icons prefix">add_a_photo</i>
+                    <input class="file-path validate" type="text" placeholder="Choose an image">
+                </div>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">mode_edit</i>
+                <input id="subject1" type="text" class="validate text-white">
+                <label class="text-white" for="subject1">Subject</label>
+            </div>
+            <textarea id="content" placeholder="Write here...." style="height:100px;width:100%"></textarea>
+            <div class="container" style="margin:20px;">
+                <input class="modal-close waves-effect waves-green btn text-white" type="button" value="Cancel">
+                <input class="modal-close waves-effect waves-green btn text-white" type="Submit" value="Post">
+            </div>
+        </form>
+    </div>
 </div>
 
 
@@ -113,4 +140,3 @@
 <script src="{% static 'clubs/club_main.js' %}"></script>
 </body>
 </html>
-        

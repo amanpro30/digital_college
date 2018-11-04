@@ -1,6 +1,11 @@
 {% extends "clubs/club_basic.html" %}
 
 {% block content %}
+
+    <div class="center-align teal lighten-5" style="margin-bottom:40px;">
+            <h1 >Forum</h1>
+    </div>
+
     <div class="row" style="background-color:white!important;border:2px solid grey;padding: 5px;">
         <img class="col s4" src="/media/club_images/club_default.jpg" style="object-fit:fill !important;">
         <div class="col s8">
@@ -11,15 +16,15 @@
                 <li><a href="#report">Report</a></li>
             </ul>
         </div>
-        <div class="col s8 truncate" style="padding:5px;">
+        <div id="readMore" class="col s8 truncate" style="padding:5px;">
             College Life not only offers extensive information and advice, but refers you to product & service deals for
             every aspect your studies.I have an item "gallery" with the name of the item above the image. I am loading
             all information from an xml file so I need the strings to be modified dynamically at twoWe hope you have
             enjoyed using Materialize and if you feel like it has helped you out and want to support the team you can
             help us by donating.
         </div>
-        <div class="col s8">
-            <a href="#" class="waves-effect waves-light btn-small">Read More</a>
+        <div class="col s8 footer">
+            <button id="btn-read" class="waves-effect waves-light btn-small" onclick="expandText();">Read More</button>
         </div>
 
     </div>
