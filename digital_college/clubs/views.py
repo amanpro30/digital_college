@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Post, Images
 from .form import PostForm, ImageForm
 
+
 def home(request):
     data = Post.objects.all()
     return render(request, 'clubs/club_forum.html', {'data': data})
@@ -31,6 +32,11 @@ def gallery(request):
 #     return render(request, 'clubs/club_forum.html', {'data': data})
 
 def post(request):
+    pass
+
+
+'''
+def post(request):
     if request.method == 'POST':
         post_form = PostForm(request.POST)
         image_form = ImageForm(request.POST)
@@ -42,3 +48,4 @@ def post(request):
         image_form = ImageForm()
     return render (request,'clubs/club_basic.html',{'post_form':post_form, 'image_form':image_form})
 
+'''
