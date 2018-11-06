@@ -19,7 +19,6 @@ class Images(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to='profile_pics')
 
     def __str__(self):
-
         return self.postId.subject
 
 

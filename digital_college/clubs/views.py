@@ -50,3 +50,20 @@ def post(request):
     return render (request,'clubs/club_basic.html',{'post_form':post_form, 'image_form':image_form})
 
 '''
+
+
+def after_login(request):
+    return render(request, 'after_login/main.html')
+
+
+def progress_report(request):
+    return None
+
+
+def planner(request):
+    return None
+
+
+def profile(request):
+    return None
+
