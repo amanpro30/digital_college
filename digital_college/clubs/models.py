@@ -19,8 +19,8 @@ class Images(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to='profile_pics')
 
     def __str__(self):
-        post = Post.objects.get(pk=self.postId)
-        return post
+
+        return self.postId.subject
 
 
 class Comment(models.Model):
@@ -51,4 +51,7 @@ class Like(models.Model):
         unique_together = ["postId", "userId"]
 
     def __str__(self):
-        return self.userId
+        return self.userId.user.username
+
+
+

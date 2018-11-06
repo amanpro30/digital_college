@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from .models import Post, Images
+from clubs.models import Post, Images
 from .form import PostForm, ImageForm
 
 
 def home(request):
-    data = Post.objects.all()
-    return render(request, 'clubs/club_forum.html', {'data': data})
+    posts = Post.objects.all()
+    images = Images.objects.all()
+    return render(request, 'clubs/club_forum.html', {'posts': posts, 'images': images})
 
 
 def contacts(request):
