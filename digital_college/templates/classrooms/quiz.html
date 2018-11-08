@@ -1,0 +1,110 @@
+{% extends 'classrooms/base_classrooms.html' %}
+{% load staticfiles %}
+
+
+
+{% block content %}
+    <!-- Handling quiz on student side -->
+    {% ifequal user.registered_user.role 'S' %}
+        <p>hello student</p>
+
+    {% endifequal %}   
+    
+    
+    <!-- Handling quiz on faculty side-->
+    {% ifequal user.registered_user.role 'F' %}
+        <div class='row'> 
+            <div class="input-field col s7">
+                {{ quiz_detail_form.name_of_quiz }}
+                <label for="first_name">Name Of Quiz</label>
+            </div>
+            <div class="input-field col s7">
+                    {{ quiz_detail_instructions }}
+                    <label for="first_name">Enter the instructions regarding the quiz</label>
+            </div>
+            <div class="input-field col s7">
+                    {{ quiz_detail_form.date }}
+                    <label for="first_name">Enter the date on which this quiz will start</label>
+            </div>
+            <div class="input-field col s7">
+                    {{ quiz_detail_form.start_time }}
+                    <label for="first_name">Enter the time when this quiz will start</label>
+            </div>
+            <div class="input-field col s7">
+                    {{ quiz_detail_form.end_time }}
+                    <label for="first_name">Enter the time when this quiz will finish</label>
+            </div>
+        </div>
+        <p>hello faculty</p>
+        <div class="col s12 m7" id='question_card'>
+            <h6 class="header">Horizontal Card1</h6>
+            <div class="card horizontal large" id="card">
+                <div class="card-stacked row" >
+                    <div class="input-field col s7 offset-s1">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Enter your question here</label>
+                    </div>
+                    <div class="input-field col s2" >
+                        <select id='select_box' onchange='changeFunc()'>
+                            <option value="1" selected>Single Correct</option>
+                            <option value="2">Multiple Correct</option>
+                            <option value="3">True</option> 
+                            <option value="4">Matching</option>
+                        </select>
+                    </div>    
+                            
+                    
+                    <div class="input-field col s6 offset-s1" id='option1' style="visibility:visible;">
+                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <label for="textarea1">Option 1</label>
+        
+                    </div>
+                    <div class="input-field col s5" id="matching1" style="visibility:hidden;">
+                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <label for="textarea1">Matching 1</label>
+                    </div>    
+                    <div class="input-field col s6 offset-s1" id='option2' style="visibility:visible;">
+                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <label for="textarea1">Option 2</label>
+                    </div>
+                    <div class="input-field col s5" id="matching2" style="visibility:hidden;">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Matching 2</label>
+                        
+                    </div>    
+                    <div class="input-field col s6 offset-s1" id='option3' style="visibility:visible;">
+                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <label for="textarea1">Option 3</label>
+                    </div>
+                    <div class="input-field col s5" id="matching3" style="visibility:hidden;">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Matching 3</label>
+                        
+                    </div>    
+                    <div class="input-field col s6 offset-s1" id='option4' style="visibility:visible;">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">option 4</label>
+                    </div>
+                    <div class="input-field col s5" id="matching4" style="visibility:hidden;">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Matching 4</label>
+                        
+                    </div>    
+                </div>
+            
+                <div class="card-action">
+                    <a id='new_card' onclick='add_another_card()'><i class="material-icons md-48 md-dark md-inactive">add_circle</i></a>
+                </div>
+            </div>
+        </div>
+    {% endifequal %}
+{% endblock content %}
+
+
+
+
+
+
+
+
+
