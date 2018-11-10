@@ -1,6 +1,7 @@
 const elems = document.querySelector('select');
 M.FormSelect.init(elems,{});
 
+var question_number = 1;
 
 function changeFunc() {
 
@@ -12,14 +13,10 @@ if(selectedValue=='1'||selectedValue=='2'){
         document.getElementById("card").classList.remove('small');
         document.getElementById("card").classList.add('large');
         }
-    document.getElementById('option1').classList.remove('s5');
-    document.getElementById('option1').classList.add('s6');
-    document.getElementById('option2').classList.remove('s5');
-    document.getElementById('option2').classList.add('s6');
-    document.getElementById('option3').classList.remove('s5');
-    document.getElementById('option3').classList.add('s6');
-    document.getElementById('option4').classList.remove('s5');
-    document.getElementById('option4').classList.add('s6');
+    document.getElementById("choice1").style.visibility='visible';
+    document.getElementById("choice2").style.visibility='visible';
+    document.getElementById("choice3").style.visibility='visible';
+    document.getElementById("choice4").style.visibility='visible';
     document.getElementById("option1").style.visibility='visible';
     document.getElementById("option2").style.visibility='visible';
     document.getElementById("option3").style.visibility='visible';
@@ -34,14 +31,15 @@ if(selectedValue=='3'){
         document.getElementById("card").classList.remove('large');
         document.getElementById("card").classList.add('small');
         }
-    document.getElementById('option1').classList.remove('s5');
-    document.getElementById('option1').classList.add('s6');
-    document.getElementById('option2').classList.remove('s5');
-    document.getElementById('option2').classList.add('s6');
     document.getElementById("matching1").style.visibility='hidden';
     document.getElementById("matching2").style.visibility='hidden';
     document.getElementById("matching3").style.visibility='hidden';
     document.getElementById("matching4").style.visibility='hidden';
+    document.getElementById("choice2").style.visibility='visible';
+    document.getElementById("choice2").style.visibility='hidden';
+    document.getElementById("choice3").style.visibility='hidden';
+    document.getElementById("choice4").style.visibility='hidden';
+    document.getElementById("option2").style.visibility='hidden';
     document.getElementById("option3").style.visibility='hidden';
     document.getElementById("option4").style.visibility='hidden';
     }
@@ -50,27 +48,32 @@ if(selectedValue=='4'){
         document.getElementById("card").classList.remove('small');
         document.getElementById("card").classList.add('large');
         }
-    document.getElementById('option1').classList.remove('s6');
-    document.getElementById('option1').classList.add('s5');
-    document.getElementById('option2').classList.remove('s6');
-    document.getElementById('option2').classList.add('s5');
-    document.getElementById('option3').classList.remove('s6');
-    document.getElementById('option3').classList.add('s5');
-    document.getElementById('option4').classList.remove('s6');
-    document.getElementById('option4').classList.add('s5');
     document.getElementById("option1").style.visibility='visible';
     document.getElementById("option2").style.visibility='visible';
     document.getElementById("option3").style.visibility='visible';
     document.getElementById("option4").style.visibility='visible';
+    document.getElementById("choice1").style.visibility='hidden';
+    document.getElementById("choice2").style.visibility='hidden';
+    document.getElementById("choice3").style.visibility='hidden';
+    document.getElementById("choice4").style.visibility='hidden';
     document.getElementById("matching1").style.visibility='visible';
     document.getElementById("matching2").style.visibility='visible';
     document.getElementById("matching3").style.visibility='visible';
     document.getElementById("matching4").style.visibility='visible';
     }
-
 }
 
-
+function add_question(){
+    question_number = question_number+1;
+    var block_to_insert ;
+    var container_block ;
+    block_to_insert = document.createElement('div');
+    block_to_insert.setAttribute('id','question'+String(question_number));
+    div_to_insert = document.getElementsById('question_card');
+    block_to_insert.innerHTML = div_to_insert.innerHTML;
+    container_block = document.getElementById('quiz','question'+String(question_number));
+    container_block.appendChild( block_to_insert ); 
+}
 
 function add_another_card(){
     document.getElementById("question_card").innerHTML=document.getElementById("question_card").innerHTML+
