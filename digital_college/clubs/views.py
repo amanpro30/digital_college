@@ -63,3 +63,6 @@ def planner(request):
 def profile(request):
     return None
 
+
+def after_login(request):
+    return None
