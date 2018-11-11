@@ -76,13 +76,13 @@ WSGI_APPLICATION = 'digital_college.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-'default':
-    {
-        'ENGINE':'django.db.backends.mysql',
-        'NAME':'test',
-        'USER':'root',
-        'PASSWORD':'root'
-    }
+    'default':
+        {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'test',
+            'USER': 'root',
+            'PASSWORD': 'Atul@123',
+        }
 }
 
 # Password validation
@@ -120,7 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-       
+
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
@@ -128,4 +128,4 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL='User_Home'
+LOGIN_REDIRECT_URL = 'User_Home'

@@ -52,10 +52,6 @@ def post(request):
 '''
 
 
-def after_login(request):
-    return render(request, 'after_login/main.html')
-
-
 def progress_report(request):
     return None
 
