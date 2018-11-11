@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import Courses,Registered_College
+from datetime import date,time
+from django.utils import timezone
 
 # Create your models here.
 class quiz(models.Model):
@@ -7,13 +9,13 @@ class quiz(models.Model):
     class_id = models.ForeignKey(Courses,on_delete=models.CASCADE)
     name_of_quiz = models.CharField(max_length=50)
     instructions = models.CharField(max_length=250)
-    date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.DateTimeField(default=timezone.now)
+    end_time = models.DateTimeField(default=timezone.now)
     total_marks = models.IntegerField()
-    
     def __str__(self):
-        return self.name
+        return self.name_of_quiz
+       
+ 
 
 class multiplechoice(models.Model):
     college_id=models.ForeignKey(Registered_College,on_delete=models.CASCADE)
