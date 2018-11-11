@@ -6,17 +6,20 @@ from .models import Registered_User
 from .models import Registered_College
 from django.contrib.auth.forms import UserCreationForm
 
+
 def User_Home(request):
-    classrooms=['cs1', 'cs2', 'cs3']
-    clubs=['cb1', 'cb2', 'cb3']
+    classrooms = ['cs1', 'cs2', 'cs3']
+    clubs = ['cb1', 'cb2', 'cb3']
     context = {
         'classrooms': classrooms,
         'clubs': clubs
     }
-    return render(request,'users/user_home.html', context)
+    return render(request, 'users/main.html', context)
+
 
 def College_Home(request):
     return render(request, 'users/college_home.html')
+
 
 def College_Registration(request):
     forms = {}
@@ -28,18 +31,19 @@ def College_Registration(request):
             current_user.save()
             Name_Of_College = forms['College_Registration_Form'].cleaned_data.get('Name_Of_College')
             email = forms['College_Registration_Form'].cleaned_data.get('email')
-            College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get('College_Registration_Number')
+            College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get(
+                'College_Registration_Number')
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
             current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
-                                              College_Registration_Number=College_Registration_Number, City=City, State=State)
+                                              College_Registration_Number=College_Registration_Number, City=City,
+                                              State=State)
             current_user.save()
             return redirect('College_Home')
     else:
         forms['User_Creation_Form'] = UserCreationForm()
         forms['College_Registration_Form'] = College_Registration_Form()
     return render(request, 'users/College_Registration.html', {'forms': forms})
-
 
 
 def User_Registration(request):
@@ -64,13 +68,43 @@ def User_Registration(request):
     return render(request, 'users/User_Registration.html', {'forms': forms})
 
 
-
-
 def website_homepage(request):
-    return render(request,'users/website_homepage.html')
+    return render(request, 'users/website_homepage.html')
+
 
 def website_register(request):
-    return render(request,'users/website_register.html')
+    return render(request, 'users/website_register.html')
+
 
 def base(request):
-    return render(request,'users/base.html')
+    return render(request, 'users/base.html')
+
+
+whos_logged = {
+    'F': {'classrooms', 'Progress Report', 'Calender', 'profile'},
+    'S': {'classroom', 'Progress Report', 'Calender', 'clubs', 'profile'},
+    'Ad': {'classroom', 'courses', 'faculty', 'clubs', 'Progress Report', 'Profile'},
+}
+
+
+def after_login(request):
+    user = request.user
+    role = 'Ad'
+    if user.registered_user.role:
+        role = user.registered_user.role
+    context = {
+        'whos_logged': role,
+    }
+    return render(request, 'users/main.html', context)
+
+
+def progress_report(request):
+    return None
+
+
+def calender(request):
+    return None
+
+
+def profile(request):
+    return None

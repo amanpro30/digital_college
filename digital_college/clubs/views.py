@@ -50,6 +50,10 @@ def post(request):
     return render(request, 'clubs/club_forum.html', context)
 
 
+def progress_report(request):
+    return None
+
+
 def delete(request, post_id):
     Post.objects.get(id=post_id).delete()
     posts = Post.objects.all()
@@ -57,4 +61,8 @@ def delete(request, post_id):
 
 
 def update(request):
+    return None
+
+
+def after_login(request):
     return None
