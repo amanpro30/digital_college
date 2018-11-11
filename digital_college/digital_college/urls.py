@@ -29,8 +29,9 @@ urlpatterns = [
     path('logout/',auth_views.LogoutView.as_view(template_name='users/website_logoutpage.html'),name='website_logout'),
     path('admin/', admin.site.urls),
     path('base/', user_views.base),
+    path('club/', include('clubs.urls')),
+    path('after_login/', include('after_login.urls'))
     path('classrooms/',include('classrooms.urls')),
-    path('clubs/', include('clubs.urls'))
 ]   
 
 if settings.DEBUG:
