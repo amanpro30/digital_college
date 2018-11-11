@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'after_login.apps.AfterLoginConfig',
     'classrooms.apps.ClassroomsConfig',
     'clubs.apps.ClubsConfig',
     'users.apps.UsersConfig',

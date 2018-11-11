@@ -6,26 +6,30 @@
         <h1>Forum</h1>
     </div>
     {% for post in posts %}
-        <div class="col s12 m7" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
+        <div class="col s12 m7 post-class" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
             <div style="margin:10px;">
-                        <img class="circle left-align" src="/media/club_images/image1.jpg"
-                             style="height:40px;width:40px;">
-                        <span style="font-weight: bold;">{{ post.userId.user.username|title }}</span>&nbsp;<span>posted this</span>
-                        <a class='dropdown-trigger right' data-target='dropdown1'><i
-                                class="material-icons">more_vert</i></a>
-                        <ul id='dropdown1' class='dropdown-content'>
-                            <li><a href="#report">Report</a></li>
-                        </ul>
-                    </div>
+                <img class="circle left-align" src="/media/club_images/image1.jpg"
+                     style="height:40px;width:40px;">
+                <span style="font-weight: bold;">{{ post.userId.user.username|title }}</span>&nbsp;<span>posted this</span>
+                <a class='dropdown-trigger right' data-target='dropdown{{ post.id }}'><i
+                        class="material-icons">more_vert</i></a>
+                <ul id='dropdown{{ post.id }}' class='dropdown-content'>
+                    {% if post.userId.user == user %}
+                        <li><a href="{% url 'clubs:delete' post.id %}">Delete</a></li>
+                        <li><a href="{% url 'clubs:update' %}">Update</a></li>
+                    {% endif %}
+                    <li><a href="#report">Report</a></li>
+                </ul>
+            </div>
             <div class="card horizontal">
-                <div class="card-image hide-on-med-and-down">
-                    <img src="/media/club_images/club_default.jpg">
+                <div class="card-image hide-on-med-and-down responsive-img">
+                    <img src="{{ post.images_set.all.0.image.url }}">
                 </div>
                 <div class="card-stacked">
 
                     <div class="card-content container">
-                        <img class="responsive-img hide-on-large-only" src="/media/club_images/image2.jpg"
-                         style="object-fit:fill !important;">
+                        <img class="responsive-img hide-on-large-only" src="{{ post.images_set.all.0.image.url }}"
+                             style="object-fit:fill !important;">
                         <h2 class="header">{{ post.subject }}</h2>
                         <p>{{ post.content }}</p>
                     </div>
@@ -38,4 +42,11 @@
         </div>
 
     {% endfor %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(elems, {});
+        });
+
+    </script>
 {% endblock %}

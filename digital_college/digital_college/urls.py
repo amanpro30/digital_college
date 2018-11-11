@@ -30,6 +30,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('base/', user_views.base),
     path('club/', include('clubs.urls')),
+    path('after_login/', include('after_login.urls'))
 ]   
 
 if settings.DEBUG:

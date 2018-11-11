@@ -1,12 +1,19 @@
 from django.shortcuts import render
 from clubs.models import Post, Images
 from .form import PostForm, ImageForm
+from users.models import Registered_User
 
 
 def home(request):
     posts = Post.objects.all()
-    images = Images.objects.all()
-    return render(request, 'clubs/club_forum.html', {'posts': posts, 'images': images})
+    imageform = ImageForm()
+    postform = PostForm()
+    context = {
+        'imageform': imageform,
+        'postform': postform,
+        'posts': posts,
+    }
+    return render(request, 'clubs/club_forum.html', context)
 
 
 def contacts(request):
@@ -17,53 +24,37 @@ def gallery(request):
     pass
 
 
-# def post(request):
-#     # user = request.user
-#     if request.method == 'POST':
-#         subject = request.POST.get('subject1')
-#         content = request.POST.get('content')
-#         images = request.POST.get('images')
-#         a = Post(subject=subject, content=content)
-#         a.save()
-#         for img in images:
-#             b = Images(postId=a.pk, image=img)
-#             b.save()
-#         print("in Post")
-#     data = Post.objects.all()
-#     return render(request, 'clubs/club_forum.html', {'data': data})
-
-def post(request):
-    pass
-
-
-'''
 def post(request):
     if request.method == 'POST':
-        post_form = PostForm(request.POST)
-        image_form = ImageForm(request.POST)
-        if post_form.is_valid() and image_form.is_valid():
-            post_form.save()
-            image_form.save()
+        postform = PostForm(request.POST)
+        imageform = ImageForm(request.POST, request.FILES)
+        if postform.is_valid() and imageform.is_valid():
+            subject = postform.cleaned_data['subject']
+            content = postform.cleaned_data['content']
+            date = postform.cleaned_data['date']
+            user = Registered_User.objects.get(user=request.user)
+            a = Post(userId=user, subject=subject, content=content, date=date)
+            a.save()
+            b = Images(image=request.FILES['image'], postId=a)
+            b.save()
     else:
-        post_form = PostForm()
-        image_form = ImageForm()
-    return render (request,'clubs/club_basic.html',{'post_form':post_form, 'image_form':image_form})
+        imageform = ImageForm()
+        postform = PostForm()
+    posts = Post.objects.all()
+    context = {
+        'user': request.user,
+        'imageform': imageform,
+        'postform': postform,
+        'posts': posts,
+    }
+    return render(request, 'clubs/club_forum.html', context)
 
-'''
+
+def delete(request, post_id):
+    Post.objects.get(id=post_id).delete()
+    posts = Post.objects.all()
+    return render(request, 'clubs/club_forum.html', {'posts': posts})
 
 
-def after_login(request):
-    return render(request, 'after_login/main.html')
-
-
-def progress_report(request):
+def update(request):
     return None
-
-
-def planner(request):
-    return None
-
-
-def profile(request):
-    return None
-
