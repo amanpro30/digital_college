@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
+from django.db.models import CharField
 
 
 class Registered_College(models.Model):
@@ -15,9 +16,11 @@ class Registered_College(models.Model):
 
 class Registered_User(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     activation_key = models.CharField(max_length=255)
     email_validated = models.BooleanField(default=False)
-    email = models.EmailField(max_length=50)
+    email = models.EmailField(max_length=50,unique=True)
     ROLE_CHOICES = [
         ('F', 'faculty'),
         ('S', 'student'),
@@ -39,9 +42,10 @@ class Clubs(models.Model):
 
 
 class Courses(models.Model):
+    user = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
     course_name = models.CharField(max_length=100)
-    faculty_id = models.ForeignKey(Registered_User,on_delete=models.CASCADE)
-    college_id = models.ForeignKey(Registered_College,on_delete=models.CASCADE)
+    # faculty_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+    # college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.course_name
