@@ -14,7 +14,7 @@ def User_Home(request):
         'classrooms': classrooms,
         'clubs': clubs
     }
-    return render(request, 'users/main.html', context)
+    return render(request, 'users/../templates/after_login/main.html', context)
 
 
 def College_Home(request):
@@ -95,7 +95,7 @@ def after_login(request):
     context = {
         'whos_logged': role,
     }
-    return render(request, 'users/main.html', context)
+    return render(request, 'users/../templates/after_login/main.html', context)
 
 
 def progress_report(request):

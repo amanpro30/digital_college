@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from clubs.models import Post, Images
+from clubs.models import Post, Images, Like
 from .form import PostForm, ImageForm
 from users.models import Registered_User
 
 
 def home(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-date')
     imageform = ImageForm()
     postform = PostForm()
     context = {
@@ -31,16 +31,15 @@ def post(request):
         if postform.is_valid() and imageform.is_valid():
             subject = postform.cleaned_data['subject']
             content = postform.cleaned_data['content']
-            date = postform.cleaned_data['date']
             user = Registered_User.objects.get(user=request.user)
-            a = Post(userId=user, subject=subject, content=content, date=date)
+            a = Post(userId=user, subject=subject, content=content,)
             a.save()
             b = Images(image=request.FILES['image'], postId=a)
             b.save()
     else:
         imageform = ImageForm()
         postform = PostForm()
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-date')
     context = {
         'user': request.user,
         'imageform': imageform,
@@ -56,8 +55,29 @@ def progress_report(request):
 
 def delete(request, post_id):
     Post.objects.get(id=post_id).delete()
-    posts = Post.objects.all()
-    return render(request, 'clubs/club_forum.html', {'posts': posts})
+    posts = Post.objects.all().order_by('-date')
+    imageform = ImageForm()
+    postform = PostForm()
+    context = {
+        'imageform': imageform,
+        'postform': postform,
+        'posts': posts,
+    }
+    return render(request, 'clubs/club_forum.html', context)
+
+
+def like_post(request, post_id):
+    posts = Post.objects.all().order_by('-date')
+    imageform = ImageForm()
+    postform = PostForm()
+    context = {
+        'imageform': imageform,
+        'postform': postform,
+        'posts': posts,
+    }
+    a = Like(postId=post_id, userId=request.user)
+    a.save()
+    return render(request, 'clubs/club_forum.html', context)
 
 
 def update(request):
