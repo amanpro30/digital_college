@@ -10,12 +10,14 @@ M.Slider.init(slider, {
     }
 );
 
-const floatAction = document.querySelectorAll('.fixed-action-btn');
+const floatAction = document.querySelector('.fixed-action-btn');
 M.FloatingActionButton.init(floatAction, {
         hoverEnabled: true,
         direction: 'top',
     }
 );
 
-const dropdown = document.querySelectorAll('.dropdown-trigger');
-M.Dropdown.init(dropdown, {});
+const model1 = document.querySelectorAll('.modal');
+M.Modal.init(model1,{
+    opacity:0.7,
+});

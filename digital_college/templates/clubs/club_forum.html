@@ -1,27 +1,52 @@
 {% extends "clubs/club_basic.html" %}
 
 {% block content %}
-    <div class="row" style="background-color:white!important;border:2px solid grey;padding: 5px;">
-        <img class="col s4" src="/media/club_images/club_default.jpg" style="object-fit:fill !important;">
-        <div class="col s8">
-            <img class="circle left-align" src="/media/club_images/image1.jpg" style="height:40px;width:40px;">
-            <span style="font-weight: bold;">Atul Vidyarthi</span>&nbsp;<span>posted this</span>
-            <a class='dropdown-trigger right' data-target='dropdown1'><i class="material-icons">more_vert</i></a>
-            <ul id='dropdown1' class='dropdown-content'>
-                <li><a href="#report">Report</a></li>
-            </ul>
-        </div>
-        <div class="col s8 truncate" style="padding:5px;">
-            College Life not only offers extensive information and advice, but refers you to product & service deals for
-            every aspect your studies.I have an item "gallery" with the name of the item above the image. I am loading
-            all information from an xml file so I need the strings to be modified dynamically at twoWe hope you have
-            enjoyed using Materialize and if you feel like it has helped you out and want to support the team you can
-            help us by donating.
-        </div>
-        <div class="col s8">
-            <a href="#" class="waves-effect waves-light btn-small">Read More</a>
-        </div>
 
+    <div class="center-align teal lighten-5" style="margin-bottom:40px;">
+        <h1>Forum</h1>
     </div>
+    {% for post in posts %}
+        <div class="col s12 m7 post-class" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
+            <div style="margin:10px;">
+                <img class="circle left-align" src="/media/club_images/image1.jpg"
+                     style="height:40px;width:40px;">
+                <span style="font-weight: bold;">{{ post.userId.user.username|title }}</span>&nbsp;<span>posted this</span>
+                <a class='dropdown-trigger right' data-target='dropdown{{ post.id }}'><i
+                        class="material-icons">more_vert</i></a>
+                <ul id='dropdown{{ post.id }}' class='dropdown-content'>
+                    {% if post.userId.user == user %}
+                        <li><a href="{% url 'clubs:delete' post.id %}">Delete</a></li>
+                        <li><a href="{% url 'clubs:update' %}">Update</a></li>
+                    {% endif %}
+                    <li><a href="#report">Report</a></li>
+                </ul>
+            </div>
+            <div class="card horizontal">
+                <div class="card-image hide-on-med-and-down responsive-img">
+                    <img src="{{ post.images_set.all.0.image.url }}">
+                </div>
+                <div class="card-stacked">
 
+                    <div class="card-content container">
+                        <img class="responsive-img hide-on-large-only" src="{{ post.images_set.all.0.image.url }}"
+                             style="object-fit:fill !important;">
+                        <h2 class="header">{{ post.subject }}</h2>
+                        <p>{{ post.content }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">Like</a>
+                        <a href="#">Comment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(elems, {});
+        });
+
+    </script>
 {% endblock %}
