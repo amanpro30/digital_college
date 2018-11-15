@@ -30,8 +30,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('base/', user_views.base),
     path('classrooms/',include('classrooms.urls')),
-    path('clubs/', include('clubs.urls'))
-]   
+    path('clubs/', include('clubs.urls')),
+
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
