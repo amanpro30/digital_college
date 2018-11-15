@@ -1,0 +1,21 @@
+
+body
+{
+	margin:0;
+	padding:0;
+	//height:300vh;
+	//overflow:hidden;
+}
+
+#particles-js
+{
+	//height: 50%;
+	background-image: url('pictures/st18.jpg');
+	background-size: 100% 100%;
+	//opacity: 0.6;
+	//background-repeat: no-repeat;
+	//z-index: -1;
+	position: relative;
+}
+
+
