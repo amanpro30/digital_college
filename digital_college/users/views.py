@@ -38,11 +38,13 @@ def College_Registration(request):
             current_user = forms['User_Creation_Form'].save(commit=False)
             current_user.save()
             Name_Of_College = forms['College_Registration_Form'].cleaned_data.get('Name_Of_College')
+            First_Name = forms['College_Registration_Form'].cleaned_data.get('First_Name')
+            Last_Name = forms['College_Registration_Form'].cleaned_data.get('Last_Name')
             email = forms['College_Registration_Form'].cleaned_data.get('email')
             College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get('College_Registration_Number')
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
-            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
+            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, First_name=First_Name,Last_Name=Last_Name, email=email,
                                               College_Registration_Number=College_Registration_Number, City=City, State=State)
 
             current_user.is_active = False
