@@ -4,8 +4,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.shortcuts import HttpResponseRedirect,HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-
-
+from django.core import validators
 
 
 class User_Registration_Form(ModelForm):
@@ -21,44 +20,47 @@ class User_Registration_Form(ModelForm):
 
 class College_Registration_Form(ModelForm):
     STATE_CHOICES=(
-        ('AP','Andhra Pradesh'),
-        ('AC','Arunchal Pradesh'),
-        ('AS','Assam'),
-        ('BR','Bihar'),
-        ('CH','Chattisgarh'),
-        ('GO','Goa'),
-        ('GJ','Gujarat'),
-        ('HR','Haryana'),
-        ('HP','Himachal Pradesh'),
-        ('JK','Jammu and Kashmir'),
-        ('JH','Jharkhand'),
-        ('KN','Karnataka'),
-        ('KL','Kerala'),
-        ('MP','Madhya Pradesh'),
-        ('MH','Maharastra'),
-        ('MN','Manipur'),
-        ('MZ','Mizoram'),
-        ('MG','Meghalaya'),
-        ('NG','Nagaland'),
-        ('OR','Orissa'),
-        ('PB','Punjab'),
-        ('RJ','Rajasthan'),
-        ('SK','Sikkim'),
-        ('TN','Tamil Nadu'),
-        ('TG','Telangana'),
-        ('TP','Tripura'),
-        ('UL','Uttaranchal'),
-        ('UP','Uttar Pradesh'),
-        ('WB','West Bengal')
+        ('AP', 'Andhra Pradesh'),
+        ('AC', 'Arunchal Pradesh'),
+        ('AS', 'Assam'),
+        ('BR', 'Bihar'),
+        ('CH', 'Chattisgarh'),
+        ('GO', 'Goa'),
+        ('GJ', 'Gujarat'),
+        ('HR', 'Haryana'),
+        ('HP', 'Himachal Pradesh'),
+        ('JK', 'Jammu and Kashmir'),
+        ('JH', 'Jharkhand'),
+        ('KN', 'Karnataka'),
+        ('KL', 'Kerala'),
+        ('MP', 'Madhya Pradesh'),
+        ('MH', 'Maharastra'),
+        ('MN', 'Manipur'),
+        ('MZ', 'Mizoram'),
+        ('MG', 'Meghalaya'),
+        ('NG', 'Nagaland'),
+        ('OR', 'Orissa'),
+        ('PB', 'Punjab'),
+        ('RJ', 'Rajasthan'),
+        ('SK', 'Sikkim'),
+        ('TN', 'Tamil Nadu'),
+        ('TG', 'Telangana'),
+        ('TP', 'Tripura'),
+        ('UL', 'Uttaranchal'),
+        ('UP', 'Uttar Pradesh'),
+        ('WB', 'West Bengal'),
     )
-    email=forms.CharField(widget=forms.EmailInput)
-    State=forms.ChoiceField(choices=STATE_CHOICES)
+    email = forms.CharField(widget=forms.EmailInput)
+    State = forms.ChoiceField(choices=STATE_CHOICES)
+    botcatcher = forms.CharField(required=False,
+                                 widget=forms.HiddenInput,
+                                 validators=[validators.MaxLengthValidator(0)],)
     class Meta:
         model = Registered_College
-        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State']
+        fields = ['Name_Of_College', 'First_Name', 'Last_Name', 'email', 'College_Registration_Number', 'City', 'State']
 
 def Sign_Up_Form(UserCreationForm):
-    email=forms.CharField(widget=forms.EmailInput)
+    email = forms.CharField(widget=forms.EmailInput)
     class Meta:
         model=UserCreationForm
         fields=['username','first_name','last_name','email','password1','password2']
