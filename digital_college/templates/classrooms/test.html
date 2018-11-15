@@ -1,0 +1,125 @@
+<!-- Handling quiz on faculty side-->
+{% ifequal user.registered_user.role 'F' %}
+<div id='quiz'>
+    <form method="post" action={% url 'result' %}>
+    <div class='row' id='question1'> 
+        <div class="input-field col s7 offset-s2">
+            {{ quiz_detail_form.name_of_quiz }}
+            <label for="first_name">Name Of Quiz</label>
+        </div>
+        <div class="input-field col s7 offset-s2">
+                {{ quiz_detail_instructions }}
+        </div>
+        <div class="input-field col s7 offset-s2">
+                {{ quiz_detail_form.date }}
+                <label for="first_name">Enter the date on which this quiz will start</label>
+        </div>
+        <div class="input-field col s7 offset-s2">
+                {{ quiz_detail_form.start_time }}
+                <label for="first_name">Enter the time when this quiz will start</label>
+        </div>  
+        <div class="input-field col s7 offset-s2">
+                {{ quiz_detail_form.end_time }}
+                <label for="first_name">Enter the time when this quiz will finish</label>
+        </div>
+    </div>
+    <p>hello faculty</p>
+    
+    {% csrf_token %}
+        <div class="col s12 m7" id='question_card' style='width:80%;margin-left:10%'>
+            <h6 class="header">Horizontal Card1</h6>
+            <div class="card horizontal large" id="card">
+                <div class="card-stacked">
+                    <div class="row">
+                        <div class="input-field col s12" >
+                                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                <label for="textarea1">Enter your question here</label>
+                        </div>
+                        <p class='col s1' style='visibility:visible;' id='choice1' class='choice'>
+                            <label>
+                                <input type="checkbox" />
+                                <span>A</span>
+                            </label>
+                        </p>
+                        <div class="input-field col s6" id='option1' class='option'>
+                            <textarea id="option1" class="materialize-textarea"></textarea>
+                            <label for="option1">Option 1</label>
+                        </div>
+                        <div class="input-field col s5" id="matching1" class='matching' style="visibility:hidden;">
+                            <textarea id="matching1" class="materialize-textarea"></textarea>
+                            <label for="matching1">Matching 1</label>
+                        </div>
+                        <p class='col s1' style='visibility:visible;' id='choice2' class='choice'>
+                            <label>
+                                <input type="checkbox" />
+                                <span>B</span>
+                            </label>
+                        </p>
+                        <div class="input-field col s6" id='option2' class='option'>
+                            <textarea id="option2" class="materialize-textarea"></textarea>
+                            <label for="option2">Option 2</label>
+                        </div>
+                        <div class="input-field col s5" id="matching2" class='matching' style="visibility:hidden;">
+                            <textarea id="matching2" class="materialize-textarea"></textarea>
+                            <label for="matching2">Matching 2</label>
+                        </div>
+                        <p class='col s1' style='visibility:visible;' id='choice3' class='choice'>
+                            <label>
+                                <input type="checkbox" />
+                                <span>C</span>
+                            </label>
+                        </p>
+                        <div class="input-field col s6" id='option3' class='option'>
+                            <textarea id="option3" class="materialize-textarea"></textarea>
+                            <label for="option3">Option 3</label>
+                        </div>
+                        <div class="input-field col s5" id="matching3" class='matching' style="visibility:hidden;">
+                            <textarea id="matching3" class="materialize-textarea"></textarea>
+                            <label for="matching3">Matching 3</label>
+                        </div>
+                        <p class='col s1' style='visibility:visible;' id='choice4' class='choice'>
+                            <label>
+                                <input type="checkbox" />
+                                <span>D</span>
+                            </label>
+                        </p>
+                        <div class="input-field col s6 " id='option4' class='option'>
+                            <textarea id="option4" class="materialize-textarea"></textarea>
+                            <label for="option4">Option 4</label>
+                        </div>
+                        <div class="input-field col s5" id="matching4" class='matching' style="visibility:hidden;">
+                            <textarea id="matching4" class="materialize-textarea"></textarea>
+                            <label for="matching4">Matching 4</label>
+                        </div>    
+                    </div>
+                </div>    
+                <div class="card-action" style='height:80px'>
+                    <div class='row'>
+                        <div class="input-field col s2" >
+                            <select id='select_box' onchange='changeFunc()' >
+                                <option value="1" selected>Single Correct</option>
+                                <option value="2">Multiple Correct</option>
+                                <option value="3">True</option> 
+                                <option value="4">Matching</option>
+                            </select>
+                        </div>
+                        <div class="input-field col s2">
+                            <input id="question_mark" type="text" class="validate">
+                            <label for="question_mark">Marks</label>
+                        </div>
+                        <div class="input-field col s2 offset-s6">
+                            <a class="waves-effect waves-light btn-small" onclick="save_edit()"><i class="material-icons left">save</i>save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+        <div class='row'>
+            <div class='col s2 offset-s1'>
+                <a class="btn-floating btn-large waves-effect waves-light red" onclick="add_question()"><i class="material-icons">add</i></a>
+            </div>
+        </div>
+
+    </div>
+    {% endifequal %}

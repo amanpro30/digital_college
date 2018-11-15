@@ -4,6 +4,10 @@ from datetime import date,time
 from django.utils import timezone
 
 # Create your models here.
+
+
+
+
 class quiz(models.Model):
     college_id=models.ForeignKey(Registered_College,on_delete=models.CASCADE)
     class_id = models.ForeignKey(Courses,on_delete=models.CASCADE)
@@ -41,8 +45,8 @@ class singlechoice(models.Model):
     option2 = models.CharField(max_length=100)
     option3 = models.CharField(max_length=100)
     option4 = models.CharField(max_length=100)
-    answer = models.IntegerField()
-
+    answer = models.CharField(max_length=1)
+    
 class matching(models.Model):
     college_id=models.ForeignKey(Registered_College,on_delete=models.CASCADE)
     class_id = models.ForeignKey(Courses,on_delete=models.CASCADE)

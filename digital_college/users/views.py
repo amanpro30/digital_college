@@ -3,18 +3,19 @@ from django.shortcuts import redirect
 from .forms import User_Registration_Form
 from .forms import College_Registration_Form
 from .models import Registered_User
-from .models import Registered_College
+from .models import Registered_College,ClubEnrollment,CourseEnrollment
 from django.contrib.auth.forms import UserCreationForm
 
-
 def User_Home(request):
-    classrooms = ['cs1', 'cs2', 'cs3']
-    clubs = ['cb1', 'cb2', 'cb3']
-    context = {
-        'classrooms': classrooms,
-        'clubs': clubs
-    }
-    return render(request, 'users/main.html', context)
+    html=''
+    print(dir(request.user))
+    all_courses=CourseEnrollment.objects.filter(student_id=request.user.registered_user)
+    all_clubs=ClubEnrollment.objects.filter(student_id=request.user.registered_user)
+    # for course in all_courses:
+        # print(dir(course))
+        # url='/classrooms'+str(course.courses.course_name)+'/'
+        # html += '<a href="'+url+'">'+course.courses.course_name+'</a><br>'
+    return render(request, 'users/main.html')
 
 
 def College_Home(request):

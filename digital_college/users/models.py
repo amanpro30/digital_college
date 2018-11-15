@@ -4,7 +4,7 @@ from django import forms
 
 
 class Registered_College(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user     = models.OneToOneField(User, on_delete=models.CASCADE)
     Name_Of_College = models.CharField(max_length=100)
     email = models.EmailField()
     College_Registration_Number = models.IntegerField()

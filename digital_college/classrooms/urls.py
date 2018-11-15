@@ -6,4 +6,5 @@ urlpatterns = [
     path('assignment',classroom_views.assignment),
     path('slides',classroom_views.slides),
     path('forum',classroom_views.forum),
+    path('result',classroom_views.result,name='result')
 ]
