@@ -47,26 +47,19 @@ def College_Registration(request):
 
             current_user.is_active = False
             current_user.save()
-            print('1')
             socket.getaddrinfo('localhost', 8080)
-            print('2')
             current_site = get_current_site(request)
-            print('3')
             mail_subject = 'digital college account'
-            print('4')
             message = render_to_string('users/activate_email.html',{
                 'current_user': current_user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(current_user.pk)).decode(),
                 'token': account_activation_token.make_token(current_user),
             })
-            print('5')
             to_email = forms['College_Registration_Form'].cleaned_data.get('email')
-            print('6')
             email = EmailMessage(
                     mail_subject, message, to=[to_email]
             )
-            print('6')
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
             # return redirect('College_Home')
@@ -78,19 +71,13 @@ def College_Registration(request):
 def activate(request, uidb64, token):
     try:
         uid =urlsafe_base64_decode(uidb64).decode()
-        print('8')
         current_user = User.objects.get(pk=uid)
         print("ravish")
     except(TypeError, ValueError, OverflowError):
-        print('9')
         current_user = None
-        print("Ra")
     if current_user is not None and account_activation_token.check_token(current_user, token):
-        print('10')
         current_user.is_active = True
-        print('11')
         current_user.save()
-        print('rtr')
         return redirect('/users/User_Home')
 
     else:
