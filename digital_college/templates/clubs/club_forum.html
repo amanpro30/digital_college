@@ -6,7 +6,7 @@
         <h1>Forum</h1>
     </div>
     {% for post in posts %}
-        <div class="col s12 m7 post-class" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
+        <div class="col s12 m7" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
             <div style="margin:10px;">
                 <img class="circle left-align" src="/media/club_images/image1.jpg"
                      style="height:40px;width:40px;">
@@ -22,14 +22,14 @@
                 </ul>
             </div>
             <div class="card horizontal">
-                <div class="card-image hide-on-med-and-down responsive-img">
-                    <img src="{{ post.images_set.all.0.image.url }}">
+                <div class="card-image hide-on-med-and-down responsive-img" style="width:30%;">
+                    <img src="{{ post.images_set.all.0.image.url }}" style="width:100%;object-fit: contain;">
                 </div>
                 <div class="card-stacked">
 
                     <div class="card-content container">
                         <img class="responsive-img hide-on-large-only" src="{{ post.images_set.all.0.image.url }}"
-                             style="object-fit:fill !important;">
+                             style="width:100%;object-fit:fill !important;">
                         <h2 class="header">{{ post.subject }}</h2>
                         <p>{{ post.content }}</p>
                     </div>

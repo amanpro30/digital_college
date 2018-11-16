@@ -50,8 +50,12 @@ class Courses(models.Model):
 class ClubEnrollment(models.Model):
     club_id = models.ForeignKey(Clubs, on_delete=models.CASCADE)
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+    
 
 
 class CourseEnrollment(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.course_id.course_name
