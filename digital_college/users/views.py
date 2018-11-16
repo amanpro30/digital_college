@@ -1,10 +1,10 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
 from .forms import User_Registration_Form
 from .forms import College_Registration_Form
 from .models import Registered_User
 from .models import Registered_College
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string, get_template
@@ -25,6 +25,7 @@ def User_Home(request):
         'classrooms': classrooms,
         'clubs': clubs
     }
+
     return render(request, 'users/../templates/after_login/main.html', context)
 
 
@@ -41,15 +42,12 @@ def College_Registration(request):
             current_user = forms['User_Creation_Form'].save(commit=False)
             current_user.save()
             Name_Of_College = forms['College_Registration_Form'].cleaned_data.get('Name_Of_College')
-            First_Name = forms['College_Registration_Form'].cleaned_data.get('First_Name')
-            Last_Name = forms['College_Registration_Form'].cleaned_data.get('Last_Name')
             email = forms['College_Registration_Form'].cleaned_data.get('email')
             College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get(
                 'College_Registration_Number')
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
-
-            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, First_name=First_Name,Last_Name=Last_Name, email=email,
+            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
                                               College_Registration_Number=College_Registration_Number, City=City, State=State)
 
             current_user.is_active = False
@@ -97,18 +95,17 @@ def User_Registration(request):
         forms['User_Creation_Form'] = UserCreationForm(request.POST)
         forms['User_Registration_Form'] = User_Registration_Form(request.POST)
         if forms['User_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
-            first_name = forms['User_Registration_Form'].cleaned_data.get('first_name')
-            last_name = forms['User_Registration_Form'].cleaned_data.get('last_name')
+            current_user = forms['User_Creation_Form'].save(commit=False)
+            current_user.save()
+            first_name = forms['User_Registration_Form'].cleaned_data.get('First_Name')
+            last_name = forms['User_Registration_Form'].cleaned_data.get('Last_Name')
             email = forms['User_Registration_Form'].cleaned_data.get('email')
             role = forms['User_Registration_Form'].cleaned_data.get('role')
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
-            generated_key = 123
-            activation_key = forms['User_Registration_Form'].cleaned_data.get('activation_key')
-            current_user = forms['User_Creation_Form'].save(commit=False)
+            current_user = Registered_User(user=current_user, email=email, First_Name=first_name, Last_Name=last_name,
+                                           role=role, college_id=college_id,)
             current_user.save()
-            current_user = Registered_User(user=current_user, fisrt_name=first_name, last_name=last_name, email=email, role=role, college_id=college_id,activation_key=activation_key)
-            current_user.save()
-            return redirect('User_Home')
+            return redirect('/users/User_Home/')
             # return redirect('User_Registration')
     else:
         forms['User_Creation_Form'] = UserCreationForm()
@@ -156,3 +153,4 @@ def calender(request):
 
 def profile(request):
    return render(request,'users/base.html')
+

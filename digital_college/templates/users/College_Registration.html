@@ -1,6 +1,24 @@
-<form method="post">
+{% extends 'users/base_login_signup.html' %}
+
+{% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<h2>Sign Up</h2>
+<form method="POST">
     {% csrf_token %}
+	<!--<label class="container">College Admin-->
+		<!--<input type="radio" checked="checked" name="radio">-->
+		<!--<span class="checkmark"></span>-->
+	<!--</label>-->
+	<!--<label class="container">Faculty-->
+		<!--<input type="radio" name="radio">-->
+		<!--<span class="checkmark"></span>-->
+	<!--</label>-->
+	<!--<label class="container">Student-->
+		<!--<input type="radio" name="radio">-->
+		<!--<span class="checkmark"></span>-->
+	<!--</label>-->
     {{ forms.User_Creation_Form.as_p }}
     {{ forms.College_Registration_Form.as_p }}
-    <button type="submit">Sign up</button>
+    <button type="submit" value="Sign Up">Sign up</button>
 </form>
+{% endblock content %}
