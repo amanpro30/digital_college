@@ -77,15 +77,22 @@ WSGI_APPLICATION = 'digital_college.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+# 'default':
+#     {
+#         'ENGINE':'django.db.backends.mysql',
+#         'NAME':'test',
+#         'USER':'root',
+#         'PASSWORD':'ravish11',
+#     }
+# }
 DATABASES = {
-    'default':
-        {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'test',
-            'USER': 'root',
-            'PASSWORD': 'ravish11',
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -131,3 +138,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = 'User_Home'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'digital.classroom247@gmail.com'
+EMAIL_HOST_PASSWORD = 'projectdjango@17'
+EMAIL_PORT = '587'
+
+EMAIL_USE_SSL = False

@@ -7,6 +7,8 @@ from django.db.models import CharField
 class Registered_College(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     Name_Of_College = models.CharField(max_length=100)
+    First_Name = models.CharField(max_length=100,)
+    Last_Name = models.CharField(max_length=100,)
     email = models.EmailField()
     College_Registration_Number = models.IntegerField()
     City = models.CharField(max_length=25)
