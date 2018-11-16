@@ -7,8 +7,6 @@ from django.db.models import CharField
 class Registered_College(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     Name_Of_College = models.CharField(max_length=100)
-    First_Name = models.CharField(max_length=100,)
-    Last_Name = models.CharField(max_length=100,)
     email = models.EmailField()
     College_Registration_Number = models.IntegerField()
     City = models.CharField(max_length=25)
@@ -18,9 +16,8 @@ class Registered_College(models.Model):
 
 class Registered_User(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    activation_key = models.CharField(max_length=255)
+    First_Name = models.CharField(max_length=100)
+    Last_Name = models.CharField(max_length=100)
     email_validated = models.BooleanField(default=False)
     email = models.EmailField(max_length=50,unique=True)
     ROLE_CHOICES = [

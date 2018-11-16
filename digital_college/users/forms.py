@@ -12,14 +12,16 @@ class User_Registration_Form(ModelForm):
         ('F', 'Faculty'),
         ('S', 'Student')
     )
-    role = forms.ChoiceField(choices=ROLE_CHOICES)
+
     college_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
     botcatcher = forms.CharField(required=False, widget=forms.HiddenInput,
                                  validators=[validators.MaxLengthValidator(0), ])
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'container'}))
     class Meta:
         model = Registered_User
         fields = ['first_name', 'last_name', 'email', 'role', 'college_id', 'activation_key', 'botcatcher', ]
         # fields = '__all__'
+
 
 class College_Registration_Form(ModelForm):
     STATE_CHOICES=(
@@ -67,11 +69,5 @@ class College_Registration_Form(ModelForm):
                                  validators=[validators.MaxLengthValidator(0)],)
     class Meta:
         model = Registered_College
-        fields = ['Name_Of_College', 'First_Name', 'Last_Name', 'email', 'College_Registration_Number', 'City', 'State']
-
-def Sign_Up_Form(UserCreationForm):
-    email = forms.CharField(widget=forms.EmailInput)
-    class Meta:
-        model = UserCreationForm
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', ]
 
