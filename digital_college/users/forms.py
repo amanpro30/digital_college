@@ -8,15 +8,15 @@ from django.core import validators
 
 
 class User_Registration_Form(ModelForm):
-    ROLE_CHOICES=(
-        ('F','Faculty'),
-        ('S','Student')
+    ROLE_CHOICES = (
+        ('F', 'Faculty'),
+        ('S', 'Student')
     )
-    role=forms.ChoiceField(choices=ROLE_CHOICES)
-    college_id=forms.ModelChoiceField(queryset=Registered_College.objects.all())
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'container'}))
+    college_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
     class Meta:
-        model=Registered_User
-        fields=['email','role','college_id','activation_key',]
+        model = Registered_User
+        fields = ['role', 'email', 'First_Name', 'Last_Name', 'role', 'college_id', ]
 
 class College_Registration_Form(ModelForm):
     STATE_CHOICES=(
@@ -57,10 +57,10 @@ class College_Registration_Form(ModelForm):
                                  validators=[validators.MaxLengthValidator(0)],)
     class Meta:
         model = Registered_College
-        fields = ['Name_Of_College', 'First_Name', 'Last_Name', 'email', 'College_Registration_Number', 'City', 'State']
+        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', ]
 
 def Sign_Up_Form(UserCreationForm):
     email = forms.CharField(widget=forms.EmailInput)
     class Meta:
-        model=UserCreationForm
-        fields=['username','first_name','last_name','email','password1','password2']
+        model = UserCreationForm
+        fields = ['username', 'email', 'password1', 'password2']

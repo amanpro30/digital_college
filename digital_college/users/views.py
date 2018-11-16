@@ -1,10 +1,10 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
 from .forms import User_Registration_Form
 from .forms import College_Registration_Form
 from .models import Registered_User
 from .models import Registered_College
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string, get_template
@@ -18,13 +18,13 @@ from django.contrib.auth.models import User
 
 
 def User_Home(request):
-    classrooms=['cs1', 'cs2', 'cs3']
-    clubs=['cb1', 'cb2', 'cb3']
+    classrooms = ['cs1', 'cs2', 'cs3']
+    clubs = ['cb1', 'cb2', 'cb3']
     context = {
         'classrooms': classrooms,
         'clubs': clubs
     }
-    return render(request,'users/user_home.html', context)
+    return render(request, 'users/user_home.html', context)
 
 def College_Home(request):
     return render(request, 'users/college_home.html')
@@ -38,13 +38,11 @@ def College_Registration(request):
             current_user = forms['User_Creation_Form'].save(commit=False)
             current_user.save()
             Name_Of_College = forms['College_Registration_Form'].cleaned_data.get('Name_Of_College')
-            First_Name = forms['College_Registration_Form'].cleaned_data.get('First_Name')
-            Last_Name = forms['College_Registration_Form'].cleaned_data.get('Last_Name')
             email = forms['College_Registration_Form'].cleaned_data.get('email')
             College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get('College_Registration_Number')
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
-            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, First_name=First_Name,Last_Name=Last_Name, email=email,
+            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
                                               College_Registration_Number=College_Registration_Number, City=City, State=State)
 
             current_user.is_active = False
@@ -93,20 +91,19 @@ def User_Registration(request):
         if forms['User_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
             current_user = forms['User_Creation_Form'].save(commit=False)
             current_user.save()
+            first_name = forms['User_Registration_Form'].cleaned_data.get('First_Name')
+            last_name = forms['User_Registration_Form'].cleaned_data.get('Last_Name')
             email = forms['User_Registration_Form'].cleaned_data.get('email')
             role = forms['User_Registration_Form'].cleaned_data.get('role')
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
-            activation_key = forms['User_Registration_Form'].cleaned_data.get('activation_key')
-            current_user = Registered_User(user=current_user, email=email, role=role, college_id=college_id,
-                                           activation_key=activation_key)
+            current_user = Registered_User(user=current_user, email=email, First_Name=first_name, Last_Name=last_name,
+                                           role=role, college_id=college_id,)
             current_user.save()
             return redirect('User_Home')
     else:
         forms['User_Creation_Form'] = UserCreationForm()
         forms['User_Registration_Form'] = User_Registration_Form()
     return render(request, 'users/User_Registration.html', {'forms': forms})
-
-
 
 
 def website_homepage(request):
@@ -116,4 +113,4 @@ def website_register(request):
     return render(request,'users/website_register.html')
 
 def base(request):
-    return render(request,'users/base.html')
+    return render(request, 'users/base.html')
