@@ -3,10 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-.atom
-.idea
-.idea/workspace.xml
-
 # C extensions
 *.so
 
@@ -450,4 +446,10 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+.atom
+.idea
 
+
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py

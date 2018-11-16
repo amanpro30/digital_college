@@ -16,7 +16,7 @@ def quiz(request):
         form = quiz_detail_form(request.POST)
         if form.is_valid():
             form.save()
-        
+
     else:
         form=quiz_detail_form()
     Quiz= qz.objects.all().first()
@@ -28,6 +28,7 @@ def quiz(request):
         present=datetime.utcnow()
         present = pytz.utc.localize(present)
         return quiz.end_time < present
+<<<<<<< HEAD
     '''
     single = singlechoice.objects.filter(college_id=request.user.registered_user.college_id,class_id=request.user.registered_college.)
     multiple = multiplechoice.objects.filter(college_id=request.user.registered_user.college_id,class_id=)
@@ -35,6 +36,13 @@ def quiz(request):
     match = matching.objects.filter(college_id=request.user.registered_user.college_id,class_id=)
     ans = answers.objects.filter(college_id=request.user.registered_user.college_id,class_id=)
     '''
+=======
+    # single = singlechoice.objects.filter(college_id=request.user.registered_user.college_id,class_id=request.user.registered_college)
+    # multiple = multiplechoice.objects.filter(college_id=request.user.registered_user.college_id,class_id=)
+    # tf = truefalse.objects.filter(college_id=request.user.registered_user.college_id,class_id=)
+    # match = matching.objects.filter(college_id=request.user.registered_user.college_id,class_id=)
+    # ans = answers.objects.filter(college_id=request.user.registered_user.college_id,class_id=)
+>>>>>>> dc7bc16b998f78e8ab97daf0b38a08cb5b10e061
     return render(request,'classrooms/quiz.html',{'quiz_detail_form':form,'is_started':is_started(Quiz),'is_finished':is_finished(Quiz),'qz':Quiz})
 
 def assignment(request):

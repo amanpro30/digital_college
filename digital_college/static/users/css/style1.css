@@ -2,7 +2,11 @@ body{
 	margin:0;
 	padding: 0;
 	background-size: cover;
+<<<<<<< HEAD:digital_college/static/users/css/style1.css
+	background-image: url({% static 'users/pictures/login.jpg' %});
+=======
 	background-image: url(login.jpg);
+>>>>>>> 7172660490c3c390bf043d403794800efb4328e6:digital_college/static/users/style1.css
 	background-repeat: no-repeat;
 	font-family: Tahoma, sans-seriff;
 
