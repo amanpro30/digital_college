@@ -19,7 +19,7 @@ class User_Registration_Form(ModelForm):
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'container'}))
     class Meta:
         model = Registered_User
-        fields = ['first_name', 'last_name', 'email', 'role', 'college_id', 'activation_key', 'botcatcher', ]
+        fields = ['First_Name', 'Last_Name', 'email', 'role', 'college_id', 'botcatcher', ]
         # fields = '__all__'
 
 
@@ -61,7 +61,6 @@ class College_Registration_Form(ModelForm):
     class Meta:
         model = Registered_College
         fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', 'botcatcher', ]
-    )
     email = forms.CharField(widget=forms.EmailInput)
     State = forms.ChoiceField(choices=STATE_CHOICES)
     botcatcher = forms.CharField(required=False,
