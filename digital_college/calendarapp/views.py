@@ -1,18 +1,30 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
+
+from users.models import Registered_User
 from .models import Entry
 from .forms import Entryform
+from after_login import views as after_helper
+
 # Create your views here.
+
+whos_logged = after_helper.whos_logged
 
 
 def index(request):
-    return render(request, 'calendarapp/index.html')
+    user = request.user
+    role = user.registered_user.role
+    entries = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
+    context = {
+        'whos_logged': whos_logged[role],
+        'logged_in': user,
+        'entries': entries
+    }
+    return render(request, 'calendarapp/index.html', context)
 
 
-def details(request, pk):
-    entry = Entry.objects.get(id=pk)
+def details(request, entry_id):
+    entry = Entry.objects.get(id=entry_id)
     return render(request, 'calendarapp/details.html', {'entry': entry})
 
 
@@ -26,21 +38,45 @@ def add(request):
             description = form.cleaned_data['description']
 
             Entry.objects.create(
+                userId=Registered_User.objects.get(user=request.user),
                 name=name,
                 date=date,
                 description=description,
             ).save()
-            return HttpResponseRedirect('/')
+            user = request.user
+            role = user.registered_user.role
+            entries = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
+            context = {
+                'whos_logged': whos_logged[role],
+                'logged_in': user,
+                'entries': entries
+            }
+            return render(request, 'calendarapp/index.html', context)
     else:
         form = Entryform()
-    return render(request, 'calendarapp/form.html', {'form': form})
+    user = request.user
+    role = user.registered_user.role
+    context = {
+        'whos_logged': whos_logged[role],
+        'logged_in': user,
+        'form': form,
+    }
+    return render(request, 'calendarapp/form.html', context)
 
 
-def delete(request, pk):
-    if request.method == 'DELETE':
-        entry = get_object_or_404(Entry, pk=pk)
-        entry.delete()
-
-    return HttpResponseRedirect("/")
-
-
+def delete(request, entry_id):
+    # if request.method == 'DELETE':
+    #     entry = get_object_or_404(Entry, pk=pk)
+    #     entry.delete()
+    #
+    # return HttpResponseRedirect("/")
+    Entry.objects.get(id=entry_id).delete()
+    user = request.user
+    role = user.registered_user.role
+    entries = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
+    context = {
+        'whos_logged': whos_logged[role],
+        'logged_in': user,
+        'entries': entries
+    }
+    return render(request, 'calendarapp/index.html', context)

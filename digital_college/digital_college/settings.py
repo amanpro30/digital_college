@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'calendarapp',
     'quiz',
     'announcements',
+<<<<<<< HEAD
     'slides',
+=======
+>>>>>>> 6638ef29afcfa9d9875a8718857864d21a803f6d
 ]
 
 MIDDLEWARE = [
@@ -87,6 +90,7 @@ DATABASES = {
             'NAME': 'test',
             'USER': 'root',
             'PASSWORD': 'Dheer@1507',
+
         }
 }
 # DATABASES = {
