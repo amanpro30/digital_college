@@ -1,13 +1,25 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Post, Images
+from .models import Post, Images, Comment
 
 
 class PostForm(ModelForm):
+    subject = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'validate text-white', }
+    ))
+
+    content = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'placeholder': 'Write something here...',
+            'style': 'height:100px;width:100%',
+        }
+    ))
+
     class Meta:
         model = Post
         fields = [
-            'userId', 'date', 'subject', 'content',
+             'subject', 'content',
         ]
 
 
@@ -22,5 +34,18 @@ class ImageForm(ModelForm):
     class Meta:
         model = Images
         fields = [
-            'postId', 'image',
+             'image',
         ]
+
+
+class CommentForm(ModelForm):
+    comment = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'placeholder': 'Post a comment..',
+        }
+    ))
+
+    class Meta:
+        model = Comment
+        fields = ['comment', ]
+

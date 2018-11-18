@@ -17,23 +17,7 @@ M.FloatingActionButton.init(floatAction, {
     }
 );
 
-const dropdown = document.querySelector('.dropdown-trigger');
-M.Dropdown.init(dropdown, {});
-
-
 const model1 = document.querySelectorAll('.modal');
 M.Modal.init(model1,{
     opacity:0.7,
 });
-
-function expandText(){
-	if(document.getElementById('readMore').classList.contains('truncate')){
-		document.getElementById('readMore').classList.remove('truncate');
-		document.getElementById('btn-read').innerHTML="Read Less";
-	}
-	else{
-		document.getElementById('readMore').classList.add('truncate');
-		document.getElementById('btn-read').innerHTML="Read More";
-	}
-
-}

@@ -21,23 +21,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.models import User
 
+
 urlpatterns = [
     path('', user_views.website_homepage, name='website_homepage'),
     path('users/', include('users.urls')),
     path('register', user_views.website_register, name='website_register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/website_loginpage.html'), name='website_login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/website_logoutpage.html'), name='website_logout'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='users/website_homepage.html'), name='website_logout'),
     path('admin/', admin.site.urls),
     path('base/', user_views.base),
+    path('club/', include('clubs.urls')),
+    path('after_login/', include('after_login.urls')),
     path('classrooms/', include('classrooms.urls')),
-    path('clubs/', include('clubs.urls')),
-    path('', include('django.contrib.auth.urls')),
-    # path('password_reset/', auth_views.password_reset, name='password_reset'),
-    # path('password_reset/done/', auth_views.password_reset_done, name='password_reset_done'),
-    # path('reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
-    #     auth_views.password_reset_confirm, name='password_reset_confirm'),
-    # path('reset/done/', auth_views.password_reset_complete, name='password_reset_complete'),
-
+    path('announcements/',include('announcements.urls')),
 ]
 
 if settings.DEBUG:

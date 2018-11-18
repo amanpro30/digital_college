@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from .models import Registered_User, Registered_College, Courses
 from django.contrib.auth.models import User
 from django import forms
-from django.shortcuts import HttpResponseRedirect,HttpResponse
+from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
@@ -16,6 +16,7 @@ class User_Registration_Form(ModelForm):
     )
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
     college_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
     class Meta:
         model = Registered_User
         fields = ['role', 'email', 'First_Name', 'Last_Name', 'college_id', ]
@@ -50,12 +51,13 @@ class College_Registration_Form(ModelForm):
         ('TP', 'Tripura'),
         ('UL', 'Uttaranchal'),
         ('UP', 'Uttar Pradesh'),
-        ('WB', 'West Bengal'),
+        ('WB', 'West Bengal')
     )
     State = forms.ChoiceField(choices=STATE_CHOICES)
     class Meta:
         model = Registered_College
         fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', ]
+
 
 def Sign_Up_Form(UserCreationForm):
     email = forms.CharField(widget=forms.EmailInput)
@@ -68,7 +70,7 @@ class Course_Forms(forms.ModelForm):
     # faculty_id = forms.ModelChoiceField(queryset=Registered_User.objects.all())
     class Meta:
         model = Courses
-        fields = ['Course_Name','faculty_id']
+        fields = ['course_name','faculty_id']
 
 class ResetForm(forms.Form):
     reset_email = forms.EmailField()

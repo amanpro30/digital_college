@@ -1,0 +1,76 @@
+{% extends 'quiz/base_classrooms.html' %}
+{% load staticfiles %}
+
+{% block content %}
+{% ifequal user.registered_user.role 'F' %}
+
+    <form method="POST" >
+    <p>single choice form</p>
+    {% csrf_token %}
+        <div class='row' style='width:80%'>
+            <fieldset>
+                <legend>Single Choice Question</legend>
+                    <div>
+                        {{ single_choice_form.management_form }}
+                        {% for single in single_choice_form %}
+                        <div class="link-formset input-field col s12">
+                            {{ single.as_p }}
+                        </div>
+                        {% endfor %}
+                            
+                    </div>
+                    <div class='row'>
+            </fieldset>
+            <button type='submit'>submit</button>
+        </div>
+    </form>
+        <!-- <div class='row' style='width:80%'>
+            <fieldset>
+                <legend>Multiple Choice Question</legend>
+                    <div>
+                    {{ multiple_choice_form.management_form }}
+                        {% for multiple in multiple_choice_form %}
+                        <div class="link-formset2 materialize-textarea  offset-s2">
+                            {{ multiple.as_p }}
+                        </div>
+                        {% endfor %}
+                    </div>
+            </fieldset>
+        </div>
+        <div class='row' style='width:80%'>
+            <fieldset>
+                <legend>True False Question</legend>
+                    <div>
+                    {{ truefalse_form.management_form }}
+                        {% for true in truefalse_form %}
+                        <div class="link-formset3 materialize-textarea  offset-s2">
+                            {{ true.as_p }}
+                        </div>
+                        {% endfor %}
+                    </div>
+            </fieldset>
+        </div>
+        <div class='row' style='width:80%'>
+            <fieldset>
+                <legend>Matching Question</legend>
+                    <div>
+                    {{ matching_form.management_form }}
+                        {% for matching in matching_form %}
+                            <div class="link-formset4 materialize-textarea  offset-s2">
+                                {{ matching.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+        </div>
+         -->
+    
+{% endifequal %}    
+    
+
+
+
+
+ 
+            
+{% endblock content %}

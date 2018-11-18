@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
+from django.db.models import CharField
 
 
 class Registered_College(models.Model):
@@ -18,13 +19,14 @@ class Registered_User(models.Model):
     First_Name = models.CharField(max_length=100)
     Last_Name = models.CharField(max_length=100)
     email_validated = models.BooleanField(default=False)
-    email = models.EmailField(max_length=50)
+    email = models.EmailField(max_length=50,unique=True)
     ROLE_CHOICES = [
         ('F', 'faculty'),
         ('S', 'student'),
     ]
     role = models.CharField(max_length=1, choices=ROLE_CHOICES)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE, default=0)
+    mobile_no = models.CharField(max_length=10)
 
     def __str__(self):
         return self.user.username
@@ -40,19 +42,21 @@ class Clubs(models.Model):
 
 
 class Courses(models.Model):
-    Course_Name = models.CharField(max_length=100)
-    faculty_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
-    # College_ID = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
-
+    course_name = models.CharField(max_length=100)
+    faculty_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+    college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
     def __str__(self):
-        return self.Course_Name
+        return self.course_name
 
 
 class ClubEnrollment(models.Model):
     club_id = models.ForeignKey(Clubs, on_delete=models.CASCADE)
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+    
 
 
 class CourseEnrollment(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.course_id.course_name

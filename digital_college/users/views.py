@@ -1,10 +1,11 @@
-from django.shortcuts import render, HttpResponse, redirect
-from .forms import User_Registration_Form
-from .forms import College_Registration_Form
 from .forms import Course_Forms
 from .forms import ResetForm
 from .forms import ResetDoneForm
 from .models import Registered_User, Courses
+from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect
+from .forms import User_Registration_Form, College_Registration_Form
+from .models import Registered_College,ClubEnrollment,CourseEnrollment
 from .models import Registered_College
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from django.core.mail import send_mail
@@ -20,17 +21,9 @@ import socket
 from django.contrib.auth.models import User
 
 
-def User_Home(request):
-    classrooms = ['cs1', 'cs2', 'cs3']
-    clubs = ['cb1', 'cb2', 'cb3']
-    context = {
-        'classrooms': classrooms,
-        'clubs': clubs
-    }
-    return render(request, 'users/user_home.html', context)
-
 def College_Home(request):
     return render(request, 'users/college_home.html')
+
 
 def College_Registration(request):
     forms = {}
@@ -46,8 +39,7 @@ def College_Registration(request):
             College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get('College_Registration_Number')
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
-            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
-                                              College_Registration_Number=College_Registration_Number, City=City, State=State)
+            current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,College_Registration_Number=College_Registration_Number, City=City, State=State)
             current_user.is_active = False
             current_user.save()
             socket.getaddrinfo('localhost', 8080)
@@ -128,6 +120,7 @@ def User_Registration(request):
             )
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
+            # return redirect('User_Registration')
     else:
         forms['User_Creation_Form'] = UserCreationForm()
         forms['User_Registration_Form'] = User_Registration_Form()
@@ -151,13 +144,16 @@ def add_courses(request):
         return render(request, 'users/Add_Course.html', {'forms': forms})
 
 def website_homepage(request):
-    return render(request,'users/website_homepage.html')
+    return render(request, 'users/website_homepage.html')
+
 
 def website_register(request):
-    return render(request,'users/website_register.html')
+    return render(request, 'users/website_register.html')
+
 
 def base(request):
     return render(request, 'users/base.html')
+
 
 def PasswordReset(request):
     forms = {}
@@ -216,3 +212,33 @@ def reset(request, uidb64, token):
     else:
         forms = ResetDoneForm()
         return render(request, 'users/Reset_done.html', {'forms': forms})
+
+whos_logged = {
+    'F': {'classrooms', 'Progress Report', 'Calender', 'profile'},
+    'S': {'classroom', 'Progress Report', 'Calender', 'clubs', 'profile'},
+    'Ad': {'classroom', 'courses', 'faculty', 'clubs', 'Progress Report', 'Profile'},
+}
+
+
+def after_login(request):
+    user = request.user
+    role = 'Ad'
+    if user.registered_user.role:
+        role = user.registered_user.role
+    context = {
+        'whos_logged': role,
+    }
+    return render(request, 'users/../templates/after_login/main.html', context)
+
+
+def progress_report(request):
+    return None
+
+
+def calender(request):
+    return None
+
+
+def profile(request):
+   return render(request,'users/base.html')
+
