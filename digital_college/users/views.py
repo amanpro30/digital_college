@@ -79,7 +79,7 @@ def activate(request, uidb64, token):
         current_user.is_active = True
         current_user.save()
         print('rtr')
-        return redirect('/users/User_Home')
+        return redirect('/users/User_Home/')
     else:
         return HttpResponse('Activation link is invalid')
 
@@ -98,12 +98,12 @@ def User_Registration(request):
             password = forms['User_Creation_Form'].cleaned_data.get('password1')
             current_user = User(username=username, email=email)
             current_user.set_password(password)
-            current_user.is_active = False
+            # current_user.is_active = False
             current_user.save()
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
             current_user = Registered_User(user=current_user, email=email, First_Name=first_name, Last_Name=last_name,
                                            role=role, college_id=college_id,)
-            current_user.is_active =False
+            current_user.is_active = False
             current_user.save()
             socket.getaddrinfo('localhost', 8080)
             current_site = get_current_site(request)
