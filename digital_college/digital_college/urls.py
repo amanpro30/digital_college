@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.models import User
 
+
 urlpatterns = [
     path('', user_views.website_homepage, name='website_homepage'),
     path('users/', include('users.urls')),
@@ -32,7 +33,7 @@ urlpatterns = [
     path('club/', include('clubs.urls')),
     path('after_login/', include('after_login.urls')),
     path('classrooms/', include('classrooms.urls')),
-
+    path('announcements/',include('announcements.urls')),
 ]
 
 if settings.DEBUG:
