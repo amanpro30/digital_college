@@ -34,10 +34,37 @@
                         <p>{{ post.content }}</p>
                     </div>
                     <div class="card-action">
-                        <a href="#">Like</a>
-                        <a href="#">Comment</a>
+                        {% if post.images_set.all %}
+                            <a href="{% url 'clubs:dislike_post' post.id %}">Dislike</a>
+                        {% else %}
+                            <a href="{% url 'clubs:like_post' post.id %}">Like</a>
+                        {% endif %}
+                        <span>Liked by {{ post.like_set.all.count }}</span>
+                        <button class="btn-flat right" id="com_button{{ post.id }}"
+                                onclick="showcomments({{ post.id }})">Comments
+                        </button>
                     </div>
+
                 </div>
+            </div>
+            <div class="hide" id="comments{{ post.id }}" style="border-bottom:1.7px solid dimgray;">
+                <h6 class="left-align">Comments</h6>
+                <div style="padding:1%;">
+                    <form action="{% url 'clubs:comment' post.id %}" method="POST">
+                        {% csrf_token %}
+                        {{ commentform.comment }}
+                        <input type="submit" value="Post">
+                    </form>
+                </div>
+                {% for com in post.comment_set.all %}
+                    <div style="padding:1%;">
+                        <div class="valign-wrapper" style="margin:1%;"><img class="circle" src="{{ post.userId.image.url }}"
+                                  style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
+                            <span style="font-weight: bold;">{{ com.userId.user.username|title }}&nbsp;posted this:</span>
+                        </div>
+                        <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -47,6 +74,17 @@
             var elems = document.querySelectorAll('.dropdown-trigger');
             M.Dropdown.init(elems, {});
         });
+
+        function showcomments(a) {
+            if (document.getElementById('comments' + a).classList.contains('hide')) {
+                document.getElementById('comments' + a).classList.remove('hide');
+                document.getElementById('com_button' + a).innerHTML = "Hide Comments";
+            }
+            else {
+                document.getElementById('comments' + a).classList.add('hide');
+                document.getElementById('com_button' + a).innerHTML = "Comments";
+            }
+        }
 
     </script>
 {% endblock %}

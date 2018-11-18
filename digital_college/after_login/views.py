@@ -3,13 +3,17 @@ from django.shortcuts import render
 from users.models import Registered_User, Courses, CourseEnrollment, Registered_College
 
 whos_logged = {
-    'F': [('Classrooms', 'format_list_bulleted'), ('Progress Report', 'trending_up'), ('Calender', 'date_range'),
-          ('Profile', 'person')],
-    'S': [('Classrooms', 'format_list_bulleted'), ('Progress Report', 'trending_up'), ('Calender', 'date_range'),
-          ('Profile', 'person'), ('clubs', 'public')],
-    'Ad': [('Classrooms', 'format_list_bulleted'), ('courses', 'import_contacts'), ('faculty', 'record_voice_over'),
-           ('clubs', 'public'), ('Student', 'group'), ('Progress Report', 'trending_up'),
-           ('Profile', 'person')],
+    'F': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
+          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calender', 'date_range', 'after:calender'),
+          ('Profile', 'person', 'after:profile')],
+    'S': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
+          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calender', 'date_range', 'after:calender'),
+          ('Profile', 'person', 'after:profile'), ('Clubs', 'public', 'after:clubs')],
+    'Ad': [('Courses', 'import_contacts', 'after:after_login'),
+           ('faculty', 'record_voice_over', 'after:faculty'),
+           ('Clubs', 'public', 'after:clubs'), ('Student', 'group', 'after:students'),
+           ('Progress Report', 'trending_up', 'after:progress_report'),
+           ('Profile', 'person', 'after:profile')],
 }
 
 
@@ -65,4 +69,17 @@ def calender(request):
 
 
 def profile(request):
-    return None
+    return render(request, 'after_login/profile.html')
+
+
+def faculty(request):
+    return render(request, 'after_login/faculty.html')
+
+
+def clubs(request):
+    return render(request, 'after_login/clubs.html')
+
+
+def students(request):
+    return render(request, 'after_login/students.html')
+

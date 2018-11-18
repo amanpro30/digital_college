@@ -1,8 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
-from .forms import User_Registration_Form
-from .forms import College_Registration_Form
-from .models import Registered_User
+from .forms import User_Registration_Form,College_Registration_Form
+from .models import Registered_College,ClubEnrollment,CourseEnrollment
 from .models import Registered_College
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.mail import send_mail
@@ -15,18 +14,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 import socket
 from django.contrib.auth.models import User
-
-
-
-def User_Home(request):
-    classrooms = ['cs1', 'cs2', 'cs3']
-    clubs = ['cb1', 'cb2', 'cb3']
-    context = {
-        'classrooms': classrooms,
-        'clubs': clubs
-    }
-
-    return render(request, 'users/../templates/after_login/main.html', context)
 
 
 def College_Home(request):
