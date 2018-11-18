@@ -1,9 +1,11 @@
 from django.urls import path
 from . import views
+from after_login import views as login_view
 
 app_name = "clubs"
 
 urlpatterns = [
+    path('', login_view.clubs, name='cl_list'),
     path('', views.home, name='forum'),
     path('contacts/', views.contacts, name='contacts'),
     path('gallery/', views.gallery, name='gallery'),

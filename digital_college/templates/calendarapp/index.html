@@ -1,0 +1,22 @@
+{% extends 'after_login/main.html' %}
+{% block options %}
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-lg-4">
+                <h1>EVENTS</h1>
+            </div>
+            <div class="col-lg-8">
+                <button onclick="window.location='{% url 'after:calendarapp:add' %}'" type="button"
+                        class="btn btn-suceess">Add entry
+                </button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            {% for entry in entries %}
+                {% include 'calendarapp/_calendar_entry.html' %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'calendarapp',
     'quiz',
     'announcements',
-
+    'slides',
 ]
 
 MIDDLEWARE = [
@@ -142,6 +142,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/users/User_Home/'
+
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

@@ -1,0 +1,8 @@
+<div class="calendar_entry col-lg-4">
+    <br />
+    <h2>{{ entry.name }}</h2>
+    <h4>{{ entry.date|date:"d M y" }}</h4>
+    <p>{{ entry.description }}</p>
+    <a href="{% url 'after:calendarapp:details' entry.id %}" class="btn btn-primary"> View Details </a>
+    <a class="btn" href="{% url 'after:calendarapp:delete' entry.id %}">Delete</a>
+</div>

@@ -64,11 +64,9 @@ body {
 </div>
 
 <div class="content">
-  <h2>Take your assignment</h2>
-  <p>A full-height, fixed sidenav and content.</p>
     {% for file in assign_files %}
-        <a href="{%   url  'download' file.id %}">{{ file.title }}</a>
-        <a href="{% url 'delete' file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
+        <a href="{%   url  'download' class_name file.id %}">{{ file.title }}</a>
+        <a href="{% url 'delete' class_name file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
     {% endfor %}
     <form method="POST" enctype="multipart/form-data">
         <div class="row">
@@ -78,8 +76,6 @@ body {
         </div>
         <input type="submit">
     </form>
-
-
-</div>>
+</div>
 </body>
 </html>

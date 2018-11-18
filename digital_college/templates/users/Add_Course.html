@@ -1,0 +1,8 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<h2>Add Courses</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ forms.as_p }}
+    <button type="submit" value="Add_Courses">Add courses</button>
+</form>
