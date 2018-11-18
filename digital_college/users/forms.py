@@ -1,10 +1,12 @@
 from django.forms import ModelForm
-from .models import Registered_User,Registered_College
+from .models import Registered_User, Registered_College, Courses
 from django.contrib.auth.models import User
 from django import forms
 from django.shortcuts import HttpResponseRedirect,HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-from django.core import validators
+from django import forms
+from django.forms import ModelForm
+from .models import Registered_User,Registered_College
 
 
 class User_Registration_Form(ModelForm):
@@ -12,11 +14,11 @@ class User_Registration_Form(ModelForm):
         ('F', 'Faculty'),
         ('S', 'Student')
     )
-    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'container'}))
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
     college_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
     class Meta:
         model = Registered_User
-        fields = ['role', 'email', 'First_Name', 'Last_Name', 'role', 'college_id', ]
+        fields = ['role', 'email', 'First_Name', 'Last_Name', 'college_id', ]
 
 class College_Registration_Form(ModelForm):
     STATE_CHOICES=(
@@ -50,11 +52,7 @@ class College_Registration_Form(ModelForm):
         ('UP', 'Uttar Pradesh'),
         ('WB', 'West Bengal'),
     )
-    email = forms.CharField(widget=forms.EmailInput)
     State = forms.ChoiceField(choices=STATE_CHOICES)
-    botcatcher = forms.CharField(required=False,
-                                 widget=forms.HiddenInput,
-                                 validators=[validators.MaxLengthValidator(0)],)
     class Meta:
         model = Registered_College
         fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', ]
@@ -64,3 +62,17 @@ def Sign_Up_Form(UserCreationForm):
     class Meta:
         model = UserCreationForm
         fields = ['username', 'email', 'password1', 'password2']
+
+class Course_Forms(forms.ModelForm):
+    faculty_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
+    # faculty_id = forms.ModelChoiceField(queryset=Registered_User.objects.all())
+    class Meta:
+        model = Courses
+        fields = ['Course_Name','faculty_id']
+
+class ResetForm(forms.Form):
+    reset_email = forms.EmailField()
+
+class ResetDoneForm(forms.Form):
+    Password = forms.CharField(widget=forms.PasswordInput())
+    Confirm_Password = forms.CharField(widget=forms.PasswordInput())

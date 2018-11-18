@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 
@@ -79,10 +80,12 @@ WSGI_APPLICATION = 'digital_college.wsgi.application'
 DATABASES = {
 'default':
     {
-        'ENGINE':'django.db.backends.mysql',
-        'NAME':'test',
-        'USER':'root',
-        'PASSWORD':'ravish11',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test',
+        'USER': 'root',
+        'PASSWORD': 'ravish11',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 # DATABASES = {
@@ -137,6 +140,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/users/User_Home/'
+
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

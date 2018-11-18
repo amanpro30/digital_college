@@ -40,12 +40,12 @@ class Clubs(models.Model):
 
 
 class Courses(models.Model):
-    course_name = models.CharField(max_length=100)
-    faculty_id = models.ForeignKey(Registered_User,on_delete=models.CASCADE)
-    college_id = models.ForeignKey(Registered_College,on_delete=models.CASCADE)
+    Course_Name = models.CharField(max_length=100)
+    faculty_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
+    # College_ID = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.course_name
+        return self.Course_Name
 
 
 class ClubEnrollment(models.Model):
