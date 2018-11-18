@@ -1,0 +1,17 @@
+{% extends 'quiz/base_classrooms.html' %}
+    {% block content %}
+<div class="container">
+    <form method="POST" >
+            {% csrf_token %}
+    <div class="col s12 m7">
+        <div class="card horizontal" >
+            <div class="card-stacked" style="width:100%">
+                <p>Quiz Details</p>
+                {{form.as_p}}
+                <button type="submit">Add Question</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+    {% endblock content %}

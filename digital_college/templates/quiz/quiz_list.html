@@ -1,0 +1,11 @@
+{% extends 'quiz/base_classrooms.html' %}
+{% block content %}
+    <div style='text-align:center'>
+    <p>You have following quizzes listed for you</p>
+    {% for quiz in quizzes %}
+        <a href="{{ quiz }}">{{ quiz }}</a><br>
+        start time:{{ quiz.start_time }}<br>
+        end time: {{ quiz.end_time}}<br>
+    {% endfor %}
+    </div>
+{% endblock content %}

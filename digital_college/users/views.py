@@ -7,6 +7,7 @@ from .models import Registered_College,ClubEnrollment,CourseEnrollment
 from django.contrib.auth.forms import UserCreationForm
 
 def User_Home(request):
+
     html=''
     print(dir(request.user))
     all_courses=CourseEnrollment.objects.filter(student_id=request.user.registered_user)
@@ -53,16 +54,19 @@ def User_Registration(request):
         forms['User_Creation_Form'] = UserCreationForm(request.POST)
         forms['User_Registration_Form'] = User_Registration_Form(request.POST)
         if forms['User_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
-            current_user = forms['User_Creation_Form'].save(commit=False)
-            current_user.save()
+            first_name = forms['User_Registration_Form'].cleaned_data.get('first_name')
+            last_name = forms['User_Registration_Form'].cleaned_data.get('last_name')
             email = forms['User_Registration_Form'].cleaned_data.get('email')
             role = forms['User_Registration_Form'].cleaned_data.get('role')
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
+            generated_key = 123
             activation_key = forms['User_Registration_Form'].cleaned_data.get('activation_key')
-            current_user = Registered_User(user=current_user, email=email, role=role, college_id=college_id,
-                                           activation_key=activation_key)
+            current_user = forms['User_Creation_Form'].save(commit=False)
+            current_user.save()
+            current_user = Registered_User(user=current_user, fisrt_name=first_name, last_name=last_name, email=email, role=role, college_id=college_id,activation_key=activation_key)
             current_user.save()
             return redirect('User_Home')
+            # return redirect('User_Registration')
     else:
         forms['User_Creation_Form'] = UserCreationForm()
         forms['User_Registration_Form'] = User_Registration_Form()
@@ -96,7 +100,7 @@ def after_login(request):
     context = {
         'whos_logged': role,
     }
-    return render(request, 'users/main.html', context)
+    return render(request, 'users/../templates/after_login/main.html', context)
 
 
 def progress_report(request):

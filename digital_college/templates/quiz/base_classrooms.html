@@ -1,0 +1,64 @@
+{% extends 'Parent/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'classrooms/css/classroom2.css' %}">
+{% endblock %}
+{% block body %}
+{#    <div style="height:400px;width:100%;">#}
+{#        <img src="/media/club_images/club_default.jpg" style=" width:100%;object-fit:cover;overflow: hidden;">#}
+{#    </div>#}
+    {% block content %}
+    
+    {% endblock content %}
+    <div class="fixed-action-btn right">
+        <div class="li_float">
+            <a class="btn-floating btn-large red anchor">
+                <i class="large material-icons">menu</i>
+            </a>
+            <p class="message red lighter-2 right"
+               style="position:absolute; color: white;display:none;top:40px;border-radius: 5px;">Menu</p>
+        </div>
+        <ul>
+            <li class="li_float"><a class="btn-floating yellow darken-1 anchor" href="{% url 'clubs:forum' %}"><i
+                    class="material-icons">forum</i></a>
+                <p class="message yellow lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Forum</p>
+            </li>
+            <li class="li_float"><a class="btn-floating green anchor" href="{% url 'clubs:gallery' %}"><i
+                    class="material-icons">photo</i></a>
+                <p class="message green lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Assignments</p>
+            </li>
+            <li class="li_float"><a class="btn-floating blue anchor" href="quiz/quiz_home"><i
+                    class="material-icons">contacts</i></a>
+                <p class="message blue lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Quizzes</p>
+            </li>
+            <li class="li_float"><a class="btn-floating blue anchor" href="{% url 'clubs:contacts' %}"><i
+                    class="material-icons">contacts</i></a>
+                <p class="message blue lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Slides</p>
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        const slider = document.querySelector('.slider');
+        M.Slider.init(slider, {
+                indicators: false,
+                height: 500,
+                transition: 500,
+                interval: 2000,
+            }
+        );
+
+        const floatAction = document.querySelector('.fixed-action-btn');
+        M.FloatingActionButton.init(floatAction, {
+                hoverEnabled: true,
+                direction: 'top',
+            }
+        );
+    </script>
+
+{% endblock %}
