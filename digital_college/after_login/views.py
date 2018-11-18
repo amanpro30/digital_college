@@ -4,10 +4,10 @@ from users.models import Registered_User, Courses, CourseEnrollment, Registered_
 
 whos_logged = {
     'F': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calender', 'date_range', 'after:calender'),
+          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calendar', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile')],
     'S': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calender', 'date_range', 'after:calender'),
+          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calendar', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile'), ('Clubs', 'public', 'after:clubs')],
     'Ad': [('Courses', 'import_contacts', 'after:after_login'),
            ('faculty', 'record_voice_over', 'after:faculty'),

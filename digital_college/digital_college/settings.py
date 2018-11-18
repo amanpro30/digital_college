@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'calendarapp',
+    'calendarapp.apps.CalendarappConfig',
     'slides',
 ]
 
@@ -84,7 +84,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'test',
             'USER': 'root',
-            'PASSWORD': 'Atul@123',
+            'PASSWORD': '12345',
         }
 }
 # DATABASES = {
