@@ -45,3 +45,7 @@ def slides(request):
 
 def forum(request):
     pass
+
+
+def home(request):
+    return render(request, 'classroom2/cl_room.html')

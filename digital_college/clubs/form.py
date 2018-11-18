@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Post, Images
+from .models import Post, Images, Comment
 
 
 class PostForm(ModelForm):
@@ -36,3 +36,16 @@ class ImageForm(ModelForm):
         fields = [
              'image',
         ]
+
+
+class CommentForm(ModelForm):
+    comment = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'placeholder': 'Post a comment..',
+        }
+    ))
+
+    class Meta:
+        model = Comment
+        fields = ['comment', ]
+
