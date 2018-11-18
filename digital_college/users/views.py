@@ -32,7 +32,7 @@ def College_Registration(request):
         forms['College_Registration_Form'] = College_Registration_Form(request.POST)
         if forms['College_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
             current_user = forms['User_Creation_Form'].save(commit=False)
-            current_user.is_active = False
+            # current_user.is_active = False
             current_user.save()
             Name_Of_College = forms['College_Registration_Form'].cleaned_data.get('Name_Of_College')
             email = forms['College_Registration_Form'].cleaned_data.get('email')
@@ -103,7 +103,7 @@ def User_Registration(request):
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
             current_user = Registered_User(user=current_user, email=email, First_Name=first_name, Last_Name=last_name,
                                            role=role, college_id=college_id,)
-            current_user.is_active = False
+            # current_user.is_active = False
             current_user.save()
             socket.getaddrinfo('localhost', 8080)
             current_site = get_current_site(request)

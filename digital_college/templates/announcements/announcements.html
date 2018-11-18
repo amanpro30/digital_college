@@ -1,5 +1,16 @@
-<form method="POST">
-    {% csrf_token %}
-    {{form}}
-    <button type="submit">Make Announcments</button>
+{% extends 'after_login/main.html' %}
+{% block content %}
+{% ifequal user.registered_user.role ='F' or user.registered_user.role ='S' %}
+    {% for announce in announcments %}
+        {{ announce.message }}
+        {{ announce.date }}
+    {% endfor %}
+{% endifequal %}
+{% ifequal user.registered_college %}
+<form method="POST"></form>
+{% csrf_token %}
+{{form}}
+<button type="submit">Make Announcments</button>
 </form>
+{% endifequal %}
+{% endcontent block%}
