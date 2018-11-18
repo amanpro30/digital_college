@@ -51,6 +51,7 @@ def after_login(request):
 
 
 def progress_report(request):
+
     return None
 
 

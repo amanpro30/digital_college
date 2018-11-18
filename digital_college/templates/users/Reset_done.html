@@ -1,0 +1,11 @@
+{% extends 'users/base_login_signup.html' %}
+
+{% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<h2>Reset Password</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ forms.as_p }}
+    <button type="submit" value="Sign Up">reset</button>
+</form>
+{% endblock content %}

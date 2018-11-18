@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import assign
 from django.http import HttpResponse
@@ -9,10 +6,12 @@ from django.conf import settings
 from django.http import HttpResponse, Http404
 from .forms import add_assign
 from django.contrib import messages
+
+
 from django.core.files.storage import FileSystemStorage
 
-def download(request, id=None):
-     print(id)
+def download(request,class_name,id=None):
+
      instance = get_object_or_404(assign, id=id)
      file_path = str(instance.file)
 
@@ -23,7 +22,8 @@ def download(request, id=None):
              return response
      raise Http404
 
-def addAssign(request):
+
+def addAssign(request,class_name):
     assign_files = assign.objects.all()
     form = add_assign(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -35,10 +35,12 @@ def addAssign(request):
     form_add = {
         "form" : form,
         "assign_files": assign_files,
+        "class_name":class_name,
     }
-    return render(request,'faculty/faculty.html',form_add)
+    return render(request,'slides/slides.html',form_add)
 
-def delAssign(request,file_id):
+def delAssign(request,class_name,file_id):
     assign_files = assign.objects.get(pk=file_id).delete()
-    return redirect ('/faculty/addAssign/')
+    return redirect ('/classrooms/{k}/slides/addSlides/'.format(k=class_name))
+
 

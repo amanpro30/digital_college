@@ -5,7 +5,7 @@ from django.db.models import CharField
 
 
 class Registered_College(models.Model):
-    user     = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     Name_Of_College = models.CharField(max_length=100)
     email = models.EmailField()
     College_Registration_Number = models.IntegerField()
@@ -45,7 +45,6 @@ class Courses(models.Model):
     course_name = models.CharField(max_length=100)
     faculty_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.course_name
 
