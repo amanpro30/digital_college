@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from .forms import quiz_detail_form
-from .models import quiz as qz,singlechoice,multiplechoice,matching,truefalse,answers
+
 from datetime import datetime
 from django.contrib.auth.models import User
 import pytz

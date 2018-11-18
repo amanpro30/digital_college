@@ -1,0 +1,26 @@
+{% extends 'quiz/base_classrooms.html' %}
+{% block content %}
+    {% ifequal user.registered_user.role 'F' %}
+    <div class="container">
+        {% for file in assign_files %}
+            <a href="{%   url  'download' class_name file.id %}">{{ file.title }}</a>
+            <a href="{% url 'delete' class_name file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
+        {% endfor %}
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            {% csrf_token %}
+            {{ form.file }}
+            {{ form.title }}
+        </div>
+        <input type="submit">
+    </form>
+    </div>
+    {% endifequal %}
+    {% ifequal user.registered_user.role 'S' %}
+        <div class="container">
+            {% for file in assign_files %}
+                <a href="{%   url  'download' class_name file.id %}">{{ file.title }}</a><br>
+            {% endfor %}
+        </div>
+    {% endifequal %}
+{% endblock content %}

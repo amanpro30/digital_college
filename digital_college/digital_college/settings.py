@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'calendarapp',
     'quiz',
     'announcements',
-
+    'slides',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +86,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'test',
             'USER': 'root',
-            'PASSWORD': 'Atul@123',
+            'PASSWORD': 'Dheer@1507',
         }
 }
 # DATABASES = {
