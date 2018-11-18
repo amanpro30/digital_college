@@ -1,3 +1,4 @@
+
 {% extends 'Parent/base.html' %}
 
 {% block body %}
@@ -50,6 +51,16 @@
     </div>
 {% endblock %}
     
+
+{% csrf_token%}
+<h1>hello {{username}}</h1>
+hello {{user.username}}
+{% for class in classrooms %}
+    <a href="#">{{class}}</a>
+{% endfor %}
+{% for club in clubs %}
+    <a href="#">{{club}}</a>
+{% endfor %}
 
 {% ifequal user.registered_user.role 'S' %}
     <p>hello student</p>

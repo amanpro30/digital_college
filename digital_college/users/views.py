@@ -1,22 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
-from .forms import User_Registration_Form
-from .forms import College_Registration_Form
-from .models import Registered_User
+from .forms import User_Registration_Form,College_Registration_Form
 from .models import Registered_College,ClubEnrollment,CourseEnrollment
-from django.contrib.auth.forms import UserCreationForm
-
-def User_Home(request):
-
-    html=''
-    print(dir(request.user))
-    all_courses=CourseEnrollment.objects.filter(student_id=request.user.registered_user)
-    all_clubs=ClubEnrollment.objects.filter(student_id=request.user.registered_user)
-    # for course in all_courses:
-        # print(dir(course))
-        # url='/classrooms'+str(course.courses.course_name)+'/'
-        # html += '<a href="'+url+'">'+course.courses.course_name+'</a><br>'
-    return render(request, 'users/main.html')
+from .models import Registered_College
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string, get_template
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from .token import account_activation_token
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+import socket
+from django.contrib.auth.models import User
 
 
 def College_Home(request):
@@ -38,15 +35,46 @@ def College_Registration(request):
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
             current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
-                                              College_Registration_Number=College_Registration_Number, City=City,
-                                              State=State)
+                                              College_Registration_Number=College_Registration_Number, City=City, State=State)
+
+            current_user.is_active = False
             current_user.save()
-            return redirect('College_Home')
+            socket.getaddrinfo('localhost', 8080)
+            current_site = get_current_site(request)
+            mail_subject = 'digital college account'
+            message = render_to_string('users/activate_email.html',{
+                'current_user': current_user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(current_user.pk)).decode(),
+                'token': account_activation_token.make_token(current_user),
+            })
+            to_email = forms['College_Registration_Form'].cleaned_data.get('email')
+            email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
+            # return redirect('College_Home')
     else:
         forms['User_Creation_Form'] = UserCreationForm()
         forms['College_Registration_Form'] = College_Registration_Form()
     return render(request, 'users/College_Registration.html', {'forms': forms})
 
+def activate(request, uidb64, token):
+    try:
+        uid =urlsafe_base64_decode(uidb64).decode()
+        current_user = User.objects.get(pk=uid)
+        print("ravish")
+    except(TypeError, ValueError, OverflowError):
+        current_user = None
+    if current_user is not None and account_activation_token.check_token(current_user, token):
+        current_user.is_active = True
+        current_user.save()
+        return redirect('/users/User_Home')
+
+
+    else:
+        return HttpResponse('Activation link is invalid')
 
 def User_Registration(request):
     forms = {}
@@ -54,18 +82,17 @@ def User_Registration(request):
         forms['User_Creation_Form'] = UserCreationForm(request.POST)
         forms['User_Registration_Form'] = User_Registration_Form(request.POST)
         if forms['User_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
-            first_name = forms['User_Registration_Form'].cleaned_data.get('first_name')
-            last_name = forms['User_Registration_Form'].cleaned_data.get('last_name')
+            current_user = forms['User_Creation_Form'].save(commit=False)
+            current_user.save()
+            first_name = forms['User_Registration_Form'].cleaned_data.get('First_Name')
+            last_name = forms['User_Registration_Form'].cleaned_data.get('Last_Name')
             email = forms['User_Registration_Form'].cleaned_data.get('email')
             role = forms['User_Registration_Form'].cleaned_data.get('role')
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
-            generated_key = 123
-            activation_key = forms['User_Registration_Form'].cleaned_data.get('activation_key')
-            current_user = forms['User_Creation_Form'].save(commit=False)
+            current_user = Registered_User(user=current_user, email=email, First_Name=first_name, Last_Name=last_name,
+                                           role=role, college_id=college_id,)
             current_user.save()
-            current_user = Registered_User(user=current_user, fisrt_name=first_name, last_name=last_name, email=email, role=role, college_id=college_id,activation_key=activation_key)
-            current_user.save()
-            return redirect('User_Home')
+            return redirect('/users/User_Home/')
             # return redirect('User_Registration')
     else:
         forms['User_Creation_Form'] = UserCreationForm()
@@ -112,4 +139,5 @@ def calender(request):
 
 
 def profile(request):
-    return None
+   return render(request,'users/base.html')
+

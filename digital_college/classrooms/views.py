@@ -1,4 +1,15 @@
 from django.shortcuts import render
+from .forms import quiz_detail_form
+from .models import quiz as qz,singlechoice,multiplechoice,matching,truefalse,answers
+from datetime import datetime
+from django.contrib.auth.models import User
+import pytz
+
+# Create your views here.
+
+
+
+
 def assignment(request):
     pass
 
@@ -11,3 +22,4 @@ def forum(request):
 
 def class_home(request,class_name):
     return render(request,'quiz/base_classrooms.html',{'class_name':class_name},{'class_name':class_name})
+

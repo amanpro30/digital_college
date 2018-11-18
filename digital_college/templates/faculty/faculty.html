@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Faculty page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <style>
+
+{
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the side navigation */
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color:#b1040e ;
+    overflow-x: hidden;
+}
+
+
+/* Side navigation links */
+.sidenav a {
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color on hover */
+.sidenav a:hover {
+    background-color: white;
+    color: black;
+}
+
+/* Style the content */
+.content {
+    margin-left: 200px;
+    padding-left: 20px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidenav">
+  <a href="#">Link</a>
+  <a href="#">Link</a>
+  <a href="#">Link</a>
+</div>
+
+<div class="content">
+  <h2>Take your assignment</h2>
+  <p>A full-height, fixed sidenav and content.</p>
+    {% for file in assign_files %}
+        <a href="{%   url  'download' file.id %}">{{ file.title }}</a>
+        <a href="{% url 'delete' file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
+    {% endfor %}
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            {% csrf_token %}
+            {{ form.file }}
+            {{ form.title }}
+        </div>
+        <input type="submit">
+    </form>
+
+
+</div>>
+</body>
+</html>

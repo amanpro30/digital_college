@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'calendarapp',
     'quiz',
     'announcements',
+
 ]
 
 MIDDLEWARE = [
@@ -80,11 +81,21 @@ WSGI_APPLICATION = 'digital_college.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default':
+        {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'test',
+            'USER': 'root',
+            'PASSWORD': 'Atul@123',
+        }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 
 
 # Password validation
@@ -130,4 +141,12 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = 'User_Home'
+LOGIN_REDIRECT_URL = '/users/User_Home/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'digital.classroom247@gmail.com'
+EMAIL_HOST_PASSWORD = 'projectdjango@17'
+EMAIL_PORT = '587'
+
+EMAIL_USE_SSL = False
