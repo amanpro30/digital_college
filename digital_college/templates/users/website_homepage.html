@@ -110,7 +110,9 @@
       </div>
       <ul>
         <li><a href="{% url 'website_homepage' %}">Home</a></li>
-        <li><a href="{% url 'website_register' %}">Register</a></li>
+        <!--<li><a href="{% url 'website_register' %}">Register</a></li>-->
+        <li><a href="{% url 'users:User_Registration' %}">User Register</a></li>
+        <li><a href="{% url 'users:College_Registration' %}">Admin Register</a></li>
         <li><a class="active" href="{% url 'website_login' %}">Log In</a></li>
       </ul>
     </nav>  

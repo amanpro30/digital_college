@@ -11,15 +11,17 @@ class Registered_College(models.Model):
     College_Registration_Number = models.IntegerField()
     City = models.CharField(max_length=25)
     State = models.CharField(max_length=25)
+
     def __str__(self):
         return self.Name_Of_College
+
 
 class Registered_User(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     First_Name = models.CharField(max_length=100)
     Last_Name = models.CharField(max_length=100)
     email_validated = models.BooleanField(default=False)
-    email = models.EmailField(max_length=50,unique=True)
+    email = models.EmailField(max_length=100, unique=True)
     ROLE_CHOICES = [
         ('F', 'faculty'),
         ('S', 'student'),

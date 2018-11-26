@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from users import views as user_views
 from users.models import Registered_User, Courses, CourseEnrollment, Registered_College, Clubs, ClubEnrollment
 
 whos_logged = {
@@ -19,6 +19,7 @@ whos_logged = {
 
 def after_login(request):
     user = request.user
+
     role = ''
     try:
         if user.registered_user.role:
