@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Registered_User,Registered_College
+from .models import Registered_User, Registered_College
 
 
 class User_Registration_Form(ModelForm):

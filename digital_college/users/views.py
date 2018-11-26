@@ -1,3 +1,5 @@
+from django.contrib.auth import login
+
 from .forms import Course_Forms
 from .forms import ResetForm
 from .forms import ResetDoneForm
@@ -70,11 +72,13 @@ def activate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         current_user = User.objects.get(pk=uid)
+        print(current_user)
     except(TypeError, ValueError, OverflowError):
         current_user = None
     if current_user is not None and account_activation_token.check_token(current_user, token):
         current_user.is_active = True
         current_user.save()
+        login(request, current_user)
         return redirect('/users/User_Home')
 
     else:
@@ -128,7 +132,7 @@ def add_courses(request):
             course_name = forms.cleaned_data.get('course_name')
             faculty_id = forms.cleaned_data.get('faculty_id')
             college_id = forms.cleaned_data.get('college_id')
-            course = Courses(course_name=course_name, faculty_id=faculty_id,college_id=college_id)
+            course = Courses(course_name=course_name, faculty_id=faculty_id, college_id=college_id)
             course.save()
             return HttpResponse('Course Added')
             # return redirect('/users/User_Home/')
@@ -203,7 +207,8 @@ def reset(request, uidb64, token):
                 else:
                     return HttpResponse('Invalid reset link')
             else:
-                return HttpResponse('Password does not match')
+                raise Exception('password does not match')
+                # return HttpResponse('Password does not match')
         else:
             return render(request, 'users/Reset_done.html', {'forms': forms})
     else:
