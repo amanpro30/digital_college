@@ -35,7 +35,7 @@ def take_quiz(request,class_name,quiz_name):
                 respo_instance=respo(selected_option=selected_option,question_id=question_instance,quiz_id=quiz_instance)
                 respo_instance.save()
                 i=i+1
-            return redirect('quiz_result',quiz_name=quiz_instance.name_of_quiz,class_name=course_instance)
+            return redirect('after:classroom:quiz:quiz_result',quiz_name=quiz_instance.name_of_quiz,class_name=course_instance)
     else:    
         response_sets=response_FormSet()
     def is_started(quiz):
@@ -105,7 +105,7 @@ def quiz_home(request,class_name):
                                         name_of_quiz=name_of_exam, start_time=start_time, end_time=end_time,
                                         instructions=instructions)
                 quiz_info_instance.save()
-                return redirect(create_quiz, class_name=course_instance.course_name)
+                return redirect('after:classroom:quiz:create_quiz', class_name=course_instance.course_name)
         else:
             form1 = quiz_detail_form()
         return render(request, 'quiz/quiz_info.html', {'form': form1})

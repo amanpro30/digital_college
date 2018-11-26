@@ -80,3 +80,7 @@ def delete(request, entry_id):
         'entries': entries
     }
     return render(request, 'calendarapp/index.html', context)
+
+def edit(request, entry_id):
+    pass
+
