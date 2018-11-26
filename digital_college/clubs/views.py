@@ -1,15 +1,17 @@
 from django.shortcuts import render
 from clubs.models import Post, Images, Like, Comment
 from .form import PostForm, ImageForm, CommentForm
-from users.models import Registered_User
+from users.models import Registered_User, Clubs
 
 
-def home(request):
-    posts = Post.objects.all().order_by('-date')
+def home(request, club_name):
+    club_id = Clubs.objects.get(club_name=club_name)
+    posts = Post.objects.filter(clubId=club_id).order_by('-date')
     imageform = ImageForm()
     postform = PostForm()
     commentform = CommentForm()
     context = {
+        'club_name': club_name,
         'imageform': imageform,
         'postform': postform,
         'posts': posts,
@@ -18,15 +20,15 @@ def home(request):
     return render(request, 'clubs/club_forum.html', context)
 
 
-def contacts(request):
+def contacts(request, club_name):
     pass
 
 
-def gallery(request):
+def gallery(request, club_name):
     pass
 
 
-def post(request):
+def post(request, club_name):
     if request.method == 'POST':
         postform = PostForm(request.POST)
         imageform = ImageForm(request.POST, request.FILES)
@@ -34,7 +36,8 @@ def post(request):
             subject = postform.cleaned_data['subject']
             content = postform.cleaned_data['content']
             user = Registered_User.objects.get(user=request.user)
-            a = Post(userId=user, subject=subject, content=content, )
+            club_id = Clubs.objects.get(club_name=club_name)
+            a = Post(userId=user, subject=subject, content=content, collegeId=user.college_id, clubId=club_id)
             a.save()
             b = Images(image=request.FILES['image'], postId=a)
             b.save()
@@ -42,8 +45,10 @@ def post(request):
         imageform = ImageForm()
         postform = PostForm()
     commentform = CommentForm()
-    posts = Post.objects.all().order_by('-date')
+    club_id = Clubs.objects.get(club_name=club_name)
+    posts = Post.objects.filter(clubId=club_id).order_by('-date')
     context = {
+        'club_name': club_name,
         'user': request.user,
         'imageform': imageform,
         'postform': postform,
@@ -53,17 +58,19 @@ def post(request):
     return render(request, 'clubs/club_forum.html', context)
 
 
-def progress_report(request):
+def progress_report(request, club_name):
     return None
 
 
-def delete(request, post_id):
+def delete(request, club_name, post_id):
     Post.objects.get(id=post_id).delete()
-    posts = Post.objects.all().order_by('-date')
+    club_id = Clubs.objects.get(club_name=club_name)
+    posts = Post.objects.filter(clubId=club_id).order_by('-date')
     imageform = ImageForm()
     postform = PostForm()
     commentform = CommentForm()
     context = {
+        'club_name': club_name,
         'imageform': imageform,
         'postform': postform,
         'posts': posts,
@@ -72,12 +79,14 @@ def delete(request, post_id):
     return render(request, 'clubs/club_forum.html', context)
 
 
-def like_post(request, post_id):
-    posts = Post.objects.all().order_by('-date')
+def like_post(request, club_name, post_id):
+    club_id = Clubs.objects.get(club_name=club_name)
+    posts = Post.objects.filter(clubId=club_id).order_by('-date')
     imageform = ImageForm()
     postform = PostForm()
     commentform = CommentForm()
     context = {
+        'club_name': club_name,
         'imageform': imageform,
         'postform': postform,
         'posts': posts,
@@ -88,21 +97,24 @@ def like_post(request, post_id):
     return render(request, 'clubs/club_forum.html', context)
 
 
-def update(request):
+def update(request, club_name):
     return None
 
 
-def after_login(request):
+def after_login(request, club_name):
     return None
 
 
-def dislike_post(request, post_id):
-    Like.objects.filter(postId=Post.objects.get(pk=post_id), userId=Registered_User.objects.get(user=request.user)).delete()
-    posts = Post.objects.all().order_by('-date')
+def dislike_post(request, club_name, post_id):
+    Like.objects.filter(postId=Post.objects.get(pk=post_id),
+                        userId=Registered_User.objects.get(user=request.user)).delete()
+    club_id = Clubs.objects.get(club_name=club_name)
+    posts = Post.objects.filter(clubId=club_id).order_by('-date')
     imageform = ImageForm()
     postform = PostForm()
     commentform = CommentForm()
     context = {
+        'club_name': club_name,
         'imageform': imageform,
         'postform': postform,
         'posts': posts,
@@ -111,7 +123,7 @@ def dislike_post(request, post_id):
     return render(request, 'clubs/club_forum.html', context)
 
 
-def comment(request,post_id):
+def comment(request, club_name, post_id):
     if request.method == 'POST':
         commentform = CommentForm(request.POST)
         if commentform.is_valid():
@@ -124,8 +136,10 @@ def comment(request,post_id):
         commentform = CommentForm()
     imageform = ImageForm()
     postform = PostForm()
-    posts = Post.objects.all().order_by('-date')
+    club_id = Clubs.objects.get(club_name=club_name)
+    posts = Post.objects.filter(clubId=club_id).order_by('-date')
     context = {
+        'club_name': club_name,
         'user': request.user,
         'imageform': imageform,
         'postform': postform,

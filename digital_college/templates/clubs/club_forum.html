@@ -15,15 +15,16 @@
                         class="material-icons">more_vert</i></a>
                 <ul id='dropdown{{ post.id }}' class='dropdown-content'>
                     {% if post.userId.user == user %}
-                        <li><a href="{% url 'clubs:delete' post.id %}">Delete</a></li>
-                        <li><a href="{% url 'clubs:update' %}">Update</a></li>
+                        <li><a href="{% url 'clubs:delete' club_name post.id %}">Delete</a></li>
+                        <li><a href="{% url 'clubs:update' club_name %}">Update</a></li>
                     {% endif %}
                     <li><a href="#report">Report</a></li>
                 </ul>
             </div>
             <div class="card horizontal">
                 <div class="card-image hide-on-med-and-down responsive-img" style="width:30%;">
-                    <img src="{{ post.images_set.all.0.image.url }}" style="width:100%;object-fit: contain;">
+                    <img class="materialboxed" src="{{ post.images_set.all.0.image.url }}"
+                         style="width:100%;object-fit: contain;">
                 </div>
                 <div class="card-stacked">
 
@@ -35,9 +36,9 @@
                     </div>
                     <div class="card-action">
                         {% if post.images_set.all %}
-                            <a href="{% url 'clubs:dislike_post' post.id %}">Dislike</a>
+                            <a href="{% url 'clubs:dislike_post' club_name post.id %}">Dislike</a>
                         {% else %}
-                            <a href="{% url 'clubs:like_post' post.id %}">Like</a>
+                            <a href="{% url 'clubs:like_post' club_name post.id %}">Like</a>
                         {% endif %}
                         <span>Liked by {{ post.like_set.all.count }}</span>
                         <button class="btn-flat right" id="com_button{{ post.id }}"
@@ -50,7 +51,7 @@
             <div class="hide" id="comments{{ post.id }}" style="border-bottom:1.7px solid dimgray;">
                 <h6 class="left-align">Comments</h6>
                 <div style="padding:1%;">
-                    <form action="{% url 'clubs:comment' post.id %}" method="POST">
+                    <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
                         {% csrf_token %}
                         {{ commentform.comment }}
                         <input type="submit" value="Post">
@@ -58,8 +59,9 @@
                 </div>
                 {% for com in post.comment_set.all %}
                     <div style="padding:1%;">
-                        <div class="valign-wrapper" style="margin:1%;"><img class="circle" src="{{ post.userId.image.url }}"
-                                  style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
+                        <div class="valign-wrapper" style="margin:1%;"><img class="circle"
+                                                                            src="{{ post.userId.image.url }}"
+                                                                            style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
                             <span style="font-weight: bold;">{{ com.userId.user.username|title }}&nbsp;posted this:</span>
                         </div>
                         <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
@@ -74,6 +76,12 @@
             var elems = document.querySelectorAll('.dropdown-trigger');
             M.Dropdown.init(elems, {});
         });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const elems = document.querySelectorAll('.materialboxed');
+            M.Materialbox.init(elems, {});
+        });
+
 
         function showcomments(a) {
             if (document.getElementById('comments' + a).classList.contains('hide')) {

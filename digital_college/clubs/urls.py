@@ -6,13 +6,13 @@ app_name = "clubs"
 
 urlpatterns = [
     path('', login_view.clubs, name='cl_list'),
-    path('cl/', views.home, name='forum'),
-    path('cl/contacts/', views.contacts, name='contacts'),
-    path('cl/gallery/', views.gallery, name='gallery'),
-    path('cl/post/', views.post, name='post'),
-    path('cl/delete/<int:post_id>/', views.delete, name='delete'),
-    path('cl/update/', views.update, name='update'),
-    path('cl/like/<int:post_id>/', views.like_post, name='like_post'),
-    path('cl/dislike/<int:post_id>/', views.dislike_post, name='dislike_post'),
-    path('cl/comment/<int:post_id>/', views.comment, name="comment")
+    path('<str:club_name>/', views.home, name='forum'),
+    path('<str:club_name>/contacts/', views.contacts, name='contacts'),
+    path('<str:club_name>/gallery/', views.gallery, name='gallery'),
+    path('<str:club_name>/post/', views.post, name='post'),
+    path('<str:club_name>/delete/<int:post_id>/', views.delete, name='delete'),
+    path('<str:club_name>/update/', views.update, name='update'),
+    path('<str:club_name>/like/<int:post_id>/', views.like_post, name='like_post'),
+    path('<str:club_name>/dislike/<int:post_id>/', views.dislike_post, name='dislike_post'),
+    path('<str:club_name>/comment/<int:post_id>/', views.comment, name="comment")
 ]

@@ -48,7 +48,7 @@ def take_quiz(request,class_name,quiz_name):
         return quiz.end_time < present
     started=is_started(quiz_instance)
     finished=is_finished(quiz_instance)
-    return render(request,'quiz/take_quiz.html',{'question':questions,'respo':response_sets,'is_started':started,'is_finished':finished})
+    return render(request,'quiz/take_quiz.html',{'question':questions,'respo':response_sets,'is_started':started,'is_finished':finished, 'class_name': class_name})
 
 
 def create_quiz(request,class_name):
@@ -76,14 +76,14 @@ def create_quiz(request,class_name):
                     single_instance=singlechoice(college_id=college_instance,quiz_id=quiz_instance,class_id=course_instance,question=question,option1=option1,option2=option2,option3=option3,option4=option4,answer=answer,marks=marks)
                     single_instance.save()
         course_instance = Courses.objects.get(course_name=class_name)
-        return redirect('class_home',class_name=course_instance.course_name)
+        return redirect('after:classroom:class_home',class_name=course_instance.course_name)
     else:
         single_correct_sets= single_correct_FormSet()
         multi_correct_sets=multi_correct_FormSet()
         truefalse_sets=truefalse_FormSet()
         matching_sets=matching_FormSet()
-        return render(request,'quiz/quiz.html',{'single_choice_form':single_correct_sets,
-    'multiple_choice_form':multi_correct_sets,'truefalse_form':truefalse_sets,'matching_form':matching_sets})
+        return render(request,'quiz/quiz.html',{'single_choice_form':single_correct_sets,'class_name': class_name,
+    'multiple_choice_form':multi_correct_sets,'truefalse_form':truefalse_sets,'matching_form':matching_sets,})
 
 
 
@@ -108,14 +108,14 @@ def quiz_home(request,class_name):
                 return redirect('after:classroom:quiz:create_quiz', class_name=course_instance.course_name)
         else:
             form1 = quiz_detail_form()
-        return render(request, 'quiz/quiz_info.html', {'form': form1})
+        return render(request, 'quiz/quiz_info.html', {'form': form1, 'class_name': class_name})
     elif user_instance.registered_user.role=='S':
         college_name=request.user.registered_user.college_id
         college_instance=Registered_College.objects.get(Name_Of_College=college_name)
         course_instance=Courses.objects.get(course_name=class_name)
         quizzes = qz.objects.filter(class_id=course_instance,college_id=college_instance)
         print(quizzes)
-        return render(request,'quiz/quiz_list.html',{'quizzes':quizzes})
+        return render(request,'quiz/quiz_list.html',{'quizzes':quizzes, 'class_name': class_name})
 
 def quiz_result(request,quiz_name,class_name):
     quiz_instance = qz.objects.get(name_of_quiz=quiz_name)
@@ -131,7 +131,7 @@ def quiz_result(request,quiz_name,class_name):
         total_marks=total_marks+res.question_id.marks
     result_instance=result(quiz_id=quiz_instance,student_id=student_instance,marks_obtained=marks,total_marks=total_marks)
     result_instance.save()
-    return render(request,'quiz/quiz_result.html',{'marks':marks,'total_marks':total_marks})
+    return render(request,'quiz/quiz_result.html',{'marks':marks,'total_marks':total_marks, 'class_name': class_name})
 
 
 
