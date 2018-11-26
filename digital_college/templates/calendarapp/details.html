@@ -1,10 +1,12 @@
 {% extends 'after_login/main.html' %}
 {% block options %}
-    <div class="container jumbotron">
-        <h1>{{ entry.name }}</h1>
-        <hr>
-        <h5>{{ entry.date }}</h5>
-        <p>{{ entry.description|truncatechars:50 }}</p>
-        <button onclick="window.location'{% url 'after:calendar:index' %}'" class="btn -btn-default">Back</button>
+    <div class="container">
+        <div class="container jumbotron">
+            <h1>{{ entry.name }}</h1>
+            <hr>
+            <h5>{{ entry.date }}</h5>
+            <p>{{ entry.description|truncatechars:50 }}</p>
+            <button onclick="window.location'{% url 'after:calendar:index' %}'" class="btn -btn-default">Back</button>
+        </div>
     </div>
 {% endblock %}

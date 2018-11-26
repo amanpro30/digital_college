@@ -28,7 +28,7 @@ class Registered_User(models.Model):
     ]
     role = models.CharField(max_length=1, choices=ROLE_CHOICES)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE, default=0)
-    mobile_no = models.CharField(max_length=10)
+    # mobile_no = models.CharField(max_length=10)
 
     def __str__(self):
         return self.user.username
