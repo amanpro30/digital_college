@@ -6,7 +6,8 @@ app_name = "clubs"
 
 urlpatterns = [
     path('', login_view.clubs, name='cl_list'),
-    path('<str:club_name>/', views.home, name='forum'),
+    path('<str:club_name>/', views.post, name='forum'),
+    path('<str:club_name>/postmob', views.post_mob, name='post_mob'),
     path('<str:club_name>/contacts/', views.contacts, name='contacts'),
     path('<str:club_name>/gallery/', views.gallery, name='gallery'),
     path('<str:club_name>/post/', views.post, name='post'),

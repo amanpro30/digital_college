@@ -4,22 +4,6 @@ from .form import PostForm, ImageForm, CommentForm
 from users.models import Registered_User, Clubs
 
 
-def home(request, club_name):
-    club_id = Clubs.objects.get(club_name=club_name)
-    posts = Post.objects.filter(clubId=club_id).order_by('-date')
-    imageform = ImageForm()
-    postform = PostForm()
-    commentform = CommentForm()
-    context = {
-        'club_name': club_name,
-        'imageform': imageform,
-        'postform': postform,
-        'posts': posts,
-        'commentform': commentform,
-    }
-    return render(request, 'clubs/club_forum.html', context)
-
-
 def contacts(request, club_name):
     pass
 
@@ -56,6 +40,18 @@ def post(request, club_name):
         'commentform': commentform,
     }
     return render(request, 'clubs/club_forum.html', context)
+
+
+def post_mob(request, club_name):
+    imageform = ImageForm()
+    postform = PostForm()
+    context = {
+        'club_name': club_name,
+        'user': request.user,
+        'imageform': imageform,
+        'postform': postform,
+    }
+    return render(request, 'clubs/club_post_mob.html', context)
 
 
 def progress_report(request, club_name):

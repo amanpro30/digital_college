@@ -5,72 +5,81 @@
     <div class="center-align teal lighten-5" style="margin-bottom:40px;">
         <h1>Forum</h1>
     </div>
-    {% for post in posts %}
-        <div class="col s12 m7" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
-            <div style="margin:10px;">
-                <img class="circle left-align" src="/media/club_images/image1.jpg"
-                     style="height:40px;width:40px;">
-                <span style="font-weight: bold;">{{ post.userId.user.username|title }}</span>&nbsp;<span>posted this</span>
-                <a class='dropdown-trigger right' data-target='dropdown{{ post.id }}'><i
-                        class="material-icons">more_vert</i></a>
-                <ul id='dropdown{{ post.id }}' class='dropdown-content'>
-                    {% if post.userId.user == user %}
-                        <li><a href="{% url 'clubs:delete' club_name post.id %}">Delete</a></li>
-                        <li><a href="{% url 'clubs:update' club_name %}">Update</a></li>
-                    {% endif %}
-                    <li><a href="#report">Report</a></li>
-                </ul>
-            </div>
-            <div class="card horizontal">
-                <div class="card-image hide-on-med-and-down responsive-img" style="width:30%;">
-                    <img class="materialboxed" src="{{ post.images_set.all.0.image.url }}"
-                         style="width:100%;object-fit: contain;">
-                </div>
-                <div class="card-stacked">
-
-                    <div class="card-content container">
-                        <img class="responsive-img hide-on-large-only" src="{{ post.images_set.all.0.image.url }}"
-                             style="width:100%;object-fit:fill !important;">
-                        <h2 class="header">{{ post.subject }}</h2>
-                        <p>{{ post.content }}</p>
-                    </div>
-                    <div class="card-action">
-                        {% if post.images_set.all %}
-                            <a href="{% url 'clubs:dislike_post' club_name post.id %}">Dislike</a>
-                        {% else %}
-                            <a href="{% url 'clubs:like_post' club_name post.id %}">Like</a>
+    {% if posts %}
+        {% for post in posts %}
+            <div class="col s12 m7" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
+                <div style="margin:10px;">
+                    <img class="circle left-align" src="/media/club_images/image1.jpg"
+                         style="height:40px;width:40px;">
+                    <span style="font-weight: bold;">{{ post.userId.user.registered_user.First_Name|title }}</span>&nbsp;<span>posted this</span>
+                    <a class='dropdown-trigger right' data-target='dropdown{{ post.id }}'><i
+                            class="material-icons">more_vert</i></a>
+                    <ul id='dropdown{{ post.id }}' class='dropdown-content'>
+                        {% if post.userId.user == user %}
+                            <li><a href="{% url 'clubs:delete' club_name post.id %}">Delete</a></li>
+                            <li><a href="{% url 'clubs:update' club_name %}">Update</a></li>
                         {% endif %}
-                        <span>Liked by {{ post.like_set.all.count }}</span>
-                        <button class="btn-flat right" id="com_button{{ post.id }}"
-                                onclick="showcomments({{ post.id }})">Comments
-                        </button>
+                        <li><a href="#report">Report</a></li>
+                    </ul>
+                </div>
+                <div class="card horizontal">
+                    <div class="card-image hide-on-med-and-down responsive-img" style="width:30%;">
+                        <img class="materialboxed" src="{{ post.images_set.all.0.image.url }}"
+                             style="width:100%;object-fit: contain;">
                     </div>
+                    <div class="card-stacked">
 
-                </div>
-            </div>
-            <div class="hide" id="comments{{ post.id }}" style="border-bottom:1.7px solid dimgray;">
-                <h6 class="left-align">Comments</h6>
-                <div style="padding:1%;">
-                    <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
-                        {% csrf_token %}
-                        {{ commentform.comment }}
-                        <input type="submit" value="Post">
-                    </form>
-                </div>
-                {% for com in post.comment_set.all %}
-                    <div style="padding:1%;">
-                        <div class="valign-wrapper" style="margin:1%;"><img class="circle"
-                                                                            src="{{ post.userId.image.url }}"
-                                                                            style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
-                            <span style="font-weight: bold;">{{ com.userId.user.username|title }}&nbsp;posted this:</span>
+                        <div class="card-content container">
+                            <img class="responsive-img hide-on-large-only" src="{{ post.images_set.all.0.image.url }}"
+                                 style="width:100%;object-fit:fill !important;">
+                            <h2 class="header">{{ post.subject }}</h2>
+                            <p>{{ post.content }}</p>
                         </div>
-                        <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+                        <div class="card-action">
+                            {% if post.images_set.all %}
+                                <a href="{% url 'clubs:dislike_post' club_name post.id %}">Dislike</a>
+                            {% else %}
+                                <a href="{% url 'clubs:like_post' club_name post.id %}">Like</a>
+                            {% endif %}
+                            <span>Liked by {{ post.like_set.all.count }}</span>
+                            <button class="btn-flat right" id="com_button{{ post.id }}"
+                                    onclick="showcomments({{ post.id }})">Comments
+                            </button>
+                        </div>
 
-    {% endfor %}
+                    </div>
+                </div>
+                <div class="hide" id="comments{{ post.id }}" style="border-bottom:1.7px solid dimgray;">
+                    <h6 class="left-align">Comments</h6>
+                    <div style="padding:1%;">
+                        <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
+                            {% csrf_token %}
+                            {{ commentform.comment }}
+                            <input type="submit" value="Post">
+                        </form>
+                    </div>
+                    {% for com in post.comment_set.all %}
+                        <div style="padding:1%;">
+                            <div class="valign-wrapper" style="margin:1%;">
+                                <img class="circle" src="{{ post.userId.image.url }}"
+                                     style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
+                                <span style="font-weight: bold;">{{ com.userId.user.username|title }}&nbsp;posted this:</span>
+                            </div>
+                            <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="center" style="height:800px;">
+            <iframe width="400" height="400" scrolling="no" src="https://lottiefiles.com/iframe/180-pencil-write"
+                    frameborder="0" allowfullscreen></iframe>
+            <h3>Write the first post!</h3>
+            <a class="btn-floating modal-trigger" href="#modal1" style="border-radius: 5px;"><i
+                    class="material-icons red">create</i></a>
+        </div>
+    {% endif %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.dropdown-trigger');
