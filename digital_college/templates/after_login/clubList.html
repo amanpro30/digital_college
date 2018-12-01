@@ -1,24 +1,54 @@
 {% extends 'after_login/main.html' %}
 
 {% block options %}
-    <div class="teal lighten-5" style="border-radius:8px;margin-right:1%;margin-left:1%;">
-        <h1 class="center-align">Clubs</h1>
-    </div>
-    <div class="container" style="width:95%;">
-        {% if clubList %}
-            {% for cl in clubList %}
-                <a href="{% url 'after:clubs:forum' cl.club_name %}">
-                    <div class="valign-wrapper hoverable"
-                         style="border:2px solid teal;height:80px;margin-top:20px;border-radius:5px;">
-                        <i class="material-icons" style="margin-left:30px;margin-right:30px;">navigate_next</i>
-                        <span style="color:teal;"><h3>{{ cl.club_name }}</h3></span>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span style="color:gray">{{ cl.clubenrollment_set.count }} members</span>
-                    </div>
-                </a>
-            {% endfor %}
-        {% else %}
-            <br><br><br>
-            <h3 class="center">You are not enrolled in any club</h3>
+
+<div class="container" style="width:90%;">
+    <div>
+        <div style="padding-bottom:1%;border-bottom:2px solid teal;margin-bottom: 2%;">
+            <h1 class="left-align teal-text" style="font-size: 40px;font-family: 'Noto Serif';">
+                Clubs</h1>
+        </div>
+        {% if user.registered_college %}
+        <div class="right-align">
+            <a class="waves-effect waves-light btn-small" href="{% url 'after:new_club' %}">
+                <i class="material-icons left">cloud</i>
+                Add a new Club
+            </a>
+        </div>
         {% endif %}
     </div>
+    {% ifequal added 'yes' %}
+        <div class="green-text valign-wrapper">
+            <iframe width="100" height="100" src="https://lottiefiles.com/iframe/433-checked-done" frameborder="0"
+                    scrolling="no" allowfullscreen></iframe>
+            <h2> A new Club added</h2>
+        </div>
+    {% endifequal %}
+    {% ifequal added 'no' %}
+    <div class="red-text valign-wrapper">
+        <iframe width="100" height="100" src="https://lottiefiles.com/iframe/1167-failed" frameborder="0"
+                scrolling="no" allowfullscreen></iframe>
+        <h2>Cannot add a Club that already Exists.</h2>
+    </div>
+    {% endifequal %}
+    {% if clubList %}
+        {% for cl in clubList %}
+            <a href="{% url 'after:clubs:forum' cl.club_name %}">
+                <div class="valign-wrapper hoverable onhover"
+                     style="border:2px solid teal;height:70px;margin-top:20px;border-radius:5px;">
+                    <i class="material-icons" style="margin-left:30px;margin-right:30px;">navigate_next</i>
+                    <span style="color:teal;"><h3>{{ cl.club_name }}</h3></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="color:gray">{{ cl.clubenrollment_set.count }} members</span>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <br><br><br>
+        <div class="center-align">
+            <iframe class="white" width="180" height="180" src="https://lottiefiles.com/iframe/128-around-the-world"
+                    frameborder="0" scrolling="no"></iframe>
+            <h3>You are not enrolled in any club</h3>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

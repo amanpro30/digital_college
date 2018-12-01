@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django import forms
 from django.db.models import CharField
+from django.utils import timezone
+
 
 
 class Registered_College(models.Model):
@@ -38,6 +40,13 @@ class Clubs(models.Model):
     club_name = models.CharField(max_length=100)
     club_head = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
+    image1 = models.ImageField(blank=True)
+    image2 = models.ImageField(blank=True)
+    image3 = models.ImageField(blank=True)
+    caption1 = models.CharField(max_length=60, blank=True)
+    caption2 = models.CharField(max_length=60, blank=True)
+    caption3 = models.CharField(max_length=60, blank=True)
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.club_name

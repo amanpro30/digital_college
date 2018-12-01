@@ -2,9 +2,11 @@
 
 {% block content %}
 
-    <div class="center-align teal lighten-5" style="margin-bottom:40px;">
-        <h1>Forum</h1>
-    </div>
+    <div style="padding-bottom:1%;border-bottom:2px solid teal;margin-bottom: 2%;">
+            <h1 class="left-align teal-text" style="font-size: 40px;font-family: 'Noto Serif';">
+                Forum</h1>
+        </div>
+    <br><br>
     {% if posts %}
         {% for post in posts %}
             <div class="col s12 m7" style="border-top:2px solid lightslategrey;margin-bottom:40px;">
@@ -73,7 +75,7 @@
         {% endfor %}
     {% else %}
         <div class="center" style="height:800px;">
-            <iframe width="400" height="400" scrolling="no" src="https://lottiefiles.com/iframe/180-pencil-write"
+            <iframe width="300" height="300" scrolling="no" src="https://lottiefiles.com/iframe/180-pencil-write"
                     frameborder="0" allowfullscreen></iframe>
             <h3>Write the first post!</h3>
             <a class="btn-floating modal-trigger" href="#modal1" style="border-radius: 5px;"><i

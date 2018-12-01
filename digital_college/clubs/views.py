@@ -9,7 +9,18 @@ def contacts(request, club_name):
 
 
 def gallery(request, club_name):
-    pass
+    imageform = ImageForm()
+    postform = PostForm()
+    images = Images.objects.all()
+    context = {
+        'club_name': club_name,
+        'user': request.user,
+        'imageform': imageform,
+        'postform': postform,
+        'images': images,
+    }
+
+    return render(request, 'clubs/club_gallery.html', context)
 
 
 def post(request, club_name):

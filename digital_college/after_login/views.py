@@ -1,13 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+from after_login.forms import ClubForm
 from users import views as user_views
 from users.models import Registered_User, Courses, CourseEnrollment, Registered_College, Clubs, ClubEnrollment
 
 whos_logged = {
     'F': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calendar', 'date_range', 'after:calendarapp:index'),
+          ('Progress Report', 'trending_up', 'after:progress_report'),
+          ('Calendar', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile')],
     'S': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Progress Report', 'trending_up', 'after:progress_report'), ('Calendar', 'date_range', 'after:calendarapp:index'),
+          ('Progress Report', 'trending_up', 'after:progress_report'),
+          ('Calendar', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile'), ('Clubs', 'public', 'after:clubs:cl_list')],
     'Ad': [('Courses', 'import_contacts', 'after:after_login'),
            ('faculty', 'record_voice_over', 'after:faculty'),
@@ -52,11 +56,6 @@ def after_login(request):
 
 
 def progress_report(request):
-
-    return None
-
-
-def calender(request):
     return None
 
 
@@ -100,3 +99,46 @@ def clubs(request):
 def students(request):
     return render(request, 'after_login/students.html')
 
+
+def new_club(request):
+    user = request.user
+    print(request.method)
+    if request.method == 'POST':
+        clubform = ClubForm(request.POST)
+        if clubform.is_valid():
+            club_name = clubform.cleaned_data['club_name']
+            if Clubs.objects.filter(club_name=club_name):
+                context = {
+                    'whos_logged': whos_logged['Ad'],
+                    'logged_in': user,
+                    'clubList': Clubs.objects.all().order_by('-date'),
+                    'clubform': clubform,
+                    'added': 'no',
+                }
+                return render(request, 'after_login/clubList.html', context)
+            Clubs.objects.create(club_name=club_name,
+                                 club_head=clubform.cleaned_data['club_head'],
+                                 image1=clubform.cleaned_data['image1'],
+                                 image2=clubform.cleaned_data['image2'],
+                                 image3=clubform.cleaned_data['image3'],
+                                 caption1=clubform.cleaned_data['caption1'],
+                                 caption2=clubform.cleaned_data['caption2'],
+                                 caption3=clubform.cleaned_data['caption3'],
+                                 college_id=Registered_College.objects.get(user=user))
+            context = {
+                'whos_logged': whos_logged['Ad'],
+                'logged_in': user,
+                'clubList': Clubs.objects.all().order_by('-date'),
+                'clubform': clubform,
+                'added': 'yes',
+            }
+            return render(request, 'after_login/clubList.html', context)
+    else:
+        clubform = ClubForm()
+
+    context = {
+        'whos_logged': whos_logged['Ad'],
+        'user': user,
+        'clubform': clubform,
+    }
+    return render(request, 'after_login/club_setup.html', context)

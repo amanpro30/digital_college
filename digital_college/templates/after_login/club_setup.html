@@ -1,0 +1,75 @@
+{% extends 'after_login/main.html' %}
+
+{% block options %}
+
+    <div class="container teal-text" style="width:95%;">
+        <div>
+            <div style="padding-bottom:1%;border-bottom:2px solid teal;margin-bottom: 2%;">
+                <h1 class="left-align teal-text" style="font-size: 40px;font-family: 'Noto Serif';">
+                    Clubs</h1>
+            </div>
+        </div>
+        <div style="margin-left:4%;">
+            <br><br>
+            <form action="{% url 'after:new_club' %}" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div id="c1">
+                    <h3>
+                        Name of the club.<br>
+                        {{ clubform.club_name }}<br>
+                    </h3>
+                    <button class="waves-effect waves-light btn" onclick="nextpg(1)">Next</button>
+                </div>
+                <div id="c2" class="hide">
+                    <h3>
+                        Club Head.<br>
+                        {{ clubform.club_head }}<br>
+                    </h3>
+                    <button class="waves-effect waves-light btn" onclick="prevpg(2)">Previous</button>
+                    <button class="waves-effect waves-light btn" onclick="nextpg(2)">Next</button>
+                </div>
+                <div id="c3" class="hide">
+                    <h3>
+                        Add three images for the club Slide Show. Make sure that you add a high quality image.<br><br>
+                        {{ clubform.image1 }}<br><br>
+                        Add a caption for the image.<br><br>
+                        {{ clubform.caption1 }}<br><br>
+                    </h3>
+                    <button class="waves-effect waves-light btn" onclick="prevpg(3)">Previous</button>
+                    <button class="waves-effect waves-light btn" onclick="nextpg(3)">Next</button>
+                </div>
+                <div id="c4" class="hide">
+                    <h3>
+                        Next One<br><br>
+                        {{ clubform.image2 }}<br><br>
+                        Caption<br><br>
+                        {{ clubform.caption2 }}<br><br>
+                    </h3>
+                    <button class="waves-effect waves-light btn" onclick="prevpg(4)">Previous</button>
+                    <button class="waves-effect waves-light btn" onclick="nextpg(4)">Next</button>
+                </div>
+                <div id="c5" class="hide">
+                    <h3>
+                        Last One<br><br>
+                        {{ clubform.image3 }}<br><br>
+                        Caption<br><br>
+                        {{ clubform.caption3 }}<br><br>
+                    </h3>
+                    <button class="waves-effect waves-light btn" onclick="prevpg(5)">Previous</button>
+                    <button class="waves-effect waves-light btn" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function nextpg(a) {
+            document.getElementById('c' + a).classList.add('hide');
+            document.getElementById('c' + (a + 1)).classList.remove('hide');
+        }
+
+        function prevpg(a) {
+            document.getElementById('c' + a).classList.add('hide');
+            document.getElementById('c' + (a - 1)).classList.remove('hide');
+        }
+    </script>
+{% endblock %}
