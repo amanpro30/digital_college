@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
-from after_login.forms import ClubForm
+from after_login.forms import ClubForm, CourseForm
 from users import views as user_views
 from users.models import Registered_User, Courses, CourseEnrollment, Registered_College, Clubs, ClubEnrollment
 
@@ -102,7 +102,6 @@ def students(request):
 
 def new_club(request):
     user = request.user
-    print(request.method)
     if request.method == 'POST':
         clubform = ClubForm(request.POST)
         if clubform.is_valid():
@@ -118,12 +117,6 @@ def new_club(request):
                 return render(request, 'after_login/clubList.html', context)
             Clubs.objects.create(club_name=club_name,
                                  club_head=clubform.cleaned_data['club_head'],
-                                 image1=clubform.cleaned_data['image1'],
-                                 image2=clubform.cleaned_data['image2'],
-                                 image3=clubform.cleaned_data['image3'],
-                                 caption1=clubform.cleaned_data['caption1'],
-                                 caption2=clubform.cleaned_data['caption2'],
-                                 caption3=clubform.cleaned_data['caption3'],
                                  college_id=Registered_College.objects.get(user=user))
             context = {
                 'whos_logged': whos_logged['Ad'],
@@ -142,3 +135,40 @@ def new_club(request):
         'clubform': clubform,
     }
     return render(request, 'after_login/club_setup.html', context)
+
+
+def new_course(request):
+    user = request.user
+    if request.method == 'POST':
+        courseform = CourseForm(request.POST)
+        if courseform.is_valid():
+            course_name = courseform.cleaned_data['course_name']
+            if Courses.objects.filter(course_name=course_name):
+                context = {
+                    'whos_logged': whos_logged['Ad'],
+                    'logged_in': user,
+                    'classList': Courses.objects.all(),
+                    'courseform': courseform,
+                    'added': 'no',
+                }
+                return render(request, 'after_login/classList.html', context)
+            Courses.objects.create(course_name=course_name,
+                                   faculty_id=courseform.cleaned_data['faculty_id'],
+                                   college_id=Registered_College.objects.get(user=user))
+            context = {
+                'whos_logged': whos_logged['Ad'],
+                'logged_in': user,
+                'classList': Courses.objects.all(),
+                'courseform': courseform,
+                'added': 'yes',
+            }
+            return render(request, 'after_login/classList.html', context)
+    else:
+        courseform = CourseForm()
+
+    context = {
+        'whos_logged': whos_logged['Ad'],
+        'user': user,
+        'courseform': courseform,
+    }
+    return render(request, 'after_login/course_setup.html', context)

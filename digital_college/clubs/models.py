@@ -53,3 +53,10 @@ class Like(models.Model):
 
     def __str__(self):
         return self.userId.user.username
+
+
+class ClubSlideShowInfo(models.Model):
+    club = models.ForeignKey(Clubs, on_delete=models.CASCADE)
+    image = models.ImageField()
+    heading = models.CharField(max_length=40, blank=True)
+    caption = models.CharField(max_length=100, blank=True)

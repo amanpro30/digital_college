@@ -9,13 +9,27 @@
             </div>
             {% if user.registered_college %}
                 <div class="right-align">
-                    <a class="waves-effect waves-light btn-small" href="#">
+                    <a class="waves-effect waves-light btn-small" href="{% url 'after:new_course' %}">
                         <i class="material-icons left">cloud</i>
                         Add a new Class
                     </a>
                 </div>
             {% endif %}
         </div>
+        {% ifequal added 'yes' %}
+            <div class="green-text valign-wrapper">
+                <iframe width="100" height="100" src="https://lottiefiles.com/iframe/433-checked-done" frameborder="0"
+                        scrolling="no" allowfullscreen></iframe>
+                <h2> A new Course added</h2>
+            </div>
+        {% endifequal %}
+        {% ifequal added 'no' %}
+            <div class="red-text valign-wrapper">
+                <iframe width="100" height="100" src="https://lottiefiles.com/iframe/1167-failed" frameborder="0"
+                        scrolling="no" allowfullscreen></iframe>
+                <h2>Cannot add a Course that already Exists.</h2>
+            </div>
+        {% endifequal %}
         {% if classList %}
             {% for cl in classList %}
                 <a href="{% url 'after:classroom:class_home' cl.course_name %}">
