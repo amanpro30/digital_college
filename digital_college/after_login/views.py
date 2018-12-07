@@ -172,3 +172,4 @@ def new_course(request):
         'courseform': courseform,
     }
     return render(request, 'after_login/course_setup.html', context)
+

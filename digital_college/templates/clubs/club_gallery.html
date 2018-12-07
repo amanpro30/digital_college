@@ -5,15 +5,13 @@
     <div class="left-align" style="margin-bottom:3%;margin-top:3%;font-size: larger;">
         <h1>Gallery</h1>
     </div>
-    <div class="row" style="padding:1%;">
         {% for image in images %}
-            <div class="col s4" style="width:31%;float:left;border:1px solid lightgray;padding:1%;margin:0.33%;">
-                <img class="materialboxed col s4" src="{{ image.image.url }}"
-                     style="width:31%;height:250px;border:1px solid lightgray;padding:1%;margin:0.33%;">
+            <div style="display:inline-block;border:1px solid lightgray;margin:0.33%;">
+                <img class="materialboxed" src="{{ image.image.url }}"
+                     style="height:20vh;border:1px solid lightgray;">
             </div>
 
         {% endfor %}
-    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const elems = document.querySelectorAll('.materialboxed');

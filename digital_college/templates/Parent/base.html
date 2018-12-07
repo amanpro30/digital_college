@@ -23,7 +23,7 @@
                 </a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{% url 'after:after_login' %}">Home</a></li>
-                    <li><a href="#" class="dropdown-trigger" data-target='dropdown2'><i class="material-icons">notifications</i></a>
+                    <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications</i></a>
                     </li>
                     <li><a href="#">
                         {% if user.registered_user.image.url %}
@@ -37,7 +37,7 @@
                     <li><a href="#" style="font-family: Arbutus Slab;">Welcome&nbsp;{{ user|title }}</a></li>
                     <li><a href="{% url 'website_logout' %}">Logout</a></li>
                 </ul>
-                <ul id='dropdown2' class='dropdown-content' style="margin-top: 100px;">
+                <ul id='dropdownnot' class='dropdown-content' style="margin-top: 100px;">
                     <li><a href="#">Prof. Subu added a comment.</a></li>
                     <li><a href="#">Aman replied to your comment.</a></li>
                 </ul>

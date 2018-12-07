@@ -1,0 +1,110 @@
+{% extends 'Parent/base.html' %}
+
+{% block body %}
+    <div class="container" style="width:90%;">
+        <div style="margin:2%;border-bottom:2px solid teal">
+            <img src="{{ post.userId.image.url }}" style="height:12vh;border-radius:50%;">
+            <b>{{ post.userId.First_Name|title }}&nbsp;{{ post.userId.Last_Name|title }}</b>&nbsp;
+            <span>posted this on <b>{{ post.date }}</b> in <b>&nbsp;<a
+                    href="{% url 'after:clubs:forum' club_name %}">{{ club_name }}</a></b></span>
+            {% for i in post.like_set.all %}
+                {% if i.userId.user == user %}
+                    <a class="right" href="{% url 'clubs:dislike_post' club_name post.id %}">
+                        <i class="material-icons blue-text " style="font-size: 30px">thumb_up</i>
+                    </a>
+                {% elif forloop.last %}
+                    <a class="right" href="{% url 'clubs:like_post' club_name post.id %}">
+                        <i class="material-icons grey-text" style="font-size: 30px">thumb_up</i>
+                    </a>
+                {% endif %}
+            {% empty %}
+                <a class="right" href="{% url 'clubs:like_post' club_name post.id %}">
+                    <i class="material-icons grey-text" style="font-size: 30px">thumb_up</i>
+                </a>
+            {% endfor %}
+        </div>
+        <div class="left-align" style="width:100%;">
+            {% for image in post.images_set.all %}
+                <div style="display: inline-block;">
+                    <img src="{{ image.image.url }}" class="responsive-img materialboxed"
+                         style="height:30vh;margin:1%;"></div>
+            {% endfor %}
+        </div>
+        <div style="margin:4%;">
+            <h1 class="teal-text"><b>{{ post.subject }}</b></h1>
+            <p>{{ post.content }}</p>
+            {% if post.userId.user == user %}
+                <a class="waves-effect waves-light btn modal-trigger" href="#post">Update</a>
+            {% endif %}
+            <br>
+        </div>
+        {% if post.userId.user == user %}
+            <div id="post" class="modal" style="border-radius: 4px;">
+                <div class="modal-content">
+                    <h2 class="center-align teal-text"><u>Update</u></h2>
+                    <form class="container teal-text" style="width:80%;" action="{% url 'clubs:update' club_name post.id %}" method="POST"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <i class="material-icons prefix">mode_edit</i>
+                            {{ p_up_form.subject }}
+                            <label class="text-white" for="subject1">Subject</label>
+                        </div>
+                        {{ p_up_form.content }}
+                        <div class="container" style="margin:20px;">
+                            <button class="modal-close waves-effect waves-green btn white-text" type="button"
+                                    value="">Cancel</button>
+                            <button class="modal-close waves-effect waves-green btn white-text" type="Submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+        <div style="margin:4%">
+            <h2 class="teal-text">Comments</h2>
+            <div style="padding:1%;">
+                <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
+                    {% csrf_token %}
+                    {{ commentform.comment }}
+                    <input class="btn" type="submit" value="Post">
+                </form>
+            </div>
+            {% for com in post.comment_set.all %}
+                <div style="padding:1%;">
+                    <div style="margin:1%;">
+                        <img class="circle" src="{{ post.userId.image.url }}"
+                             style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
+                        <span style="font-weight: bold;">{{ com.userId.user.username|title }}&nbsp;posted this:</span>
+                        <a class='dropdown-trigger right' data-target='dropdown{{ com.id }}'><i
+                                class="material-icons">more_vert</i></a>
+                        <ul id='dropdown{{ com.id }}' class='dropdown-content'>
+                            {% if com.userId.user == user %}
+                                <li><a href="{% url 'after:clubs:delcom' club_name com.id %}">Delete</a></li>
+                                <li><a href="#">Update</a></li>
+                            {% endif %}
+                            <li><a href="#report">Report</a></li>
+                        </ul>
+                    </div>
+                    <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.materialboxed');
+            M.Materialbox.init(elems, {});
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(elems, {});
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems, {});
+        });
+
+    </script>
+{% endblock %}
