@@ -19,8 +19,9 @@
                     <ul id='dropdown{{ post.id }}' class='dropdown-content'>
                         {% if post.userId.user == user %}
                             <li><a href="{% url 'after:clubs:delete' club_name post.id %}">Delete</a></li>
+                        {% else %}
+                            <li><a href="#report">Report</a></li>
                         {% endif %}
-                        <li><a href="#report">Report</a></li>
                     </ul>
                 </div>
                 <div class="card horizontal">
@@ -84,15 +85,17 @@
                                 <ul id='dropdown{{ com.id }}' class='dropdown-content'>
                                     {% if com.userId.user == user %}
                                         <li><a href="{% url 'after:clubs:delcom' club_name com.id %}">Delete</a></li>
+                                    {% else %}
+                                        <li><a href="#report">Report</a></li>
                                     {% endif %}
-                                    <li><a href="#report">Report</a></li>
                                 </ul>
 
                             </div>
                             <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
                         </div>
                     {% endfor %}
-                    <a class="small grey-text" href="{% url 'after:clubs:postdetails' club_name post.id %}">load more></a>
+                    <a class="small grey-text" href="{% url 'after:clubs:postdetails' club_name post.id %}">load
+                        more></a>
                 </div>
             </div>
         {% endfor %}
