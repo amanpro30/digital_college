@@ -13,4 +13,6 @@ urlpatterns = [
     path('faculty/', views.faculty, name='faculty'),
     path('clubs/', include('clubs.urls', namespace='clubs')),
     path('students/', views.students, name="students"),
+    path('newclub', views.new_club, name='new_club'),
+    path('newcourse/', views.new_course, name="new_course")
 ]

@@ -7,30 +7,37 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Arbutus Slab' rel='stylesheet'>
     {% block head %}
     {% endblock %}
 </head>
 
 <body>
-<div class="navbar-fixed">
     <nav class="teal">
         <div class="container">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
+                <a href="/" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
                 <a href="#" data-target="mobile-nav" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">notifications</i></a>
+                    <li><a href="{% url 'after:after_login' %}">Home</a></li>
+                    <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications</i></a>
                     </li>
-                    <li><a href="#"><img class="responsive-img" src="/media/profile_pics/user.png"
-                                         style="border-radius:50%;width:40px;height:40px;object-fit:fill;"></a></li>
+                    <li><a href="#">
+                        {% if user.registered_user.image.url %}
+                            <img class="responsive-img" src="{{ user.registered_user.image.url }}"
+                                 style="border-radius:50%;width:40px;height:40px;object-fit:fill;">
+                        {% elif user.registered_user.image.url %}
+                            <img class="responsive-img" src="/media/profile_pics/user.png"
+                                 style="border-radius:50%;width:40px;height:40px;object-fit:fill;">
+                        {% endif %}
+                    </a></li>
                     <li><a href="#" style="font-family: Arbutus Slab;">Welcome&nbsp;{{ user|title }}</a></li>
                     <li><a href="{% url 'website_logout' %}">Logout</a></li>
                 </ul>
-                <ul id='dropdown1' class='dropdown-content' style="margin-top: 100px;">
+                <ul id='dropdownnot' class='dropdown-content' style="margin-top: 100px;">
                     <li><a href="#">Prof. Subu added a comment.</a></li>
                     <li><a href="#">Aman replied to your comment.</a></li>
                 </ul>
@@ -38,32 +45,17 @@
         </div>
     </nav>
     <ul class="sidenav" id="mobile-nav">
-        <li><a href="#dashboard">Home</a></li>
-        <li><a href="#classroom">
-            <div class="valign-wrapper">
-                <i class="material-icons" style="margin-left:30px;margin-right:30px;">format_list_bulleted</i>
-                <span>Classrooms</span>
-            </div>
+        <li><a href="{% url 'after:after_login' %}">
+            <i class="material-icons" style="margin-left:30px;margin-right:30px;">dashboard</i>
+            <span>Home</span>
         </a></li>
-        <li>
-            <a href="#about">
-                <div class="valign-wrapper">
-                    <i class="material-icons" style="margin-left:30px;margin-right:30px;">group</i>
-                    <span>Progress Report</span>
-                </div>
-            </a></li>
-        <li><a href="#classroom">
-            <div class="valign-wrapper">
-                <i class="material-icons" style="margin-left:30px;margin-right:30px;">date_range</i>
-                <span>Planner</span>
-            </div>
-        </a></li>// // document.addEventListener('DOMContentLoaded', function() {
-            // //     var elems = document.querySelectorAll('.parallax');
-            // //     var instances = M.Parallax.init(elems, options);
-            // //   });
-            
+        {% block sidebar %}
+        {% endblock %}
+        <li><a href="{% url 'website_logout' %}">
+            <i class="material-icons" style="margin-left:30px;margin-right:30px;">subdirectory_arrow_right</i>
+            <span>Logout</span>
+        </a></li>
     </ul>
-</div>
 
 {% block body %}
 
@@ -77,32 +69,29 @@
 <script src="{% static 'classrooms/js/quiz.js' %}"></script>
 
 
-
-
-
 <script>
-        $('.link-formset').formset({
-            addText: 'Add Single Choice Question',
-            deleteText: 'Remove Single Choice Question'
-        });
+    $('.link-formset').formset({
+        addText: 'Add Single Choice Question',
+        deleteText: 'Remove Single Choice Question'
+    });
 </script>
 <script>
-        $('.link-formset2').formset({
-            addText: 'Add Multiple Choice Question',
-            deleteText: 'Remove Multiple Choice Question'
-        });
+    $('.link-formset2').formset({
+        addText: 'Add Multiple Choice Question',
+        deleteText: 'Remove Multiple Choice Question'
+    });
 </script>
 <script>
-        $('.link-formset3').formset({
-            addText: 'Add True False Question',
-            deleteText: 'Remove True False Question'
-        });
+    $('.link-formset3').formset({
+        addText: 'Add True False Question',
+        deleteText: 'Remove True False Question'
+    });
 </script>
 <script>
-        $('.link-formset4').formset({
-            addText: 'Add Matching Question',
-            deleteText: 'Remove Matching Question'
-        });
+    $('.link-formset4').formset({
+        addText: 'Add Matching Question',
+        deleteText: 'Remove Matching Question'
+    });
 </script>
 
 </body>

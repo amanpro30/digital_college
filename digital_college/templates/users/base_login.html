@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+<html>
+	<head>
+		<title>
+			{{ page_title }}
+		</title>
+		<link rel="stylesheet" href={% static "users/css/style3.css" %}>
+	</head>
+    <body>
+
+		<div class="form-area">
+				{% csrf_token %}
+                {% block content %}
+                {% endblock %}
+		</div>
+	</body>
+</html>

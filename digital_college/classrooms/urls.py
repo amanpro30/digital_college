@@ -10,5 +10,9 @@ urlpatterns = [
     path('<str:class_name>/quiz/', include('quiz.urls', namespace='quiz')),
     # path('<str:class_name>/assignment',include('assignment.urls')),
     path('<str:class_name>/slides/', include('slides.urls', namespace='slides')),
+
     path('<str:class_name>/report/', include('report.urls', namespace='report')),
+    path('<str:class_name>/forum/', include('forum.urls', namespace='class_forum')),
+    path('<str:class_name>/members/', views.members, name="members"),
+    # path('<str:class_name>/report',include('report.urls')),
 ]

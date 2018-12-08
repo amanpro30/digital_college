@@ -1,146 +1,127 @@
+{% extends 'Parent/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'clubs/club_main.css' %}">
-    <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'>
 
-</head>
+{% block head %}
+    <link rel="stylesheet" href="{% static 'clubs/club_main.css' %}">
+{% endblock %}
 
-<body>
-<div class="navbar-fixed">
-    <nav class="teal">
-        <div class="container">
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
-                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
-                    <i class="material-icons">menu</i>
-                </a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#profile">Profile</a></li>
-                    <li><a href="#classroom">Classroom</a></li>
-                    <li><a href="#about">About Us</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <ul class="sidenav" id="mobile-nav">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#profile">Profile</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#classroom">Classroom</a></li>
-    </ul>
-</div>
-<div class="slider">
-    <ul class="slides">
-        <li>
-            <img src="https://lorempixel.com/580/250/nature/1"> <!-- random image -->
-            <div class="caption center-align">
-                <h3>Photography Club</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-        </li>
-        <li>
-            <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
-            <div class="caption left-align">
-                <h3>Left Aligned Caption</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-        </li>
-        <li>
-            <img src="https://lorempixel.com/580/250/nature/3"> <!-- random image -->
-            <div class="caption right-align">
-                <h3>Right Aligned Caption</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-        </li>
-        <li>
-            <img src="https://lorempixel.com/580/250/nature/4"> <!-- random image -->
-            <div class="caption center-align">
-                <h3>This is our big Tagline!</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-        </li>
-    </ul>
-    <!--<div class="svg">
-      <svg viewBox="0 186.5 1920 113.5" x="0px" y="0px">
-      <polygon points="-30,300 355.167,210.5 1432.5,290 1920,198.5 1920,300"></polygon>
-      </svg>
-    </div>-->
-</div>
-<div class="fixed-action-btn right">
-    <div class="li_float">
-        <a class="btn-floating btn-large red anchor">
-            <i class="large material-icons">menu</i>
-        </a>
-        <p class="message red lighter-2 right"
-           style="position:absolute; color: white;display:none;top:40px;border-radius: 5px;">Menu</p>
-    </div>
-    <ul>
-        <li class="li_float"><a class="btn-floating red anchor modal-trigger" href="#modal1"><i class="material-icons">create</i></a>
-            <p class="message red lighter-2 right"
-               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Post</p>
-        </li>
-        <li class="li_float"><a class="btn-floating yellow darken-1 anchor" href="{% url 'clubs:forum' %}"><i
-                class="material-icons">forum</i></a>
-            <p class="message yellow lighter-2 right"
-               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Forum</p>
-        </li>
-        <li class="li_float"><a class="btn-floating green anchor" href="{% url 'clubs:gallery' %}"><i
-                class="material-icons">photo</i></a>
-            <p class="message green lighter-2 right"
-               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Gallery</p>
-        </li>
-        <li class="li_float"><a class="btn-floating blue anchor" href="{% url 'clubs:contacts' %}"><i
-                class="material-icons">contacts</i></a>
-            <p class="message blue lighter-2 right"
-               style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Students</p>
-        </li>
-    </ul>
-</div>
+{% block sidebar %}
+    <li><a href="{% url 'clubs:post_mob' club_name %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">create</i>
+        <span>Post</span>
+    </a></li>
+    <li><a href="{% url 'clubs:forum' club_name %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">forum</i>
+        <span>Forum</span>
+    </a></li>
+    <li><a href="{% url 'clubs:gallery' club_name %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">photo</i>
+        <span>Gallery</span>
+    </a></li>
+    <li><a href="{% url 'clubs:contacts' club_name %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">contacts</i>
+        <span>Students</span>
+    </a></li>
+{% endblock %}
 
-<div class="container" style="width:90%;padding:15px; height:500px;margin-top: 10px;">
-    {% block content %}
-    {% endblock %}
-</div>
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h2 class="center-align">Add a Public Post</h2>
-        <form class="container" style="width:80%;" action="{% url 'clubs:post' %}" method="POST"
-              enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="center-align file-field input-field">
-                {{ imageform.image }}
-                <!--<input type="file" id="images" multiple>-->
-                <div class="file-path-wrapper">
-                    <i class="material-icons prefix">add_a_photo</i>
-                    <input class="file-path validate" type="text" placeholder="Choose an image">
+{% block body %}
+    <div class="slider">
+        <ul class="slides">
+            <li>
+                <img src="https://lorempixel.com/580/250/nature/1"> <!-- random image -->
+                <div class="caption center-align">
+                    <h3>Photography Club</h3>
+                    <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
                 </div>
-            </div>
-            <div class="input-field">
-                <i class="material-icons prefix">mode_edit</i>
-                {{ postform.subject }}
-                <!--<input id="subject1" type="text" class="validate text-white">-->
-                <label class="text-white" for="subject1">Subject</label>
-            </div>
-            {{ postform.content }}
-            {{ postform.date }}
-            <!--<textarea id="content" placeholder="Write here...." style="height:100px;width:100%"></textarea>-->
-            <div class="container" style="margin:20px;">
-                <input class="modal-close waves-effect waves-green btn text-white" type="button" value="Cancel">
-                <input class="modal-close waves-effect waves-green btn text-white" type="Submit" value="Post">
-            </div>
-        </form>
+            </li>
+            <li>
+                <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+                <div class="caption left-align">
+                    <h3>Left Aligned Caption</h3>
+                    <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                </div>
+            </li>
+            <li>
+                <img src="https://lorempixel.com/580/250/nature/3"> <!-- random image -->
+                <div class="caption right-align">
+                    <h3>Right Aligned Caption</h3>
+                    <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                </div>
+            </li>
+            <li>
+                <img src="https://lorempixel.com/580/250/nature/4"> <!-- random image -->
+                <div class="caption center-align">
+                    <h3>This is our big Tagline!</h3>
+                    <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                </div>
+            </li>
+        </ul>
     </div>
-</div>
+    <div class="fixed-action-btn right hide-on-med-and-down">
+        <div class="li_float">
+            <a class="btn-floating btn-large red anchor">
+                <i class="large material-icons">menu</i>
+            </a>
+            <p class="message red lighter-2 right"
+               style="position:absolute; color: white;display:none;top:40px;border-radius: 5px;">Menu</p>
+        </div>
+        <ul>
+            <li class="li_float"><a class="btn-floating red anchor modal-trigger" href="#modal1"><i
+                    class="material-icons">create</i></a>
+                <p class="message red lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Post</p>
+            </li>
+            <li class="li_float"><a class="btn-floating yellow darken-1 anchor"
+                                    href="{% url 'clubs:forum' club_name %}"><i
+                    class="material-icons">forum</i></a>
+                <p class="message yellow lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Forum</p>
+            </li>
+            <li class="li_float"><a class="btn-floating green anchor" href="{% url 'clubs:gallery' club_name %}"><i
+                    class="material-icons">photo</i></a>
+                <p class="message green lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Gallery</p>
+            </li>
+            <li class="li_float"><a class="btn-floating blue anchor" href="{% url 'clubs:contacts' club_name %}"><i
+                    class="material-icons">contacts</i></a>
+                <p class="message blue lighter-2 right"
+                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Students</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container" style="width:90%;padding:15px; height:500px;margin-top: 10px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h2 class="center-align teal-text"><u>Add a Public Post</u></h2>
+            <form class="container" style="width:80%;" action="{% url 'clubs:post' club_name %}" method="POST"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="center-align file-field input-field">
+                    {{ imageform.image }}
+                    <div class="file-path-wrapper">
+                        <i class="material-icons prefix">add_a_photo</i>
+                        <input class="file-path validate" type="text" placeholder="Choose an image">
+                    </div>
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">mode_edit</i>
+                    {{ postform.subject }}
+                    <label class="text-white" for="subject1">Subject</label>
+                </div>
+                {{ postform.content }}
+                <div class="container" style="margin:20px;">
+                    <button class="modal-close waves-effect waves-green btn white-text" type="button">Cancel</button>
+                    <button class="modal-close waves-effect waves-green btn white-text" type="Submit">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script src="{% static 'clubs/club_main.js' %}"></script>
-</body>
-</html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'clubs/club_main.js' %}"></script>
+{% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'users/base_login_signup.html' %}
 
 {% block content %}
+{% csrf_token %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <h2>Sign Up</h2>
 <form method="POST">

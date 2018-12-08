@@ -4,11 +4,6 @@ from .models import Post, Images, Comment
 
 
 class PostForm(ModelForm):
-    subject = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'validate text-white', }
-    ))
-
     content = forms.CharField(widget=forms.Textarea(
         attrs={
             'placeholder': 'Write something here...',
@@ -19,7 +14,7 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = [
-             'subject', 'content',
+            'subject', 'content',
         ]
 
 
@@ -34,7 +29,7 @@ class ImageForm(ModelForm):
     class Meta:
         model = Images
         fields = [
-             'image',
+            'image',
         ]
 
 
@@ -48,4 +43,39 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['comment', ]
+
+
+class PostUpdateForm(ModelForm):
+    content = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'style': 'height:100px;width:100%',
+        }
+    ))
+
+    class Meta:
+        model = Post
+        fields = [
+            'subject', 'content',
+        ]
+
+
+class ImageUpdateForm(ModelForm):
+
+    class Meta:
+        model = Images
+        fields = [
+            'image',
+        ]
+
+
+class CommentUpdateForm(ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['comment', ]
+
+
+
+
+
 

@@ -1,4 +1,4 @@
-{% extends 'users/base_login_signup.html' %}
+{% extends 'users/base_login.html' %}
 
 {% block content %}
 <h2>Login</h2>
@@ -18,6 +18,6 @@
 	</label> -->
 	{{form}}
 	<input type="submit" value="Sign in">
-	<a href="#">Forgot Password?</a>
+	<a href="{% url 'users:reset' %}">Forgot Password?</a>
 </form>
 {% endblock content %}

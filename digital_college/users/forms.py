@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Registered_User,Registered_College
+from .models import Registered_User, Registered_College
 
 
 class User_Registration_Form(ModelForm):
@@ -66,14 +66,14 @@ def Sign_Up_Form(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class Course_Forms(forms.ModelForm):
-    faculty_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
-    # faculty_id = forms.ModelChoiceField(queryset=Registered_User.objects.all())
+    faculty_id = forms.ModelChoiceField(queryset=Registered_User.objects.all())
+    college_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
     class Meta:
         model = Courses
-        fields = ['course_name','faculty_id']
+        fields = ['course_name', 'college_id', 'faculty_id']
 
 class ResetForm(forms.Form):
-    reset_email = forms.EmailField()
+    enter_email = forms.EmailField()
 
 class ResetDoneForm(forms.Form):
     Password = forms.CharField(widget=forms.PasswordInput())

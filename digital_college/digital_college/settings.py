@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'quiz',
     'announcements',
     'slides',
-    'report'
+    'report',
+    'forum.apps.ForumConfig',
 ]
 
 MIDDLEWARE = [
@@ -88,6 +89,9 @@ DATABASES = {
             'NAME': 'test',
             'USER': 'root',
             'PASSWORD': '12345',
+            'HOST':'localhost',
+            'PORT':'',
+
         }
 }
 # DATABASES = {

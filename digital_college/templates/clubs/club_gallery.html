@@ -1,0 +1,23 @@
+{% extends "clubs/club_basic.html" %}
+
+{% block content %}
+
+    <div class="left-align" style="margin-bottom:3%;margin-top:3%;font-size: larger;">
+        <h1>Gallery</h1>
+    </div>
+        {% for image in images %}
+            <div style="display:inline-block;border:1px solid lightgray;margin:0.33%;">
+                <img class="materialboxed" src="{{ image.image.url }}"
+                     style="height:20vh;border:1px solid lightgray;">
+            </div>
+
+        {% endfor %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const elems = document.querySelectorAll('.materialboxed');
+            M.Materialbox.init(elems, {});
+        });
+
+    </script>
+
+{% endblock %}

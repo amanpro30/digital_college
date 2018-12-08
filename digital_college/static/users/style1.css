@@ -5,11 +5,12 @@ body{
 	background-image: url(login.jpg);
 	background-repeat: no-repeat;
 	font-family: Tahoma, sans-seriff;
+	color: white;
 
 }
 /* width */
 ::-webkit-scrollbar {
-    width: 20px;
+    width: 15px;
 }
 
 /* Track */
@@ -41,6 +42,7 @@ body{
 	padding: 40px;
 	overflow:auto;
 	//border: inset;
+	color: white;
 }
 
 .radio{
@@ -69,7 +71,7 @@ h2{
 	width: 100%;
 }
 
-.form-area input[type=email],.form-area input[type=password]
+.form-area input[type=email],.form-area input[type=password], .form-area[type=username]
 {border: none;
 border-bottom: 1px solid #ffffff
 background-color: transparent;
