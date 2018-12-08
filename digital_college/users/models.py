@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django import forms
 from django.db.models import CharField
 from django.db.models.fields.files import FieldFile
-
 from django.utils import timezone
+
 
 class Registered_College(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -74,3 +74,19 @@ class Exam(models.Model):
     max_marks = models.IntegerField()
     contribution = models.IntegerField()
     result_file = models.FileField(blank=True, upload_to='report')
+
+class Assignment(models.Model):
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
+    contribution = models.IntegerField()
+    max_marks = models.IntegerField()
+    assingment_name=models.CharField(max_length=100)
+    result_file = models.FileField(blank=True, upload_to='assignment')
+
+class Content(models.Model):
+    course_id = models.OneToOneField(Courses,on_delete=models.CASCADE)
+    content_text = models.CharField(max_length=500)
+
+class Topics(models.Model):
+    course_id = models.OneToOneField(Courses, on_delete=models.CASCADE)
+    topic_name = models.CharField(max_length=100)
+    lectures_alloted = models.IntegerField()

@@ -4,8 +4,6 @@ from . import views
 app_name = 'report'
 
 urlpatterns = [
-    path('test/', views.test, name='report'),
-    path('test1/', views.test1, name='report'),
-    #path('exam_result/<str:file_name>', name='report'),
-
+    path('test/', views.student_graph, name='student_graph'),
+    path('test1/', views.faculty_graph, name='faculty_graph'),
 ]
