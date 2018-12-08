@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django import forms
 from django.db.models import CharField
+from django.db.models.fields.files import FieldFile
+
 from django.utils import timezone
-
-
 
 class Registered_College(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -50,6 +50,7 @@ class Courses(models.Model):
     course_name = models.CharField(max_length=100)
     faculty_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.course_name
 
@@ -59,9 +60,17 @@ class ClubEnrollment(models.Model):
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
     
 
-
 class CourseEnrollment(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.course_id.course_name
+
+
+class Exam(models.Model):
+    course_id = models.ForeignKey(Courses,on_delete=models.CASCADE)
+    exam_name = models.CharField(max_length=100)
+    max_marks = models.IntegerField()
+    contribution = models.IntegerField()
+    result_file = models.FileField(blank=True, upload_to='report')
