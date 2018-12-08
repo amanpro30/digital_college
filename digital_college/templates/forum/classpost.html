@@ -38,7 +38,8 @@
                                 class="material-icons">more_vert</i></a>
                         <ul id='dropdown{{ post.id }}' class='dropdown-content'>
                             {% if post.userId.user == user %}
-                                <li><a href="{% url 'after:classroom:class_forum:cl_delete' class_name post.id %}">Delete</a>
+                                <li>
+                                    <a href="{% url 'after:classroom:class_forum:cl_delete' class_name post.id %}">Delete</a>
                                 </li>
                                 <li><a href="#">Update</a></li>
                             {% else %}
@@ -112,24 +113,62 @@
                                             class="material-icons">more_vert</i></a>
                                     <ul id='com{{ com.id }}' class='dropdown-content'>
                                         {% if com.userId.user == user %}
-                                            <li><a href="{% url 'after:classroom:class_forum:cl_delcom' class_name com.id %}">Delete</a>
+                                            <li>
+                                                <a href="{% url 'after:classroom:class_forum:cl_delcom' class_name com.id %}">Delete</a>
                                             </li>
                                         {% else %}
                                             <li><a href="#report">Report</a></li>
                                         {% endif %}
+                                        <li><a class="teal-text" onclick="showreplies({{ com.id }})">Reply</a></li>
                                     </ul>
                                 </div>
                                 <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
+                                <div id="repl{{ com.id }}" class="hide" style="margin-left:8%;">
+                                    {% for rep in com.classreply_set.all|slice:":2" %}
+                                        <div style="padding:1%;">
+                                            <div style="margin:1%;">
+                                                <img class="circle" src="{{ rep.comId.postId.userId.image.url }}"
+                                                     style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
+                                                <span style="font-weight: bold;">{{ rep.comId.userId.user.username|title }}&nbsp;posted this:</span>
+                                                <a class='dropdown-trigger right' data-target='rep{{ rep.id }}'><i
+                                                        class="material-icons">more_vert</i></a>
+                                                <ul id='rep{{ rep.id }}' class='dropdown-content'>
+                                                    {% if rep.comId.userId.user == user %}
+                                                        <li>
+                                                            <a href="{% url 'after:classroom:class_forum:cl_delreply' class_name rep.id %}">Delete</a>
+                                                        </li>
+                                                    {% else %}
+                                                        <li><a href="#report">Report</a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                            <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ rep.reply }}</div>
+                                        </div>
+                                    {% empty %}
+                                        <span class="center teal-text">No replies</span><br>
+                                    {% endfor %}
+                                </div>
                             </div>
                         {% endfor %}
+                        <a href="{% url 'after:classroom:class_forum:cl_post' class_name post.id %}">load the
+                            complete post></a>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <h1>Nothing to show!</h1>
+            <h3 class="center">Nothing to show!</h3>
         {% endif %}
     </div>
     <script>
+        function showreplies(a) {
+            if (document.getElementById('repl' + a).classList.contains('hide')) {
+                document.getElementById('repl' + a).classList.remove('hide');
+            }
+            else {
+                document.getElementById('repl' + a).classList.add('hide');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const elems = document.querySelectorAll('.dropdown-trigger');
             M.Dropdown.init(elems, {});

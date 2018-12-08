@@ -11,4 +11,7 @@ urlpatterns = [
     path('delcom/<int:com_id>/', views.delcom, name="cl_delcom"),
     path('dislike/<int:post_id>/', views.dislike_post, name="cl_dislike"),
     path('like/<int:post_id>/', views.like_post, name="cl_like"),
+    path('reply/<int:com_id>/', views.reply, name="cl_reply"),
+    path('delreply/<int:rep_id>/', views.delreply, name="cl_delreply"),
+    path('update/<int:post_id>/', views.update, name="cl_updatepost"),
 ]

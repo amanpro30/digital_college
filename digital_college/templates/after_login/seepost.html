@@ -42,7 +42,8 @@
             <div id="post" class="modal" style="border-radius: 4px;">
                 <div class="modal-content">
                     <h2 class="center-align teal-text"><u>Update</u></h2>
-                    <form class="container teal-text" style="width:80%;" action="{% url 'clubs:update' club_name post.id %}" method="POST"
+                    <form class="container teal-text" style="width:80%;"
+                          action="{% url 'clubs:update' club_name post.id %}" method="POST"
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="input-field">
@@ -53,8 +54,10 @@
                         {{ p_up_form.content }}
                         <div class="container" style="margin:20px;">
                             <button class="modal-close waves-effect waves-green btn white-text" type="button"
-                                    value="">Cancel</button>
-                            <button class="modal-close waves-effect waves-green btn white-text" type="Submit">Update</button>
+                                    value="">Cancel
+                            </button>
+                            <button class="modal-close waves-effect waves-green btn white-text" type="Submit">Update
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -72,7 +75,7 @@
             {% for com in post.comment_set.all %}
                 <div style="padding:1%;">
                     <div style="margin:1%;">
-                        <img class="circle" src="{{ post.userId.image.url }}"
+                        <img class="circle" src="{{ com.userId.image.url }}"
                              style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
                         <span style="font-weight: bold;">{{ com.userId.user.username|title }}&nbsp;posted this:</span>
                         <a class='dropdown-trigger right' data-target='dropdown{{ com.id }}'><i
@@ -80,17 +83,61 @@
                         <ul id='dropdown{{ com.id }}' class='dropdown-content'>
                             {% if com.userId.user == user %}
                                 <li><a href="{% url 'after:clubs:delcom' club_name com.id %}">Delete</a></li>
-                                <li><a href="#">Update</a></li>
+                            {% else %}
+                                <li><a href="#report">Report</a></li>
                             {% endif %}
-                            <li><a href="#report">Report</a></li>
                         </ul>
                     </div>
-                    <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
+                    <div style="margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
+                    <a class="teal-text right" onclick="showreplies({{ com.id }})" style="margin-right:2%;">Reply</a>
+                    <div class="hide" id="rep{{ com.id }}">
+                        <div style="margin-left:8%;">
+                            <form action="{% url 'clubs:reply' club_name com.id %}"
+                                  method="POST">
+                                {% csrf_token %}
+                                {{ replyform.reply }}
+                                <input class="btn" type="submit" value="Post">
+                            </form>
+                        </div>
+                        <div style="margin-left:8%;"><br>
+                            {% for rep in com.reply_set.all|slice:":2" %}
+                                <div style="padding:1%;">
+                                    <div style="margin:1%;">
+                                        <img class="circle" src="{{ rep.userId.image.url }}"
+                                             style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
+                                        <span style="font-weight: bold;">{{ rep.userId.user.username|title }}&nbsp;posted this:</span>
+                                        <a class='dropdown-trigger right' data-target='rep{{ rep.id }}'><i
+                                                class="material-icons">more_vert</i></a>
+                                        <ul id='rep{{ rep.id }}' class='dropdown-content'>
+                                            {% if rep.userId.user == user %}
+                                                <li>
+                                                    <a href="{% url 'clubs:delrep' club_name rep.id %}">Delete</a>
+                                                </li>
+                                                <li><a href="#">Update</a></li>
+                                            {% else %}
+                                                <li><a href="#report">Report</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                    <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ rep.reply }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
     <script>
+        function showreplies(a) {
+            if (document.getElementById('rep' + a).classList.contains('hide')) {
+                document.getElementById('rep' + a).classList.remove('hide');
+            }
+            else {
+                document.getElementById('rep' + a).classList.add('hide');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.materialboxed');
             M.Materialbox.init(elems, {});

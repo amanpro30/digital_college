@@ -18,4 +18,6 @@ urlpatterns = [
     path('<str:club_name>/comment/<int:post_id>/', views.comment, name="comment"),
     path('<str:club_name>/delcom/<int:com_id>/', views.delcom, name="delcom"),
     path('<str:club_name>/postDetail/<int:post_id>/', views.postdetail, name="postdetails"),
+    path('<str:club_name>/reply/<int:com_id>/', views.reply, name="reply"),
+    path('<str:club_name>/delrep/<int:rep_id>/', views.delrep, name="delrep"),
 ]

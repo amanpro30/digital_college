@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from clubs.models import Post, Images, Like, Comment
-from .form import PostForm, ImageForm, CommentForm, PostUpdateForm, ImageUpdateForm, CommentUpdateForm
+from clubs.models import Post, Images, Like, Comment, Reply
+from .form import PostForm, ImageForm, CommentForm, PostUpdateForm, ImageUpdateForm, ReplyForm
 from users.models import Registered_User, Clubs
 
 
@@ -105,16 +105,19 @@ def comment(request, club_name, post_id):
         'postform': postform,
         'posts': posts,
         'commentform': commentform,
+        'replyform': ReplyForm(),
     }
     return render(request, 'clubs/club_forum.html', context)
 
 
 def postdetail(request, club_name, post_id):
     context = {
+        'user': request.user,
         'club_name': club_name,
         'post': Post.objects.get(id=post_id),
         'commentform': CommentForm(),
-        'p_up_form': PostUpdateForm(instance=Post.objects.get(id=post_id))
+        'replyform': ReplyForm(),
+        'p_up_form': PostUpdateForm(instance=Post.objects.get(id=post_id)),
     }
     return render(request, 'after_login/seepost.html', context)
 
@@ -122,7 +125,6 @@ def postdetail(request, club_name, post_id):
 def update(request, club_name, post_id):
     if request.method == 'POST':
         post_update_form = PostUpdateForm(request.POST, instance=Post.objects.get(id=post_id))
-        # image_update_form = ImageUpdateForm(request.POST, request.FILES, instance=Images.objects.filter)
         if post_update_form.is_valid():
             post_update_form.save()
     return redirect(request.META.get('HTTP_REFERER'), club_name)
@@ -130,4 +132,18 @@ def update(request, club_name, post_id):
 
 def delcom(request, club_name, com_id):
     Comment.objects.get(id=com_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'), club_name)
+
+
+def reply(request, club_name, com_id):
+    if request.method == 'POST':
+        repform = ReplyForm(request.POST)
+        if repform.is_valid():
+            Reply.objects.create(comId=Comment.objects.get(id=com_id), userId=request.user.registered_user,
+                                 reply=repform.cleaned_data['reply'])
+    return redirect(request.META.get('HTTP_REFERER'), club_name)
+
+
+def delrep(request, club_name, rep_id):
+    Reply.objects.get(id=rep_id).delete()
     return redirect(request.META.get('HTTP_REFERER'), club_name)
