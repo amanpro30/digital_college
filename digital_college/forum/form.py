@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import ClassPost, ClassImage, ClassComment
+from .models import ClassPost, ClassImage, ClassComment, ClassReply
 
 
 class ClassPostForm(ModelForm):
@@ -19,7 +19,7 @@ class ClassPostForm(ModelForm):
     class Meta:
         model = ClassPost
         fields = [
-             'subject', 'content',
+            'subject', 'content',
         ]
 
 
@@ -34,7 +34,7 @@ class ClassImageForm(ModelForm):
     class Meta:
         model = ClassImage
         fields = [
-             'image',
+            'image',
         ]
 
 
@@ -49,3 +49,20 @@ class ClassCommentForm(ModelForm):
         model = ClassComment
         fields = ['comment', ]
 
+
+class ClassReplyForm(ModelForm):
+    reply = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'placeholder': 'Reply..',
+        }
+    ))
+
+    class Meta:
+        model = ClassReply
+        fields = ['reply', ]
+
+
+class ClassPostUpdateForm(ModelForm):
+    class Meta:
+        model = ClassPost
+        fields = ['subject', 'content', ]

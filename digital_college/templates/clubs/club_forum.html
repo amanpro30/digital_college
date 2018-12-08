@@ -88,10 +88,37 @@
                                     {% else %}
                                         <li><a href="#report">Report</a></li>
                                     {% endif %}
+                                    <li><a class="teal-text" onclick="showreplies({{ com.id }})">Reply</a></li>
                                 </ul>
 
                             </div>
                             <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
+                            <div class="hide" id="rep{{ com.id }}">
+                                <div style="margin-left:8%;"><br>
+                                    {% for rep in com.reply_set.all|slice:":2" %}
+                                        <div style="padding:1%;">
+                                            <div style="margin:1%;">
+                                                <img class="circle" src="{{ rep.userId.image.url }}"
+                                                     style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
+                                                <span style="font-weight: bold;">{{ rep.userId.user.username|title }}&nbsp;posted this:</span>
+                                                <a class='dropdown-trigger right' data-target='rep{{ rep.id }}'><i
+                                                        class="material-icons">more_vert</i></a>
+                                                <ul id='rep{{ rep.id }}' class='dropdown-content'>
+                                                    {% if rep.userId.user == user %}
+                                                        <li>
+                                                            <a href="{% url 'clubs:delrep' club_name rep.id %}">Delete</a>
+                                                        </li>
+                                                        <li><a href="#">Update</a></li>
+                                                    {% else %}
+                                                        <li><a href="#report">Report</a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                            <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ rep.reply }}</div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                     <a class="small grey-text" href="{% url 'after:clubs:postdetails' club_name post.id %}">load
@@ -109,6 +136,15 @@
         </div>
     {% endif %}
     <script>
+        function showreplies(a) {
+            if (document.getElementById('rep' + a).classList.contains('hide')) {
+                document.getElementById('rep' + a).classList.remove('hide');
+            }
+            else {
+                document.getElementById('rep' + a).classList.add('hide');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.dropdown-trigger');
             M.Dropdown.init(elems, {});
