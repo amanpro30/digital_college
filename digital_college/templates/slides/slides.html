@@ -2,6 +2,7 @@
 {% block content %}
     {% ifequal user.registered_user.role 'F' %}
     <div class="container">
+
         {% for file in assign_files %}
             <a href="{%   url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a>
             <a href="{% url 'after:classroom:slides:delete' class_name file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
@@ -17,10 +18,23 @@
     </div>
     {% endifequal %}
     {% ifequal user.registered_user.role 'S' %}
+
         <div class="container">
+             <h><b>Hi Folks! Take Your assignments....!!!! :):)</b></h><br>
             {% for file in assign_files %}
                 <a href="{%   url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a><br>
             {% endfor %}
         </div>
+        <div class="container">
+            <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            {% csrf_token %}
+            {{ form.file }}
+            {{ form.title }}
+        </div>
+             
+            <input type="submit">
+            </form>
+            </div>
     {% endifequal %}
 {% endblock content %}

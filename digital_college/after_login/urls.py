@@ -4,6 +4,7 @@ from . import views
 app_name = "after"
 
 urlpatterns = [
+    #path('report/', include('report.urls', namespace='report')),
     path('', views.after_login, name='after_login'),
     path('classroom/', include('classrooms.urls', namespace='classroom')),
     path('progress_report/', views.progress_report, name='progress_report'),
