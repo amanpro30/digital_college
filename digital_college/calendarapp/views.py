@@ -70,7 +70,8 @@ def delete(request, entry_id):
     #     entry.delete()
     #
     # return HttpResponseRedirect("/")
-    Entry.objects.get(id=entry_id).delete()
+    entry = Entry.objects.get(id=entry_id)
+    entry.delete()
     user = request.user
     role = user.registered_user.role
     entries = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
@@ -81,6 +82,16 @@ def delete(request, entry_id):
     }
     return render(request, 'calendarapp/index.html', context)
 
-def edit(request, entry_id):
-    pass
 
+def edit(request, entry_id):
+    Entry.objects.get(id=entry_id)
+    user = request.user
+    role = user.registered_user.role
+    entries = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
+    context = {
+        'whos_logged': whos_logged[role],
+        'logged_in': user,
+        'entries': entries
+    }
+
+    return render(request, 'calendarapp/index.html', context)

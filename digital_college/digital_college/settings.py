@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'checkboxselectmultiple',
     # 'channels',
     'notifications'
+    'report',
+    'forum.apps.ForumConfig',
 ]
 
 MIDDLEWARE = [

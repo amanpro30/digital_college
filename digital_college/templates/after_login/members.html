@@ -1,0 +1,57 @@
+{% extends 'quiz/base_classrooms.html' %}
+
+{% block content %}
+    <h4 class="center teal-text"><u>Faculty</u></h4>
+    <table class="striped centered">
+        <thead>
+        <tr>
+            <th>Members</th>
+            <th>email</th>
+            {% if user.registered_college %}
+                <th></th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="hoverable">
+            <td>{{ faculty.First_Name }}&nbsp;{{ faculty.Last_Name }}</td>
+            <td>{{ faculty.email }}</td>
+            {% if user.registered_college %}
+                <td>
+                    <a class="btn" href="#">Change</a>
+                </td>
+            {% endif %}
+        </tr>
+
+        </tbody>
+    </table><br>
+    <h4 class="center teal-text"><u>Students</u></h4>
+    <table class="striped centered">
+        <thead>
+        <tr>
+            <th>Members</th>
+            <th>email</th>
+            {% if user.registered_college %}
+                <th></th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for st in students %}
+            <tr class="hoverable">
+                <td>{{ st.student_id.First_Name }}&nbsp;{{ st.student_id.Last_Name }}</td>
+                <td>{{ st.student_id.email }}</td>
+                {% if user.registered_college %}
+                    <td>
+                        <a class="btn" href="#">Remove</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+{% endblock %}
+
+
