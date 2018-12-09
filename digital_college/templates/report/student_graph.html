@@ -10,12 +10,18 @@
        <div class="ct-chart .ct-minor-second"></div>
 
         <script>
-          var chart = new Chartist.Line('.ct-chart', {
-  labels: ['test1', 'test2', 'mid1', 'mid2', 'end'],
+            {#var exam_name = [];#}
+            {#var exam=""#}
+            {#for (exam in {{ exams }}) {#}
+            {#    labels.push('{{ exam.exam_name }}');#}
+            {#}#}
+                console.log({{ exams.exam_name}})
+            var chart = new Chartist.Line('.ct-chart', {
+  labels: "{{ exams }}",
   series: [
-    [10, 9, 8, 7, 6],
-    [4,  5, 3, 7, 3],
-    [3,  4, 5, 6, 7]
+    [10],
+    [4],
+    [3]
   ]
 }, {
   low: 0

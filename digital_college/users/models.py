@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django import forms
 from django.db.models import CharField
 from django.db.models.fields.files import FieldFile
-
 from django.utils import timezone
+
 
 class Registered_College(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -58,7 +58,7 @@ class Courses(models.Model):
 class ClubEnrollment(models.Model):
     club_id = models.ForeignKey(Clubs, on_delete=models.CASCADE)
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
-    
+
 
 class CourseEnrollment(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
@@ -75,7 +75,6 @@ class Exam(models.Model):
     contribution = models.IntegerField()
     result_file = models.FileField(blank=True, upload_to='report')
 
-
 class Email(models.Model):
     email = models.EmailField(blank=False)
     ROLE_CHOICES = [
@@ -86,3 +85,20 @@ class Email(models.Model):
 
     class Meta:
         unique_together = ["email"]
+
+
+class Assignment(models.Model):
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
+    contribution = models.IntegerField()
+    max_marks = models.IntegerField()
+    assingment_name=models.CharField(max_length=100)
+    result_file = models.FileField(blank=True, upload_to='assignment')
+
+class Content(models.Model):
+    course_id = models.OneToOneField(Courses,on_delete=models.CASCADE)
+    content_text = models.CharField(max_length=500)
+
+class Topics(models.Model):
+    course_id = models.OneToOneField(Courses, on_delete=models.CASCADE)
+    topic_name = models.CharField(max_length=100)
+    lectures_alloted = models.IntegerField()
