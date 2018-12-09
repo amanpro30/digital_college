@@ -3,74 +3,171 @@
 
 {% block content %}
 {% ifequal user.registered_user.role 'F' %}
-
-    <form method="POST" >
-    <p>single choice form</p>
+<form method="POST">
     {% csrf_token %}
-        <div class='row' style='width:80%'>
-            <fieldset>
-                <legend>Single Choice Question</legend>
-                    <div>
-                        {{ single_choice_form.management_form }}
-                        {% for single in single_choice_form %}
-                        <div class="link-formset input-field col s12">
-                            {{ single.as_p }}
-                        </div>
-                        {% endfor %}
-                            
+    <div class='row'>
+            {{ single_choice_form.management_form }}
+            {% for single in single_choice_form %}
+            <div class="link-formset1 card col s10 offset-s1">
+                <div class='card-content'>
+                    <div class="input-field col s10">
+                        {{single.question}}
+                        <label for="{{single.label_tag}}">{{single.question.label_tag}}</label>
                     </div>
-                    <div class='row'>
-            </fieldset>
-            <button type='submit'>submit</button>
-        </div>
-    </form>
-        <!-- <div class='row' style='width:80%'>
-            <fieldset>
-                <legend>Multiple Choice Question</legend>
-                    <div>
-                    {{ multiple_choice_form.management_form }}
-                        {% for multiple in multiple_choice_form %}
-                        <div class="link-formset2 materialize-textarea  offset-s2">
-                            {{ multiple.as_p }}
-                        </div>
-                        {% endfor %}
+                    <div class="input-field col s6">
+                        {{single.option1}}
+                        <label for="{{single.label_tag}}">{{single.option1.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s6">
+                        {{single.option2}}
+                        <label for="{{single.label_tag}}">{{single.option2.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s6">
+                        {{single.option3}}
+                        <label for="{{single.label_tag}}">{{single.option3.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s6">
+                        {{single.option4}}
+                        <label for="{{single.label_tag}}">{{single.option4.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s2">
+                        {{single.marks}}
+                        <label for="{{single.label_tag}}">{{single.marks.label_tag}}</label>
                     </div>
-            </fieldset>
-        </div>
-        <div class='row' style='width:80%'>
-            <fieldset>
-                <legend>True False Question</legend>
-                    <div>
-                    {{ truefalse_form.management_form }}
-                        {% for true in truefalse_form %}
-                        <div class="link-formset3 materialize-textarea  offset-s2">
-                            {{ true.as_p }}
-                        </div>
-                        {% endfor %}
+                    <div class="input-field col s2">
+                        {{single.test}}
+                        {{single.test.label_tag}}
+                    <!-- <label>
+                        <input type="checkbox" checked="checked" />
+                        <span>Yellow</span>
+                    </label> -->
                     </div>
-            </fieldset>
+                </div>
+                
+            </div>
+            {% endfor %}
         </div>
-        <div class='row' style='width:80%'>
-            <fieldset>
-                <legend>Matching Question</legend>
-                    <div>
-                    {{ matching_form.management_form }}
-                        {% for matching in matching_form %}
-                            <div class="link-formset4 materialize-textarea  offset-s2">
-                                {{ matching.as_p }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                </fieldset>
+    <div class='row'>
+        {{ multiple_choice_form.management_form }}
+        {% for multiple in multiple_choice_form %}
+        <div class="link-formset2 card col s10 offset-s1">
+            <div class='card-content'>
+                <div class="input-field col s10">
+                    {{multiple.question}}
+                    <label for="{{multiple.label_tag}}">{{multiple.question.label_tag}}</label>
+                </div>
+                <div class="input-field col s6">
+                    {{multiple.option1}}
+                    <label for="{{multiple.label_tag}}">{{multiple.option1.label_tag}}</label>
+                </div> 
+                <div class="input-field col s6">
+                    {{multiple.option2}}
+                    <label for="{{multiple.label_tag}}">{{multiple.option2.label_tag}}</label>
+                </div> 
+                <div class="input-field col s6">
+                    {{multiple.option3}}
+                    <label for="{{multiple.label_tag}}">{{multiple.option3.label_tag}}</label>
+                </div> 
+                <div class="input-field col s6">
+                    {{multiple.option4}}
+                    <label for="{{multiple.label_tag}}">{{multiple.option4.label_tag}}</label>
+                </div> 
+                <div class="input-field col s2">
+                    {{multiple.marks}}
+                    <label for="{{multiple.label_tag}}">{{multiple.marks.label_tag}}</label>
+                </div>
+                <div class="input-field col s2">
+                    {{multiple.options}}
+                    <label for="{{multiple.label_tag}}">{{multiple.options.label_tag}}</label>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-         -->
-    
-{% endifequal %}    
-    
-
-
-
-
- 
+    </div>
+    <div class='row'>
+            {{ truefalse_form.management_form }}
+            {% for true in truefalse_form %}
+        <div class='link-formset3 card col s10 offset-s1'>
+            <div class='card-content'>
+                <div class="input-field col s10">
+                    {{true.question}}
+                    <label for="{{true.label_tag}}">{{true.question.label_tag}}</label>
+                </div>
+                <div class="input-field col s6">
+                    {{true.option1}}
+                    <label for="{{true.label_tag}}">{{true.option1.label_tag}}</label>
+                </div> 
+                <div class="input-field col s2">
+                    {{true.marks}}
+                    <label for="{{true.label_tag}}">{{true.marks.label_tag}}</label>
+                </div>
+                <div class="input-field col s1">
+                    {{true.answer}}
+                    <label for="{{true.label_tag}}">{{true.answer.label_tag}}</label>
+                </div>
+            </div>
             
+        </div>
+        {% endfor %}
+    </div>
+    <div class='row'>
+            {{ matching_form.management_form }}
+            {% for match in matching_form %}
+        <div class='link-formset4 card col s10 offset-s1'>
+            <div class='card-content'>
+                <div class="input-field col s9">
+                    {{match.question}}
+                    <label for="{{match.label_tag}}">{{match.question.label_tag}}</label>
+                </div>
+                <div class="input-field col s6">
+                    {{match.option1}}
+                    <label for="{{match.label_tag}}">{{match.option1.label_tag}}</label>
+                </div>
+                <div class="input-field col s6">
+                    {{match.match1}}
+                    <label for="{{match.label_tag}}">{{match.match1.label_tag}}</label>
+                </div>
+                <div class="input-field col s6">
+                    {{match.option2}}
+                    <label for="{{match.label_tag}}">{{match.option2.label_tag}}</label>
+                </div> 
+                <div class="input-field col s6">
+                    {{match.match2}}
+                    <label for="{{match.label_tag}}">{{match.match2.label_tag}}</label>
+                </div>
+                <div class="input-field col s6">
+                    {{match.option3}}
+                    <label for="{{match.label_tag}}">{{match.option3.label_tag}}</label>
+                </div>
+                <div class="input-field col s6">
+                    {{match.match3}}
+                    <label for="{{match.label_tag}}">{{match.match3.label_tag}}</label>
+                </div> 
+                <div class="input-field col s6">
+                    {{match.option4}}
+                    <label for="{{match.label_tag}}">{{match.option4.label_tag}}</label>
+                </div> 
+                <div class="input-field col s6">
+                    {{match.match4}}
+                    <label for="{{match.label_tag}}">{{match.match4.label_tag}}</label>
+                </div>
+                <div class="input-field col s2">
+                    {{match.marks}}
+                    <label for="{{match.label_tag}}">{{match.marks.label_tag}}</label>
+                </div>
+            </div>
+            
+        </div>
+        {% endfor %}
+    </div>
+
+<div class="row">
+    <button class="btn waves-effect waves-light col s1 offset-s6" type="submit" name="action">Submit
+        <i class="material-icons right">send</i>
+    </button>
+</div>
+
+</form>
+
+{% endifequal %}    
 {% endblock content %}

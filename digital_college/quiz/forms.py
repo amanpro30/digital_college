@@ -1,9 +1,29 @@
 from django.forms import ModelForm
-from .models import quiz,singlechoice,multiplechoice,matching,truefalse,respo
+from .models import quiz,singlechoice,multiplechoice,matching,truefalse,respo_single,respo_multiple,respo_true,respo_match,answers
 from django import forms
 from django.contrib.admin import widgets
-
+from djangoformsetjs.utils import formset_media_js
+from checkboxselectmultiple.widgets import CheckboxSelectMultiple
 # from .forms import 
+
+ANSWER_CHOICES=(
+    ('A','A'),
+    ('B','B'),
+    ('C','C'),
+    ('D','D'),
+)
+
+ANSWER_TRUE_CHOICES=(
+    ('T','True'),
+    ('F','False'),
+)
+
+TYPE=(
+    ('Single Option','Single Option'),
+    ('Multiple Option','Multiple Option'),
+    ('True False','True False'),
+    ('Matching','Matching'),
+)
 
 
 class quiz_detail_form(ModelForm):
@@ -14,50 +34,56 @@ class quiz_detail_form(ModelForm):
         fields=['name_of_quiz','instructions','start_time','end_time']
 
 class single_correct_form(ModelForm):
-    question = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea','id':'question'}))
-    option1 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option1'}))
-    option2 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option2'}))
-    option3 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option3'}))
-    option4 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option4'}))
-    # answer = forms.MultipleChoiceField(choices=ANSWER_CHOICES, widget=forms.CheckboxSelectMultiple())
+    answer = forms.ChoiceField(choices=ANSWER_CHOICES ,widget=forms.Select(attrs={'name':'group1','type':'radio'}))
     class Meta:
         model=singlechoice
-        fields=['question','option1','option2','option3','option4','answer','marks']
-
+        fields=['question','option1','option2','option3','option4','marks','answer']
+        
 
 class multi_correct_form(ModelForm):
-    question = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea','id':'question'}))
-    option1 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option1'}))
-    option2 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option2'}))
-    option3 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option3'}))
-    option4 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option4'}))
+    options = forms.CharField(widget=forms.SelectMultiple(choices=ANSWER_CHOICES ))
     class Meta:
         model=multiplechoice
-        fields=['question','option1','option2','option3','option4']
-    
+        fields=['question','option1','option2','option3','option4','marks','options']
+
+class answer_form(ModelForm):
+    option = forms.CharField(widget=forms.SelectMultiple(choices=ANSWER_CHOICES ))
+    class Meta:
+        model=answers
+        fields=['option']
+
 
 class matching_form(ModelForm):
-    question = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea','id':'question'}))
-    option1 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option1'}))
-    option2 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option2'}))
-    option3 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option3'}))
-    option4 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option4'}))
-    matching1 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea matching','id':'matching1'}))
-    matching2 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea matching','id':'matching2'}))
-    matching3 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea matching','id':'matching3'}))
-    matching4 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea matching','id':'matching4'}))
     class Meta:
         model=matching
-        fields=['question','option1','option2','option3','option4','match1','match2','match3','match4']
+        fields=['question','option1','match1','option2','match2','option3','match3','option4','match4','marks']
 
 class truefalse_form(ModelForm):
-    question = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea','id':'question'}))
-    option1 = forms.CharField( widget = forms.Textarea(attrs={'class':'materialize-textarea option','id':'option1'}))
+    answer = forms.ChoiceField(choices=ANSWER_TRUE_CHOICES ,widget=forms.Select(attrs={'name':'group1','type':'radio'}))
     class Meta:
         model=truefalse
-        fields=['question','option1']
+        fields=['question','option1','marks','answer']
     
-class response_form(ModelForm):
+class response_single_form(ModelForm):
     class Meta:
-        model=respo
+        model=respo_single
         fields=['selected_option']
+
+class response_multiple_form(ModelForm):
+    selected_option=forms.ChoiceField(choices=ANSWER_CHOICES ,widget=forms.Select())
+    class Meta:
+        model=respo_multiple
+        fields=['selected_option']
+
+class response_true_form(ModelForm):
+    selected_option=forms.ChoiceField(choices=ANSWER_TRUE_CHOICES,widget=forms.Select())
+    class Meta:
+        model=respo_true
+        fields=['selected_option']
+
+class response_matching_form(ModelForm):
+    #selected_option=forms.ChoiceField(choiceswidget=forms.Select())
+    class Meta:
+        model=respo_match
+        fields=['selected_option']
+

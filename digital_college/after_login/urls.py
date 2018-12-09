@@ -12,4 +12,5 @@ urlpatterns = [
     path('faculty/', views.faculty, name='faculty'),
     path('clubs/', include('clubs.urls', namespace='clubs')),
     path('students/', views.students, name="students"),
+    path('notification/',include('notifications.urls',namespace='notifications'))
 ]

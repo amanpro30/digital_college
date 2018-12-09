@@ -1,28 +1,28 @@
 {% extends 'quiz/base_classrooms.html' %}
 {% block content %}
 {%  if is_started and not is_finished %}
-    {% for ques in question %}
+    {% for single_ques in question_single %}
     <p>Question-{{ques.id}}</p>
     <div class="container">
         <div class="row">
             <div class="input-field col s10">
-                <input value={{ ques.question }} id="question" type="text" class="validate" disabled>
+                <input value={{ single_ques.question }} id="question" type="text" class="validate" disabled>
                 <label class="active" for="question">question</label>
             </div>
             <div class="input-field col s10">
-                <input value={{ ques.option1 }} id="textarea1" type="text" class="validate" disabled>
+                <input value={{ single_ques.option1 }} id="textarea1" type="text" class="validate" disabled>
                 <label class="active" for="textarea1">option 1</label>
             </div>
             <div class="input-field col s10">
-                <input value={{ ques.option2 }} id="textarea2" type="text" class="validate" disabled>
+                <input value={{ single_ques.option2 }} id="textarea2" type="text" class="validate" disabled>
                 <label class="active" for="textarea2">option 2</label>
             </div>
             <div class="input-field col s10">
-                <input value={{ ques.option3 }} id="textarea3" type="text" class="validate" disabled>
+                <input value={{ single_ques.option3 }} id="textarea3" type="text" class="validate" disabled>
                 <label class="active" for="textarea3">option 3</label>
             </div>
             <div class="input-field col s10">
-                <input value={{ ques.option4 }} id="textarea4" type="text" class="validate" disabled>
+                <input value={{ single_ques.option4 }} id="textarea4" type="text" class="validate" disabled>
                 <label class="active" for="textarea4">option 4</label>
             </div>
         </div>
@@ -48,4 +48,17 @@
 {% elif not is_started%}
     <p>The quiz is not started</p>
 {% endif %}
+
+
+<ul id="sortable">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+    <li>Item 5</li>
+    <li>Item 6</li>
+    <li>Item 7</li>
+</ul>
+
+
 {% endblock content %}
