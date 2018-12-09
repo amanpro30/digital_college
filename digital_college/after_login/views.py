@@ -64,7 +64,13 @@ def profile(request):
 
 
 def faculty(request):
-    return render(request, 'after_login/faculty.html')
+    facultylist = Registered_User.objects.filter(role='F')
+    context = {
+        'fac_list': facultylist,
+        'whos_logged': whos_logged['Ad'],
+        'logged_in': request.user,
+    }
+    return render(request, 'after_login/faculty.html', context)
 
 
 def clubs(request):
@@ -172,4 +178,3 @@ def new_course(request):
         'courseform': courseform,
     }
     return render(request, 'after_login/course_setup.html', context)
-

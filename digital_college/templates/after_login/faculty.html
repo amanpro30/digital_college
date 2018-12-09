@@ -1,6 +1,25 @@
 {% extends 'after_login/main.html' %}
 
 {% block options %}
-
-
+    <div class="container" style="width:90%;">
+        <div style="padding-bottom:1%;border-bottom:2px solid darkblue;margin-bottom: 2%;">
+            <h1 class="left-align" style="color:darkblue;font-size: 40px;font-family: 'Noto Serif';">
+                Faculty</h1>
+        </div>
+        {% for fac in fac_list %}
+            <div class="hoverable"
+                 style="display:inline-block;height:40vh;background-color:white;margin:2%; border:2px solid darkblue;border-radius:8%;padding:2%;">
+                <div class="center-align">
+                    {% if fac.image %}
+                        <img class="circle" src="{{ fac.image.url }}" style="height: 20vh">
+                    {% else %}
+                        <img class="circle" src="/media/profile_pics/user.png" style="height: 20vh;">
+                    {% endif %}
+                </div>
+                <h2 style="color:darkblue;">{{ fac.First_Name }}&nbsp;{{ fac.Last_Name }}</h2>
+                <h3 style="color:darkblue;">{{ fac.email }}</h3>
+                <a href="#">see complete profile</a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

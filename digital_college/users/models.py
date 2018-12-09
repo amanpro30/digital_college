@@ -74,3 +74,15 @@ class Exam(models.Model):
     max_marks = models.IntegerField()
     contribution = models.IntegerField()
     result_file = models.FileField(blank=True, upload_to='report')
+
+
+class Email(models.Model):
+    email = models.EmailField(blank=False)
+    ROLE_CHOICES = [
+        ('F', 'faculty'),
+        ('S', 'student'),
+    ]
+    role = models.CharField(max_length=1, choices=ROLE_CHOICES)
+
+    class Meta:
+        unique_together = ["email"]

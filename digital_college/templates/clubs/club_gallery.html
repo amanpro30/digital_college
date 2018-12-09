@@ -1,17 +1,23 @@
 {% extends "clubs/club_basic.html" %}
+{% load static %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'clubs/club_gallery.css' %}">{% endblock %}
 {% block content %}
 
     <div class="left-align" style="margin-bottom:3%;margin-top:3%;font-size: larger;">
-        <h1>Gallery</h1>
+        <h1 class="teal-text" style="border-bottom: 2px solid teal;">Gallery</h1>
     </div>
-        {% for image in images %}
-            <div style="display:inline-block;border:1px solid lightgray;margin:0.33%;">
-                <img class="materialboxed" src="{{ image.image.url }}"
-                     style="height:20vh;border:1px solid lightgray;">
+    {% for image in images %}
+        <div id="im" style="display:inline-block;border:1px solid lightgray;margin:0.33%;">
+            <img class="materialboxed" src="{{ image.image.url }}"
+                 style="height:20vh;border:1px solid lightgray;">
+            <div id="lin">
+                <a href="{% url 'clubs:postdetails' club_name image.postId.id %}"></a>
             </div>
+        </div>
 
-        {% endfor %}
+    {% endfor %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const elems = document.querySelectorAll('.materialboxed');
