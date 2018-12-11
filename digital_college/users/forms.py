@@ -19,7 +19,7 @@ class User_Registration_Form(ModelForm):
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
     class Meta:
         model = Registered_User
-        fields = ['role', 'email', 'First_Name', 'Last_Name', 'college_id', ]
+        fields = ['role', 'email', 'First_Name', 'Last_Name', 'college_id','image', ]
 
 class College_Registration_Form(ModelForm):
     STATE_CHOICES=(
@@ -56,7 +56,7 @@ class College_Registration_Form(ModelForm):
     State = forms.ChoiceField(choices=STATE_CHOICES)
     class Meta:
         model = Registered_College
-        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', ]
+        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', 'image', ]
 
 
 def Sign_Up_Form(UserCreationForm):
@@ -71,6 +71,21 @@ class Course_Forms(forms.ModelForm):
     class Meta:
         model = Courses
         fields = ['course_name', 'college_id', 'faculty_id']
+
+
+class Edit_Registered_User_Form(forms.ModelForm):
+
+    class Meta:
+        model = Registered_User
+        fields = ['email', 'First_Name', 'Last_Name', 'college_id', 'image', ]
+
+class Edit_Registered_College_Form(forms.ModelForm):
+
+    class Meta:
+        model = Registered_College
+        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', 'image', ]
+
+
 
 class ResetForm(forms.Form):
     enter_email = forms.EmailField()
