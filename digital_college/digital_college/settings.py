@@ -41,10 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jquery',
+    'djangoformsetjs',
     'calendarapp',
     'quiz',
     'announcements',
     'slides',
+    'checkboxselectmultiple',
+    'notifications',
+    'report',
+    'forum.apps.ForumConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +83,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'digital_college.wsgi.application'
 
+#
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -89,7 +96,7 @@ DATABASES = {
             'PASSWORD': 'ravish11',
             'HOST':'localhost',
             'PORT':'',
-
+gi
         }
 }
 # DATABASES = {
@@ -154,3 +161,13 @@ EMAIL_HOST_PASSWORD = 'projectdjango@17'
 EMAIL_PORT = '587'
 
 EMAIL_USE_SSL = False
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'asgi_redis.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [('localhost', 6379)],
+#         },
+#         'ROUTING': 'example_channels.routing.channel_routing',
+#     }
+# }

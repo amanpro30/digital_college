@@ -1,0 +1,119 @@
+{% extends 'after_login/main.html' %}
+{% block head %}
+    <style>
+        .onmouse:hover {
+            transition: background-color 1s ease;
+            border-bottom: 4px solid darkblue;
+        }
+
+        .onhover:hover {
+            border-bottom: 4px solid darkblue;
+            transition: background-color 1s ease;
+
+        }
+    </style>
+{% endblock %}
+
+{% block options %}
+    <div class="container" style="width:90%;">
+        <div style="margin-bottom:1%;">
+            <div style="padding-bottom:1%;border-bottom:2px solid darkblue;margin-bottom: 2%;">
+                <h1 class="left-align" style="color:darkblue;font-size: 40px;font-family: 'Noto Serif';">
+                    Students</h1>
+            </div>
+            <div class="right-align">
+                <a class="waves-effect waves-light green btn-floating btn-large modal-trigger" href="#csv_upload">
+                    <i class="material-icons left">publish</i>
+                </a>
+                <a class="waves-effect waves-light red btn-floating btn-large modal-trigger" href="#faculty_upload">
+                    <i class="material-icons left">add</i>
+                </a>
+            </div>
+            {% ifequal added 'yes' %}
+                <div class="green-text valign-wrapper">
+                    <iframe width="150" height="150" src="https://lottiefiles.com/iframe/433-checked-done"
+                            frameborder="0"
+                            scrolling="no" allowfullscreen></iframe>
+                    <h2>Uploaded successfully</h2>
+                </div>
+            {% endifequal %}
+            {% ifequal added 'no' %}
+                <div class="red-text valign-wrapper">
+                    <iframe width="100" height="100" src="https://lottiefiles.com/iframe/1167-failed" frameborder="0"
+                            scrolling="no" allowfullscreen></iframe>
+                    <h2>Cannot the duplicate emails</h2>
+                </div>
+            {% endifequal %}
+            <div id="csv_upload" class="modal">
+                <div class="modal-content">
+                    <p>Upload a file with the emails of the students. Make sure that only the 'email' column will be
+                        stored in the database.Make sure that the first row has an email.</p>
+                    <form method="POST" action="{% url 'after:faculty' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="file-field input-field">
+                            <div class="btn-floating valign-wrapper" style="display:inline-block;">
+                                <i class="green material-icons left">publish</i>
+                                {{ uploadform.file }}
+                            </div>
+                            <div class="file-path-wrapper" style="display:inline-block;">
+                                {{ uploadform.title }}
+                            </div>
+                        </div>
+                        <button class="btn blue darken-4 text-white" type="Submit">Upload</button>
+                    </form>
+                </div>
+            </div>
+            <div id="faculty_upload" class="modal">
+                <div class="modal-content">
+                    <p>Upload the email of the faculty. Note that the faculty will update his profile at the time of
+                        signup.</p>
+                    {% csrf_token %}
+                    <div class="row">
+                        <form class="col s12" method="POST" action="{% url 'after:faculty' %}"
+                              enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    {{ emailform.email }}
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <button class="btn blue darken-4 text-white" type="Submit">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for stu in stu_list %}
+            <div id="facblock" class="hoverable onmouse"
+                 style="height:15vh;background-color:white;margin:2%; border-radius:2%;padding:2%;">
+                <div class="left" style="width:8%;height:15vh;">
+                    <img class="responsive-img circle" src="{{ stu.image.url }}"
+                         style="height: 10vh;border-radius: 50%">
+                </div>
+                <div style="height:15vh;">
+                    <span style="color:darkblue;font-size:20px;margin-left:4%;">{{ stu.First_Name }}&nbsp;{{ stu.Last_Name }}</span><br>
+                    <span style="color:darkblue;font-size:15px;margin-left:4%;">{{ stu.email }}</span>
+                </div>
+                <div class="right">
+                    <a class='dropdown-trigger' data-target='stud_del'>
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                    <ul id='stud_del' class='dropdown-content' style="color:darkblue;">
+                        <li><a href="#!">Remove</a></li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems, {});
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            var instances = M.Dropdown.init(elems, {});
+        });
+
+    </script>
+{% endblock %}

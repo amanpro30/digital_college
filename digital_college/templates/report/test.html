@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/gallery.min.opt.js?5466258059227121248" crossOrigin="anonymous"></script>
+    <style>
+            div.secondnav {
+              position: -webkit-sticky;
+              position: sticky;
+              top: 0;
+            }
+    </style>
+  </head>
+  <body>
+        <nav class="teal nav-extended">
+                <div class="nav-background">
+                        <div class="ea k" style="background-image: url('/static/report/1.jpg')"></div>
+                </div>
+                <div class="nav-wrapper db">
+                    <a href="#" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
+                    <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">notifications</i></a>
+                        </li>
+                        <li><a href="#"><img class="responsive-img" src="/media/profile_pics/user.png"
+                                                style="border-radius:50%;width:40px;height:40px;object-fit:fill;"></a></li>
+                        <li><a href="#" style="font-family: Arbutus Slab;">Welcome&nbsp;{{ user|title }}</a></li>
+                        <li><a href="{% url 'website_logout' %}">Logout</a></li>
+                    </ul>
+                    <ul id='dropdown1' class='dropdown-content' style="margin-top: 100px;">
+                        <li><a href="#">Prof. Subu added a comment.</a></li>
+                        <li><a href="#">Aman replied to your comment.</a></li>
+                    </ul>
+                    
+                </div>
+                <div class="nav-content de">
+                        <h1>BLOG</h1>
+                        <div class="ge">My life</div>
+                </div>
+        </nav>
+        <div class="navbar secondnav">
+        <nav class="teal">
+            
+            <div class="nav-wrapper-">
+                            <ul class="tabs tabs-transparent">
+                              <li class="tab"><a href="#test1">Test 1</a></li>
+                              <li class="tab"><a class="active" href="#test2">Test 2</a></li>
+                              <li class="tab"><a href="#test4">Test 4</a></li>
+                            </ul>
+                      
+            </div>
+
+        </nav>
+        </div>
+        <ul class="sidenav" id="mobile-nav">
+            <li><a href="#dashboard">Home</a></li>
+            <li><a href="#classroom">
+                <div class="valign-wrapper">
+                    <i class="material-icons" style="margin-left:30px;margin-right:30px;">format_list_bulleted</i>
+                    <span>Classrooms</span>
+                </div>
+            </a></li>
+            <li>
+                <a href="#about">
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="margin-left:30px;margin-right:30px;">group</i>
+                        <span>Progress Report</span>
+                    </div>
+                </a></li>
+            <li><a href="#classroom">
+                <div class="valign-wrapper">
+                    <i class="material-icons" style="margin-left:30px;margin-right:30px;">date_range</i>
+                    <span>Planner</span>
+                </div>
+                </a>
+        </ul>
+</div>
+    <p>hello <br>
+        whss   <br>
+        sf      <br>
+        ffsdf<br>
+        fsf<br>
+        sf<br>
+        fsfa<br>
+        sdf<br>
+        sf<br>
+        fsfsd<br>
+    </p>
+    <p>hello <br>
+        whss   <br>
+        sf      <br>
+        ffsdf<br>
+        fsf<br>
+        sf<br>
+        fsfa<br>
+        sdf<br>
+        sf<br>
+        fsfsd<br>
+    </p>
+    <p>hello <br>
+        whss   <br>
+        sf      <br>
+        ffsdf<br>
+        fsf<br>
+        sf<br>
+        fsfa<br>
+        sdf<br>
+        sf<br>
+        fsfsd<br>
+    </p>
+    <p>hello <br>
+        whss   <br>
+        sf      <br>
+        ffsdf<br>
+        fsf<br>
+        sf<br>
+        fsfa<br>
+        sdf<br>
+        sf<br>
+        fsfsd<br>
+    </p>
+
+</body>
+</html>

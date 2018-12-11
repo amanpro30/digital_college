@@ -1,0 +1,47 @@
+{% extends 'quiz/base_classrooms.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<form method="POST" >
+    <p>single choice form</p>
+    {% csrf_token %}
+    <div id="formset" data-formset-prefix="{{ formset.prefix }}">
+        {{ single_choice_form.management_form }}
+    
+        <div data-formset-body>
+            <!-- New forms will be inserted in here -->
+            {% for single in single_choice_form %}
+                <div data-formset-form>
+                    {{ single }}
+                    <button type="button" data-formset-delete-button>Delete form</button>
+                </div>
+            {% endfor %}
+        </div>
+  
+        <!-- The empty form template. By wrapping this in a <script> tag, the
+        __prefix__ placeholder can easily be replaced in both attributes and
+        any scripts -->
+        <script type="form-template" data-formset-empty-form>
+            {% autoescape on %}
+                <div data-formset-form>
+                    {{ formset.empty_form }}
+                    <button type="button" data-formset-delete-button>Delete form</button>
+                </div>
+            {% endautoescape %}
+        </script>
+    
+        <!-- This button will add a new form when clicked -->
+        <input type="button" value="Add another" data-formset-add>
+        
+        <script>jQuery(function($) {
+            $("#formset").formset({
+                animateForms: true
+            });
+            $('#formset').on('formAdded', function(event) {
+                newForm = event.target;
+
+            });
+        });</script>
+    
+    </form>
+{% endblock content %}

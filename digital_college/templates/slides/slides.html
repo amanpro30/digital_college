@@ -1,11 +1,47 @@
 {% extends 'quiz/base_classrooms.html' %}
 {% block content %}
+
+<div class="container">
     {% ifequal user.registered_user.role 'F' %}
-    <div class="container">
-        {% for file in assign_files %}
-            <a href="{%   url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a>
-            <a href="{% url 'after:classroom:slides:delete' class_name file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
-        {% endfor %}
+
+        <div class="container">
+
+            {% for file in assign_files %}
+                <a href="{% url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a>
+                <a href="{% url 'after:classroom:slides:delete' class_name file.id %}"><i class="material-icons"
+                                                                                          id="{{ file.id }}">delete</i><br></a>
+            {% endfor %}
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    {% csrf_token %}
+                    {{ form.file }}
+                    {{ form.title }}
+                </div>
+                <input type="submit">
+            </form>
+        </div>
+    {% endifequal %}
+    {% ifequal user.registered_user.role 'S' %}
+
+        <div class="container">
+            <h><b>Hi Folks! Take Your assignments....!!!! :):)</b></h>
+            <br>
+            {% for file in assign_files %}
+                <a href="{% url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a><br>
+            {% endfor %}
+        </div>
+        <div class="container">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    {% csrf_token %}
+                    {{ form.file }}
+                    {{ form.title }}
+                </div>
+
+                <input type="submit">
+            </form>
+        </div>
+    {% endifequal %}
     <form method="POST" enctype="multipart/form-data">
         <div class="row">
             {% csrf_token %}
@@ -14,13 +50,19 @@
         </div>
         <input type="submit">
     </form>
-    </div>
-    {% endifequal %}
-    {% ifequal user.registered_user.role 'S' %}
-        <div class="container">
-            {% for file in assign_files %}
-                <a href="{%   url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a><br>
-            {% endfor %}
+    {% for file in assign_files %}
+        <div class="valign-wrapper hoverable">
+            <a href="{% url  'after:classroom:slides:download' class_name file.id %}">
+                <i class="material-icons" style="margin-left:30px;margin-right:30px;">navigate_next</i>
+                <span style="color:teal;">{{ file.title }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+            {% ifequal user.registered_user.role 'F' %}
+                <a href="{% url 'after:classroom:slides:delete' class_name file.id %}">
+                    <i class="material-icons" id="{{ file.id }}">delete</i>
+                </a>
+            {% endifequal %}
         </div>
-    {% endifequal %}
-{% endblock content %}
+
+    {% endfor %}
+</div>
+{% endblock %}

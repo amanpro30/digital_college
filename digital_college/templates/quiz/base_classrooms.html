@@ -1,65 +1,213 @@
-{% extends 'Parent/base.html' %}
 {% load static %}
-{% block head %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{% static 'classrooms/css/classroom2.css' %}">
-{% endblock %}
-{% block body %}
-    {#    <div style="height:400px;width:100%;">#}
-    {#        <img src="/media/club_images/club_default.jpg" style=" width:100%;object-fit:cover;overflow: hidden;">#}
-    {#    </div>#}
-    {% block content %}
+    {#    font-family#}
+    <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Arbutus Slab' rel='stylesheet'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+    /* #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+    #sortable li span { position: absolute; margin-left: -1.3em; } */
+        /* .addcss1{
+            visibility: hidden; 
+        }
+        .delcss1{
+            visibility: hidden;
+            display: none;
+        }
+        .addcss2{
+            visibility: hidden;
+            display: none;
+        }
+        .delcss2{
+            visibility: hidden;
+            display: none;
+        }
+        .addcss3{
+            visibility: hidden;
+            display: none;
+        }
+        .delcss3{
+            visibility: hidden;
+            display: none;
+        }
+        .addcss4{
+            visibility: hidden;
+            display: none;
+        }
+        .delcss4{
+            visibility: hidden;
+            display: none;  
+        } */
 
-    {% endblock content %}
-    <div class="fixed-action-btn right">
-        <div class="li_float">
-            <a class="btn-floating btn-large red anchor">
-                <i class="large material-icons">menu</i>
+    </style>
+    {% block head %}
+    {% endblock %}
+    <style>
+        div.secondnav {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+        }
+
+    </style>
+</head>
+<body style="background-color:#f0f5f5;">
+<nav class="nav-extended blue darken-4">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
+            <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
             </a>
-            <p class="message red lighter-2 right"
-               style="position:absolute; color: white;display:none;top:40px;border-radius: 5px;">Menu</p>
+            <ul class="right hide-on-med-and-down valign-wrapper">
+                <li><a href="{% url 'after:after_login' %}">Home</a></li>
+                <li><a href="#" class="dropdown-trigger" data-target='dropdown2'><i
+                        class="material-icons">notifications</i></a>
+                </li>
+                <li><a href="#">
+                    {% if user.registered_user.image.url %}
+                        <img class="responsive-img" src="{{ user.registered_user.image.url }}"
+                             style="border-radius:50%;width:40px;height:40px;object-fit:fill;">
+                    {% elif user.registered_user.image.url %}
+                        <img class="responsive-img" src="/media/profile_pics/user.png"
+                             style="border-radius:50%;width: 40px;height: 40px;object-fit:fill;">
+                    {% endif %}
+                </a></li>
+                <li><a href="#" style="font-family: Arbutus Slab;">Welcome&nbsp;{{ user|title }}</a></li>
+                <li><a href="{% url 'website_logout' %}">Logout</a></li>
+            </ul>
+            <ul id='dropdown2' class='dropdown-content' style="margin-top: 100px;">
+                <li><a href="#">Prof. Subu added a comment.</a></li>
+                <li><a href="#">Aman replied to your comment.</a></li>
+            </ul>
         </div>
-        <ul>
-            <li class="li_float"><a class="btn-floating yellow darken-1 anchor" href="#"><i
-                    class="material-icons">forum</i></a>
-                <p class="message yellow lighter-2 right"
-                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Forum</p>
-            </li>
-            <li class="li_float"><a class="btn-floating green anchor" href="#"><i
-                    class="material-icons">photo</i></a>
-                <p class="message green lighter-2 right"
-                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Assignments</p>
-            </li>
-            <li class="li_float"><a class="btn-floating blue anchor"
-                                    href="{% url 'after:classroom:quiz:quiz_home' class_name %}"><i
-                    class="material-icons">contacts</i></a>
-                <p class="message blue lighter-2 right"
-                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Quizzes</p>
-            </li>
-            <li class="li_float"><a class="btn-floating blue anchor" href="{% url 'after:classroom:slides:add' class_name %}"><i
-                    class="material-icons">contacts</i></a>
-                <p class="message blue lighter-2 right"
-                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Slides</p>
-            </li>
-        </ul>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-        const slider = document.querySelector('.slider');
-        M.Slider.init(slider, {
-                indicators: false,
-                height: 500,
-                transition: 500,
-                interval: 2000,
-            }
-        );
 
-        const floatAction = document.querySelector('.fixed-action-btn');
-        M.FloatingActionButton.init(floatAction, {
-                hoverEnabled: true,
-                direction: 'top',
-            }
-        );
-    </script>
+    <div class="nav-content"
+         style="background: url('/media/utils/cltheme.jpg') center;height: 40vh;text-align:center;justify-content: center;">
+    </div>
+</nav>
+<ul class="sidenav " id="mobile-nav">
+    <li><a href="{% url 'after:after_login' %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">dashboard</i>
+        <span>Home</span>
+    </a></li>
+    {% block sidebar %}
+    {% endblock %}
+    <li><a href="{% url 'website_logout' %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">subdirectory_arrow_right</i>
+        <span>Logout</span>
+    </a></li>
+</ul>
+
+<div class="navbar secondnav" style="z-index:1;">
+    <nav class="blue darken-4">
+        <div class="nav-wrapper container">
+            <ul class="tabs tabs-transparent white-text">
+                {% if user.registered_user %}
+                    <li class="tab onhover"><a class="white-text"
+                                               href="{% url 'after:classroom:slides:add' class_name %}">Slides</a>
+                    </li>
+                    <li class="tab"><a class="white-text" href="#test2">Assignment</a></li>
+                    <li class="tab"><a class="white-text"
+                                       href="{% url 'after:classroom:quiz:quiz_home' class_name %}">Quiz</a></li>
+                {% endif %}
+                <li class="tab"><a class="white-text"
+                                   href="{% url 'after:classroom:class_forum:cl_forum' class_name %}">Forum</a></li>
+                <li class="tab"><a class="white-text" href="{% url 'after:classroom:members' class_name %}">Members</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+{% block content %}
 
 {% endblock %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        M.Sidenav.init(elems, {});
+    });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{% static 'Parent/base_js.js' %}"></script>
+<script src="{% static 'classrooms/    function initialize_select(){
+    $('select').formSelect();
+    }
+</script>js/quiz.js' %}"></script>
+
+
+<script>
+    // $( window ).on( "load", function() {
+    //     $('.link-formset2').hide();
+    //     $('.link-formset3').hide();
+    //     $('.link-formset4').hide();
+    // })
+    function initialize_select(){
+    $('select').formSelect();
+    }
+</script>
+
+
+
+
+<script>
+    $('.link-formset1').formset({
+        prefix: '{{single_choice_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>Single Choice',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        added: initialize_select,
+        addCssClass:'addcss1 waves-effect waves-light btn green col s2 offset-s1',
+        deleteCssClass:'delcss1'
+    });
+</script>
+<script>
+    $('.link-formset2').formset({
+        prefix: '{{multiple_choice_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>Multiple Choice',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        added: initialize_select,
+        addCssClass:'addcss2 waves-effect waves-light btn red col s2 offset-s1',
+        deleteCssClass:'delcss2'
+    });
+</script>
+<script>
+    $('.link-formset3').formset({
+        prefix: '{{truefalse_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>True False',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        added: initialize_select,
+        addCssClass:'addcss3 waves-effect waves-light btn amber col s2 offset-s1',
+        deleteCssClass:'delcss3'
+    });
+</script>
+<script>
+    $('.link-formset4').formset({
+        prefix: '{{matching_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>Matching',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        addCssClass:'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
+        deleteCssClass:'delcss4'
+    });
+//     $( function() {
+//     $( "#sortable" ).sortable();
+//     $( "#sortable" ).disableSelection();
+//   } );
+</script>
+
+</body>
+</html>
