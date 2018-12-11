@@ -57,10 +57,11 @@
             position: sticky;
             top: 0;
         }
+
     </style>
 </head>
-<body>
-<nav class="nav-extended teal">
+<body style="background-color:#f0f5f5;">
+<nav class="nav-extended blue darken-4">
     <div class="container">
         <div class="nav-wrapper">
             <a href="/" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
@@ -95,7 +96,7 @@
          style="background: url('/media/utils/cltheme.jpg') center;height: 40vh;text-align:center;justify-content: center;">
     </div>
 </nav>
-<ul class="sidenav" id="mobile-nav">
+<ul class="sidenav " id="mobile-nav">
     <li><a href="{% url 'after:after_login' %}">
         <i class="material-icons" style="margin-left:30px;margin-right:30px;">dashboard</i>
         <span>Home</span>
@@ -108,17 +109,22 @@
     </a></li>
 </ul>
 
-<div class="navbar secondnav">
-    <nav class="teal">
-
+<div class="navbar secondnav" style="z-index:1;">
+    <nav class="blue darken-4">
         <div class="nav-wrapper container">
-            <ul class="tabs tabs-transparent">
-                <li class="tab"><a href="{% url 'after:classroom:slides:add' class_name %}">Slides</a>
+            <ul class="tabs tabs-transparent white-text">
+                {% if user.registered_user %}
+                    <li class="tab onhover"><a class="white-text"
+                                               href="{% url 'after:classroom:slides:add' class_name %}">Slides</a>
+                    </li>
+                    <li class="tab"><a class="white-text" href="#test2">Assignment</a></li>
+                    <li class="tab"><a class="white-text"
+                                       href="{% url 'after:classroom:quiz:quiz_home' class_name %}">Quiz</a></li>
+                {% endif %}
+                <li class="tab"><a class="white-text"
+                                   href="{% url 'after:classroom:class_forum:cl_forum' class_name %}">Forum</a></li>
+                <li class="tab"><a class="white-text" href="{% url 'after:classroom:members' class_name %}">Members</a>
                 </li>
-                <li class="tab"><a href="#test2">Assignment</a></li>
-                <li class="tab"><a href="{% url 'after:classroom:class_forum:cl_forum' class_name %}">Forum</a></li>
-                <li class="tab"><a href="{% url 'after:classroom:quiz:quiz_home' class_name %}">Quiz</a></li>
-                <li class="tab"><a href="{% url 'after:classroom:members' class_name %}">Members</a></li>
             </ul>
         </div>
     </nav>
@@ -131,7 +137,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.sidenav');
-        M.Sidenav.init(elems,{});
+        M.Sidenav.init(elems, {});
     });
 </script>
 

@@ -2,14 +2,14 @@
 
 {% block options %}
 
-    <div class="container teal-text" style="width:95%;">
+    <div class="container teal-text" style="width:90%;">
         <div>
-            <div style="padding-bottom:1%;border-bottom:2px solid teal;margin-bottom: 2%;">
-                <h1 class="left-align teal-text" style="font-size: 40px;font-family: 'Noto Serif';">
+            <div style="padding-bottom:1%;border-bottom:2px solid darkblue;margin-bottom: 2%;">
+                <h1 class="left-align blue-text text-darken-4" style="font-size: 40px;font-family: 'Noto Serif';">
                     Clubs</h1>
             </div>
         </div>
-        <div style="margin-left:4%;">
+        <div style="margin-left:4%;color:darkblue;">
             <br><br>
             <form action="{% url 'after:new_club' %}" method="POST" autocomplete="off">
                 {% csrf_token %}
@@ -18,15 +18,17 @@
                         Name of the club.<br>
                         {{ clubform.club_name }}<br>
                     </h3>
-                    <button class="waves-effect waves-light btn" onclick="nextpg(1)">Next</button>
+                    <button class="waves-effect waves-light btn blue darken-4 text-white" onclick="nextpg(1)">Next
+                    </button>
                 </div>
                 <div id="c2" class="hide">
                     <h3>
                         Club Head.<br>
                         {{ clubform.club_head }}<br>
                     </h3>
-                    <button class="waves-effect waves-light btn" onclick="prevpg(2)">Previous</button>
-                    <button class="waves-effect waves-light btn" type="Submit">Submit</button>
+                    <button class="waves-effect waves-light btn blue darken-4 text-white" onclick="prevpg(2)">Previous
+                    </button>
+                    <button class="waves-effect waves-light btn blue darken-4 text-white" type="Submit">Submit</button>
                 </div>
             </form>
         </div>

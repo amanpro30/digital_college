@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import ExamResult
 from users.models import Exam,Courses
 from django.forms.models import model_to_dict
-import simplejson
+import json
 
 # Create your views here.
 
@@ -17,7 +17,7 @@ def student_graph(request, class_name ):
     for item in all_exams:
         item['exam_name'] = model_to_dict(item['exam_name'])
     context = {
-        'exams': simplejson.dumps(all_exams),
+        'exams': json.dumps(all_exams),
         'exam_results': exam_results
     }
     print(context['exam_results'])

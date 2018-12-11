@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from forum.form import ClassPostForm, ClassImageForm, ClassCommentForm, ClassReplyForm, ClassPostUpdateForm
 from forum.models import ClassPost, ClassImage, ClassComment, ClassLike, ClassReply
-from users.models import Courses
+from users.models import Courses, Registered_User
 
 
 def forum(request, class_name):
@@ -23,7 +23,12 @@ def forum(request, class_name):
     else:
         postform = ClassPostForm()
         imageform = ClassImageForm()
-    classId = Courses.objects.get(course_name=class_name, college_id=user.registered_user.college_id)
+    classId = ''
+    try:
+        if user.registered_user.role:
+            classId = Courses.objects.get(course_name=class_name, college_id=user.registered_user.college_id)
+    except Registered_User.DoesNotExist:
+        classId = Courses.objects.get(course_name=class_name, college_id=user.registered_college.id)
     posts = ClassPost.objects.filter(courseId=classId)
     context = {
         'user': user,

@@ -1,29 +1,24 @@
 from django.shortcuts import render
-
-from after_login.forms import ClubForm, CourseForm
-from users import views as user_views
-from users.models import Registered_User, Courses, CourseEnrollment, Registered_College, Clubs, ClubEnrollment
+from after_login.forms import ClubForm, CourseForm, EmailForm, UploadFileForm
+from users.models import Registered_User, Courses, CourseEnrollment, Registered_College, Clubs, ClubEnrollment, Email, \
+    UploadedFiles
 
 whos_logged = {
     'F': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Progress Report', 'trending_up', 'after:progress_report'),
           ('Calendar', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile')],
     'S': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Progress Report', 'trending_up', 'after:progress_report'),
           ('Calendar', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile'), ('Clubs', 'public', 'after:clubs:cl_list')],
     'Ad': [('Courses', 'import_contacts', 'after:after_login'),
-           ('faculty', 'record_voice_over', 'after:faculty'),
+           ('Faculty', 'record_voice_over', 'after:faculty'),
            ('Clubs', 'public', 'after:clubs:cl_list'), ('Student', 'group', 'after:students'),
-           ('Progress Report', 'trending_up', 'after:progress_report'),
            ('Profile', 'person', 'after:profile')],
 }
 
 
 def after_login(request):
     user = request.user
-
     role = ''
     try:
         if user.registered_user.role:
@@ -55,16 +50,45 @@ def after_login(request):
     return render(request, 'after_login/classList.html', context)
 
 
-def progress_report(request):
-    return None
-
-
 def profile(request):
     return render(request, 'after_login/profile.html')
 
 
 def faculty(request):
-    return render(request, 'after_login/faculty.html')
+    user = request.user
+    error = ''
+    if request.method == 'POST':
+        uploadform = UploadFileForm(request.POST, request.FILES)
+        print(uploadform.is_valid())
+        print(uploadform.errors)
+        if uploadform.is_valid():
+            csv1 = UploadedFiles.objects.create(file=request.FILES['file'])
+            try:
+                with open(csv1.file.url[1:], encoding="utf-8", mode='r') as csv_file:
+                    lines = csv_file.readlines()
+                    for i in range(1, len(lines)):
+                        Email.objects.create(email=lines[i].strip(), role='F')
+                        error = 'yes'
+            except:
+                error = 'no'
+    else:
+        uploadform = UploadFileForm()
+    if request.method == 'POST':
+        emailform = EmailForm(request.POST)
+        if emailform.is_valid():
+            Email.objects.create(email=emailform.cleaned_data['email'], role='F')
+    else:
+        emailform = EmailForm()
+    facultylist = Registered_User.objects.filter(role='F', college_id=user.registered_college.id)
+    context = {
+        'fac_list': facultylist,
+        'whos_logged': whos_logged['Ad'],
+        'logged_in': user,
+        'emailform': emailform,
+        'uploadform': uploadform,
+        'added': error,
+    }
+    return render(request, 'after_login/faculty.html', context)
 
 
 def clubs(request):
@@ -97,7 +121,38 @@ def clubs(request):
 
 
 def students(request):
-    return render(request, 'after_login/students.html')
+    user = request.user
+    error = ''
+    if request.method == 'POST':
+        uploadform = UploadFileForm(request.POST, request.FILES)
+        if uploadform.is_valid():
+            csv1 = UploadedFiles.objects.create(file=request.FILES['file'])
+            try:
+                with open(csv1.file.url[1:], encoding="utf-8", mode='r') as csv_file:
+                    lines = csv_file.readlines()
+                    for i in range(1, len(lines)):
+                        Email.objects.create(email=lines[i].strip(), role='S')
+                        error = 'yes'
+            except:
+                error = 'no'
+    else:
+        uploadform = UploadFileForm()
+    if request.method == 'POST':
+        emailform = EmailForm(request.POST)
+        if emailform.is_valid():
+            Email.objects.create(email=emailform.cleaned_data['email'], role='S')
+    else:
+        emailform = EmailForm()
+    studentslist = Registered_User.objects.filter(role='S', college_id=user.registered_college.id)
+    context = {
+        'stu_list': studentslist,
+        'whos_logged': whos_logged['Ad'],
+        'logged_in': request.user,
+        'emailform': emailform,
+        'uploadform': uploadform,
+        'added': error,
+    }
+    return render(request, 'after_login/students.html', context)
 
 
 def new_club(request):
@@ -172,4 +227,3 @@ def new_course(request):
         'courseform': courseform,
     }
     return render(request, 'after_login/course_setup.html', context)
-

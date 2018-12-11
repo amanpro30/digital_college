@@ -34,7 +34,7 @@ class Registered_User(models.Model):
 
     def __str__(self):
         return self.user.username
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default='profile_pics/user.png', upload_to='profile_pics')
 
     def notifications(self):
         return self.notification_set.filter(viewed=False)
@@ -64,7 +64,7 @@ class Courses(models.Model):
 class ClubEnrollment(models.Model):
     club_id = models.ForeignKey(Clubs, on_delete=models.CASCADE)
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
-    
+
 
 class CourseEnrollment(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
@@ -80,6 +80,21 @@ class Exam(models.Model):
     max_marks = models.IntegerField()
     contribution = models.IntegerField()
     result_file = models.FileField(blank=True, upload_to='report')
+
+class Email(models.Model):
+    email = models.EmailField(blank=False,max_length=100)
+    ROLE_CHOICES = [
+        ('F', 'faculty'),
+        ('S', 'student'),
+    ]
+    role = models.CharField(max_length=1, choices=ROLE_CHOICES)
+
+    class Meta:
+        unique_together = ["email"]
+
+
+class UploadedFiles(models.Model):
+    file = models.FileField(upload_to='faculty')
 
 class Assignment(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)

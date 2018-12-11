@@ -27,7 +27,8 @@ class ClassImageForm(ModelForm):
     image = forms.ImageField(widget=forms.FileInput(
         attrs={
             'type': 'file',
-            'id': 'images'
+            'id': 'images',
+            'accept': '.jpg',
         }
     ))
 
