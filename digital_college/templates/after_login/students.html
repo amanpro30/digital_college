@@ -4,7 +4,6 @@
         .onmouse:hover {
             transition: background-color 1s ease;
             border-bottom: 4px solid darkblue;
-            transform: scale(1.1, 1.1);
         }
 
         .onhover:hover {
@@ -20,7 +19,7 @@
         <div style="margin-bottom:1%;">
             <div style="padding-bottom:1%;border-bottom:2px solid darkblue;margin-bottom: 2%;">
                 <h1 class="left-align" style="color:darkblue;font-size: 40px;font-family: 'Noto Serif';">
-                    Faculty</h1>
+                    Students</h1>
             </div>
             <div class="right-align">
                 <a class="waves-effect waves-light green btn-floating btn-large modal-trigger" href="#csv_upload">
@@ -47,7 +46,7 @@
             {% endifequal %}
             <div id="csv_upload" class="modal">
                 <div class="modal-content">
-                    <p>Upload a file with the emails of the faculty. Make sure that only the 'email' column will be
+                    <p>Upload a file with the emails of the students. Make sure that only the 'email' column will be
                         stored in the database.Make sure that the first row has an email.</p>
                     <form method="POST" action="{% url 'after:faculty' %}" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -84,15 +83,25 @@
                 </div>
             </div>
         </div>
-        {% for fac in fac_list %}
+        {% for stu in stu_list %}
             <div id="facblock" class="hoverable onmouse"
-                 style="display:inline-block;height:40vh;width:29%;background-color:white;margin:2%; border-radius:4%;padding:2%;">
-                <div class="center-align">
-                    <img class="responsive-img" src="{{ fac.image.url }}" style="height: 20vh;">
+                 style="height:15vh;background-color:white;margin:2%; border-radius:2%;padding:2%;">
+                <div class="left" style="width:8%;height:15vh;">
+                    <img class="responsive-img circle" src="{{ stu.image.url }}"
+                         style="height: 10vh;border-radius: 50%">
                 </div>
-                <h2 style="color:darkblue;">{{ fac.First_Name }}&nbsp;{{ fac.Last_Name }}</h2>
-                <h3 style="color:darkblue;">{{ fac.email }}</h3>
-                <span href="#" style="color:white;">see complete profile</span>
+                <div style="height:15vh;">
+                    <span style="color:darkblue;font-size:20px;margin-left:4%;">{{ stu.First_Name }}&nbsp;{{ stu.Last_Name }}</span><br>
+                    <span style="color:darkblue;font-size:15px;margin-left:4%;">{{ stu.email }}</span>
+                </div>
+                <div class="right">
+                    <a class='dropdown-trigger' data-target='stud_del'>
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                    <ul id='stud_del' class='dropdown-content' style="color:darkblue;">
+                        <li><a href="#!">Remove</a></li>
+                    </ul>
+                </div>
             </div>
         {% endfor %}
     </div>
@@ -101,5 +110,10 @@
             const elems = document.querySelectorAll('.modal');
             M.Modal.init(elems, {});
         });
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            var instances = M.Dropdown.init(elems, {});
+        });
+
     </script>
 {% endblock %}

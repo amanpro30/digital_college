@@ -3,8 +3,9 @@
 {% block head %}
     <style>
         .onhover:hover {
-            background-color: #e0f7fa;
-            transition: background-color 0.5s ease;
+            transition: background-color 1s ease;
+            border-bottom:4px solid darkblue;
+            transform: scale(1.1, 1.1);
         }
     </style>
 
@@ -23,20 +24,20 @@
 
 {% block body %}
     <div style="margin-top:1.5%;">
-        <div class="hide-on-med-and-down"
-             style="float:right; background:white;border:2px solid darkblue;width:21%;border-radius:8px;">
+        <div class="hide-on-med-and-down " style="position:fixed;float:left;width:21%;">
+            <div class="z-depth-3" style="background:white;margin-left:2%;margin-top:10vh;border-radius:8px;">
                 {% for options in whos_logged %}
                     <a href="{% url options.2 %}">
                         <div class="hoverable onhover"
-                             style="border-radius:8px;color:darkblue;">
-                            <i class="material-icons" style="margin:4%;">{{ options.1 }}</i>
+                             style="border-radius:8px;color:darkblue;margin-bottom:5%;">
+                            <i class="material-icons" style="margin:6%; font-size: 28px;">{{ options.1 }}</i>
                             <span>{{ options.0 }}</span>
                         </div>
                     </a>
                 {% endfor %}
+            </div>
         </div>
-
-        <div style="float:left;width:79%;">
+        <div style="float:right;width:79%;">
             {% block options %}
             {% endblock %}
         </div>
