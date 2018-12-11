@@ -6,37 +6,174 @@
     <div class="container">
         <div class="row">
             <div class="input-field col s10">
-                <input value={{ single_ques.question }} id="question" type="text" class="validate" disabled>
+                <input value="{{ single_ques.question }}" id="question" type="text" class="validate" disabled>
                 <label class="active" for="question">question</label>
             </div>
-            <div class="input-field col s10">
-                <input value={{ single_ques.option1 }} id="textarea1" type="text" class="validate" disabled>
+            <div class="input-field col s6">
+                <input value="{{ single_ques.option1 }}" id="textarea1" type="text" class="validate" disabled>
                 <label class="active" for="textarea1">option 1</label>
             </div>
-            <div class="input-field col s10">
-                <input value={{ single_ques.option2 }} id="textarea2" type="text" class="validate" disabled>
+            <div class="input-field col s6">
+                <input value="{{ single_ques.option2 }}" id="textarea2" type="text" class="validate" disabled>
                 <label class="active" for="textarea2">option 2</label>
             </div>
-            <div class="input-field col s10">
-                <input value={{ single_ques.option3 }} id="textarea3" type="text" class="validate" disabled>
+            <div class="input-field col s6">
+                <input value="{{ single_ques.option3 }}" id="textarea3" type="text" class="validate" disabled>
                 <label class="active" for="textarea3">option 3</label>
             </div>
-            <div class="input-field col s10">
-                <input value={{ single_ques.option4 }} id="textarea4" type="text" class="validate" disabled>
+            <div class="input-field col s6">
+                <input value="{{ single_ques.option4 }}" id="textarea4" type="text" class="validate" disabled>
                 <label class="active" for="textarea4">option 4</label>
             </div>
         </div>
     </div>
     {% endfor %}
+    {% for multiple_ques in question_multiple %}
+    <p>Question-{{ques.id}}</p>
+    <div class="container">
+        <div class="row">
+            <div class="input-field col s10">
+                <input value="{{ multiple_ques.question }}"" id="question" type="text" class="validate" disabled>
+                <label class="active" for="question">question</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ multiple_ques.option1 }}" id="textarea1" type="text" class="validate" disabled>
+                <label class="active" for="textarea1">option 1</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ multiple_ques.option2 }}" id="textarea2" type="text" class="validate" disabled>
+                <label class="active" for="textarea2">option 2</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ multiple_ques.option3 }}" id="textarea3" type="text" class="validate" disabled>
+                <label class="active" for="textarea3">option 3</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ multiple_ques.option4 }}" id="textarea4" type="text" class="validate" disabled>
+                <label class="active" for="textarea4">option 4</label>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% for true_ques in question_true %}
+    <p>Question-{{ques.id}}</p>
+    <div class="container">
+        <div class="row">
+            <div class="input-field col s10">
+                <input value="{{ true_ques.question }}" id="question" type="text" class="validate" disabled>
+                <label class="active" for="question">question</label>
+            </div>
+            <div class="input-field col s10">
+                <input value="{{ true_ques.option1 }}" id="textarea1" type="text" class="validate" disabled>
+                <label class="active" for="textarea1">option 1</label>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% for matching_ques in question_matching %}
+    <p>Question-{{ques.id}}</p>
+    <div class="container">
+        <div class="row">
+            <div class="input-field col s10">
+                <input value="{{ matching_ques.question }}" id="question" type="text" class="validate" disabled>
+                <label class="active" for="question">question</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ matching_ques.option1 }}" id="textarea1" type="text" class="validate" disabled>
+                <label class="active" for="textarea1">option 1</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ matching_ques.option2 }}" id="textarea2" type="text" class="validate" disabled>
+                <label class="active" for="textarea2">option 2</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ matching_ques.option3 }}" id="textarea3" type="text" class="validate" disabled>
+                <label class="active" for="textarea3">option 3</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="{{ matching_ques.option4 }}" id="textarea4" type="text" class="validate" disabled>
+                <label class="active" for="textarea4">option 4</label>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    
+            
     <form method='POST'>
+        {% csrf_token %}
         <div class="container col s7">
             <div class="row">
-                {% csrf_token %}
-                <p>Enter your responses:</p>
+                
             <div>
-                {{ respo.management_form }}
-                {% for resp in respo %}
-                    {{resp.as_p}}
+                <div class="chip col s2 red">
+                    Single Correct:
+                </div>
+                {{ respo_single.management_form }}
+                {% for resp1 in respo_single %}
+                    <div class="chip col s1.5 offset-s1">
+                        Question-{{forloop.counter}}
+                    </div>
+                    <div class="col s3">
+                        {{resp1.as_p}}
+                    </div>
+                {% endfor %}
+            </div>
+            <div>
+                <div class="chip col s2 red">
+                        Multiple Correct:
+                </div>
+                {{ respo_multi.management_form }}
+                {% for resp2 in respo_multi %}
+                    <div class="chip col s1.5 offset-s1">
+                        Question-{{forloop.counter}}
+                    </div>
+                    {{resp2.as_p}}
+                {% endfor %}
+            </div>
+            <div>
+                <div class="chip col s2 red">
+                    True False:
+                </div>
+                {{ respo_true.management_form }}
+                {% for resp3 in respo_true %}
+                    <div class="chip col s1.5 offset-s1">
+                        Question-{{forloop.counter}}
+                    </div>
+                    {{resp3.as_p}}
+                {% endfor %}
+            </div>
+            <div>
+                <div class="chip col s2 red">
+                    Matching:
+                </div>
+                {{ respo_matching1.management_form }}
+                {% for resp4 in respo_matching %}
+                <div class="chip col s1.5 offset-s1">
+                    Question-{{forloop.counter}}
+                </div>
+                    {{resp4.as_p}}
+                {% endfor %}
+                {{ respo_matching2.management_form }}
+                {% for resp4 in respo_matching %}
+                <div class="chip col s1.5 offset-s1">
+                    Question-{{forloop.counter}}
+                </div>
+                    {{resp4.as_p}}
+                {% endfor %}
+                {{ respo_matching3.management_form }}
+                {% for resp4 in respo_matching %}
+                <div class="chip col s1.5 offset-s1">
+                    Question-{{forloop.counter}}
+                </div>
+                    {{resp4.as_p}}
+                {% endfor %}
+                {{ respo_matching4.management_form }}
+                {% for resp4 in respo_matching %}
+                <div class="chip col s1.5 offset-s1">
+                    Question-{{forloop.counter}}
+                </div>
+                    {{resp4.as_p}}
                 {% endfor %}
             </div>
             <button type="submit">submit</button>
@@ -49,16 +186,13 @@
     <p>The quiz is not started</p>
 {% endif %}
 
-
-<ul id="sortable">
-    <li>Item 1</li>
-    <li>Item 2</li>
-    <li>Item 3</li>
-    <li>Item 4</li>
-    <li>Item 5</li>
-    <li>Item 6</li>
-    <li>Item 7</li>
-</ul>
-
+<script>
+    function initialize_select(){
+$('select').formSelect();
+}
+$( window ).on( "load", function() {
+    initialize_select();
+    })
+</script>
 
 {% endblock content %}

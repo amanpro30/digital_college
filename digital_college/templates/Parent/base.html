@@ -7,16 +7,13 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Arbutus Slab' rel='stylesheet'>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
-
-    <!-- <script src="{% static '/channels/js/websocketbridge.js' %}" -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
-    #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-    #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-    #sortable li span { position: absolute; margin-left: -1.3em; }
+ 
         /* .addcss1{
             visibility: hidden; 
         }
@@ -65,7 +62,7 @@
                 </a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="#home">Home</a></li>
-                    {% if notification.count %}
+                    {% if user.registered_user.notification.count %}
                         <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications_active</i></a></li>
                     {% else %}
                         <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications</i></a></li>
@@ -86,8 +83,9 @@
                     <li><a href="{% url 'website_logout' %}">Logout</a></li>
                 </ul>
                 <ul id='dropdownnot' class='dropdown-content' style="margin-top: 100px;">
-                    {% for notif in notification %}
+                    {% for notif in user.registered_user.notification %}
                     <li>
+                        
                         {{notif.title}}
                         <a href='{% url 'after:notifications:delete_notifications' notif.id %}' >{{notif.message}}</a>
                     </li>
@@ -119,23 +117,14 @@
 
 {% endblock %}
 
-{% for notif in notifications %}
-    <li><a href='#' style='color:red'>{{notif.title}}</a></li>
-{% endfor %}
-                    
+    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="{% static 'Parent/base_js.js' %}"></script>
 <script src="{% static 'classrooms/js/quiz.js' %}"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    $( window ).on( "load", function() {
-        $('.link-formset2').hide();
-        $('.link-formset3').hide();
-        $('.link-formset4').hide();
-    })
+
     function initialize_select(){
     $('select').formSelect();
     }
@@ -179,25 +168,9 @@
         addCssClass:'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
         deleteCssClass:'delcss4'
     });
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.dropdown-trigger');
-    var instances = M.Dropdown.init(elems, options);
-    });
-    // document.addEventListener('DOMContentLoaded',function(){
-    //     const webSocketBridge = new channels.webSocketBridge():
-    //     webSocketBridge.listen(function(action,stream)){
-    //         console.log('Response',action,stream);
-    //     }
-    // })
+
+
 </script>
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    $( function() {
-        $( "#sortable" ).sortable();
-        $( "#sortable" ).disableSelection();
-    } );
-</script> -->
 
 
 </body>

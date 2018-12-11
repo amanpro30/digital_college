@@ -1,8 +1,4 @@
 from django.db import models
-<<<<<<< HEAD
-
-# Create your models here.
-=======
 from users.models import Registered_User, Courses, Exam
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
@@ -34,4 +30,3 @@ def populateExamResult(sender,**kwargs):
 
 
 post_save.connect(populateExamResult,sender=Exam)
->>>>>>> 14f158157c979a2936952e3b943b3a4495be888c

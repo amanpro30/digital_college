@@ -35,55 +35,52 @@
                         <label for="{{single.label_tag}}">{{single.marks.label_tag}}</label>
                     </div>
                     <div class="input-field col s2">
-                        {{single.test}}
-                        {{single.test.label_tag}}
-                    <!-- <label>
-                        <input type="checkbox" checked="checked" />
-                        <span>Yellow</span>
-                    </label> -->
+                        {{single.answer}}
+                        <label for="{{single.label_tag}}">{{single.answer.label_tag}}</label>
                     </div>
                 </div>
                 
             </div>
             {% endfor %}
         </div>
-    <div class='row'>
-        {{ multiple_choice_form.management_form }}
-        {% for multiple in multiple_choice_form %}
-        <div class="link-formset2 card col s10 offset-s1">
-            <div class='card-content'>
-                <div class="input-field col s10">
-                    {{multiple.question}}
-                    <label for="{{multiple.label_tag}}">{{multiple.question.label_tag}}</label>
+        <div class='row'>
+            {{ multiple_choice_form.management_form }}
+            {% for multiple in multiple_choice_form %}
+            <div class="link-formset2 card col s10 offset-s1">
+                <div class='card-content'>
+                    <div class="input-field col s10">
+                        {{multiple.question}}
+                        <label for="{{multiple.label_tag}}">{{multiple.question.label_tag}}</label>
+                    </div>
+                    <div class="input-field col s6">
+                        {{multiple.option1}}
+                        <label for="{{multiple.label_tag}}">{{multiple.option1.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s6">
+                        {{multiple.option2}}
+                        <label for="{{multiple.label_tag}}">{{multiple.option2.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s6">
+                        {{multiple.option3}}
+                        <label for="{{multiple.label_tag}}">{{multiple.option3.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s6">
+                        {{multiple.option4}}
+                        <label for="{{multiple.label_tag}}">{{multiple.option4.label_tag}}</label>
+                    </div> 
+                    <div class="input-field col s2">
+                        {{multiple.marks}}
+                        <label for="{{multiple.label_tag}}">{{multiple.marks.label_tag}}</label>
+                    </div>
+                    <div class="input-field col s2">
+                        {{multiple.options}}
+                        <label for="{{multiple.label_tag}}">{{single.options.label_tag}}</label>
+                    </div>
                 </div>
-                <div class="input-field col s6">
-                    {{multiple.option1}}
-                    <label for="{{multiple.label_tag}}">{{multiple.option1.label_tag}}</label>
-                </div> 
-                <div class="input-field col s6">
-                    {{multiple.option2}}
-                    <label for="{{multiple.label_tag}}">{{multiple.option2.label_tag}}</label>
-                </div> 
-                <div class="input-field col s6">
-                    {{multiple.option3}}
-                    <label for="{{multiple.label_tag}}">{{multiple.option3.label_tag}}</label>
-                </div> 
-                <div class="input-field col s6">
-                    {{multiple.option4}}
-                    <label for="{{multiple.label_tag}}">{{multiple.option4.label_tag}}</label>
-                </div> 
-                <div class="input-field col s2">
-                    {{multiple.marks}}
-                    <label for="{{multiple.label_tag}}">{{multiple.marks.label_tag}}</label>
-                </div>
-                <div class="input-field col s2">
-                    {{multiple.options}}
-                    <label for="{{multiple.label_tag}}">{{multiple.options.label_tag}}</label>
-                </div>
+                
             </div>
             {% endfor %}
         </div>
-    </div>
     <div class='row'>
             {{ truefalse_form.management_form }}
             {% for true in truefalse_form %}
@@ -110,7 +107,7 @@
         </div>
         {% endfor %}
     </div>
-    <div class='row'>
+    <!-- <div class='row'>
             {{ matching_form.management_form }}
             {% for match in matching_form %}
         <div class='link-formset4 card col s10 offset-s1'>
@@ -159,7 +156,7 @@
             
         </div>
         {% endfor %}
-    </div>
+    </div> -->
 
 <div class="row">
     <button class="btn waves-effect waves-light col s1 offset-s6" type="submit" name="action">Submit
@@ -171,3 +168,5 @@
 
 {% endifequal %}    
 {% endblock content %}
+
+

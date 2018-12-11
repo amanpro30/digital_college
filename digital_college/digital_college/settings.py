@@ -48,8 +48,7 @@ INSTALLED_APPS = [
     'announcements',
     'slides',
     'checkboxselectmultiple',
-    # 'channels',
-    'notifications'
+    'notifications',
     'report',
     'forum.apps.ForumConfig',
 ]
@@ -83,6 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'digital_college.wsgi.application'
+
 #
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

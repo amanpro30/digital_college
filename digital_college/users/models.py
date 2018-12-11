@@ -36,6 +36,12 @@ class Registered_User(models.Model):
         return self.user.username
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
+    def notifications(self):
+        return self.notification_set.filter(viewed=False)
+
+    notification = property(notifications)
+
+
 class Clubs(models.Model):
     club_name = models.CharField(max_length=100)
     club_head = models.ForeignKey(Registered_User, on_delete=models.CASCADE)

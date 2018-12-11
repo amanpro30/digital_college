@@ -8,6 +8,47 @@
     <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Arbutus Slab' rel='stylesheet'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+    /* #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+    #sortable li span { position: absolute; margin-left: -1.3em; } */
+        /* .addcss1{
+            visibility: hidden; 
+        }
+        .delcss1{
+            visibility: hidden;
+            display: none;
+        }
+        .addcss2{
+            visibility: hidden;
+            display: none;
+        }
+        .delcss2{
+            visibility: hidden;
+            display: none;
+        }
+        .addcss3{
+            visibility: hidden;
+            display: none;
+        }
+        .delcss3{
+            visibility: hidden;
+            display: none;
+        }
+        .addcss4{
+            visibility: hidden;
+            display: none;
+        }
+        .delcss4{
+            visibility: hidden;
+            display: none;  
+        } */
+
+    </style>
     {% block head %}
     {% endblock %}
     <style>
@@ -92,6 +133,74 @@
         var elems = document.querySelectorAll('.sidenav');
         M.Sidenav.init(elems,{});
     });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{% static 'Parent/base_js.js' %}"></script>
+<script src="{% static 'classrooms/    function initialize_select(){
+    $('select').formSelect();
+    }
+</script>js/quiz.js' %}"></script>
+
+
+<script>
+    // $( window ).on( "load", function() {
+    //     $('.link-formset2').hide();
+    //     $('.link-formset3').hide();
+    //     $('.link-formset4').hide();
+    // })
+    function initialize_select(){
+    $('select').formSelect();
+    }
+</script>
+
+
+
+
+<script>
+    $('.link-formset1').formset({
+        prefix: '{{single_choice_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>Single Choice',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        added: initialize_select,
+        addCssClass:'addcss1 waves-effect waves-light btn green col s2 offset-s1',
+        deleteCssClass:'delcss1'
+    });
+</script>
+<script>
+    $('.link-formset2').formset({
+        prefix: '{{multiple_choice_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>Multiple Choice',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        added: initialize_select,
+        addCssClass:'addcss2 waves-effect waves-light btn red col s2 offset-s1',
+        deleteCssClass:'delcss2'
+    });
+</script>
+<script>
+    $('.link-formset3').formset({
+        prefix: '{{truefalse_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>True False',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        added: initialize_select,
+        addCssClass:'addcss3 waves-effect waves-light btn amber col s2 offset-s1',
+        deleteCssClass:'delcss3'
+    });
+</script>
+<script>
+    $('.link-formset4').formset({
+        prefix: '{{matching_form.prefix}}',
+        addText: '<i class="close material-icons medium left">add_circle</i>Matching',
+        deleteText: '<i class="close material-icons medium">delete</i>',
+        addCssClass:'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
+        deleteCssClass:'delcss4'
+    });
+//     $( function() {
+//     $( "#sortable" ).sortable();
+//     $( "#sortable" ).disableSelection();
+//   } );
 </script>
 
 </body>

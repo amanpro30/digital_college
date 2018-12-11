@@ -1,11 +1,4 @@
 from django.shortcuts import render
-<<<<<<< HEAD
-
-# Create your views here.
-
-def test(request):
-    return render(request,'report/test.html')
-=======
 from .models import ExamResult
 from users.models import Exam,Courses
 from django.forms.models import model_to_dict
@@ -36,4 +29,3 @@ def faculty_graph(request , class_name):
     return render(request, 'report/faculty_graph.html')
 
 
->>>>>>> 14f158157c979a2936952e3b943b3a4495be888c
