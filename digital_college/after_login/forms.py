@@ -43,9 +43,8 @@ class EmailForm(ModelForm):
     class Meta:
         model = Email
         fields = ['email']
-    def clean(self):
+    
         
-
 
 class UploadFileForm(ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={

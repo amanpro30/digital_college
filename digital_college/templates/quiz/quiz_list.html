@@ -1,6 +1,7 @@
 {% extends 'quiz/base_classrooms.html' %}
 {% block content %}
-        <div class='row'>
+    <div class="container center-align" style="margin:2%;">
+        <div class='row' style="background-color: white;"">
             {% if message %}
                 <div style='visibility: hidden;' id='msg'>
                     {{message}}
@@ -13,4 +14,5 @@
                 end time: {{ quiz.end_time}}<br>
             {% endfor %}
         </div>
+    </div>
 {% endblock content %}
