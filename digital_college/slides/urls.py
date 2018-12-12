@@ -5,7 +5,8 @@ app_name = "slides"
 
 urlpatterns = [
     path('download/<id>/', views.download, name='download'),
+    path('assignview/<id>/', views.assignView, name='assignsolview'),
     path('addSlides/', views.addSlides, name='addSlides'),
     path('delete/<str:file_id>', views.delSlides, name='delete'),
-    path('addAssign/',views.addAssign,name='addAssign'),
+    path('addAssign/', views.addAssign, name='addAssign'),
 ]

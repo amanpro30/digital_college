@@ -80,7 +80,6 @@ def take_quiz(request,class_name,quiz_name):
             return quiz.end_time < present
         started=is_started(quiz_instance)
         finished=is_finished(quiz_instance)
-
         context={
             'question_single':question_single,
             'question_multiple':question_multiple,
@@ -91,6 +90,7 @@ def take_quiz(request,class_name,quiz_name):
             'is_started':started,
             'is_finished':finished,
             'class_name': class_name,
+
         }
         return render(request,'quiz/take_quiz.html',context)
 

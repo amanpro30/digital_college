@@ -72,15 +72,7 @@ def delete(request, entry_id):
     # return HttpResponseRedirect("/")
     entry = Entry.objects.get(id=entry_id)
     entry.delete()
-    user = request.user
-    role = user.registered_user.role
-    entries = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
-    context = {
-        'whos_logged': whos_logged[role],
-        'logged_in': user,
-        'entries': entries
-    }
-    return render(request, 'calendarapp/index.html', context)
+    return redirect('after:calendarapp:index')
 
 
 def edit(request, entry_id):
@@ -97,8 +89,8 @@ def edit(request, entry_id):
             return redirect('after:calendarapp:index')
     else:
         form = EntryUpdateForm(instance=entry)
-        template = 'calendarapp/form.html'
-        # template = 'calendarapp/edit.html'
+        # template = 'calendarapp/form.html'
+        template = 'calendarapp/edit.html'
         context = {
             'whos_logged': whos_logged[role],
             'logged_in': user,

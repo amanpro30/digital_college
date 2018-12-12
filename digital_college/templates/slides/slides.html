@@ -1,33 +1,50 @@
 {% extends 'quiz/base_classrooms.html' %}
 {% block content %}
 
-<div class="container">
-    {% ifequal user.registered_user.role 'F' %}
-
     <div class="container">
+        {% ifequal user.registered_user.role 'F' %}
+            <div class="container" style="width:80%;">
+                <div class="white" style="margin:3%;padding: 3%;">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            {% csrf_token %}
+                            {{ form.file }}
+                            {{ form.title }}
+                        </div>
+                        <input class="btn blue darken-4 white-text text-darken-4" type="submit">
+                    </form>
+                </div>
+                {% for file in slides_files %}
+                    <div class="white" style="height:10vh;margin:2%;padding:2%;border-radius:1%;">
 
-        {% for file in slides_files %}
-            <a href="{%   url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a>
-            <a href="{% url 'after:classroom:slides:delete' class_name file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
-        {% endfor %}
-    <form method="POST" enctype="multipart/form-data">
+                        <a class="blue-text text-darken-4"
+                           href="{% url  'after:classroom:slides:download' class_name file.id %}"
+                           style="font-size: 30px;">
+                            <i class="material-icons red-text"
+                               style="margin-left:1%;margin-right: 1%;">picture_as_pdf</i>
+                            {{ file.title }}</a>
+                        <a class="right red-text" href="{% url 'after:classroom:slides:delete' class_name file.id %}"><i
+                                class="material-icons"
+                                id="{{ file.id }}">delete</i><br></a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endifequal %}
+        {% ifequal user.registered_user.role 'S' %}
+            <div class="container">
+                {% for file in slides_files %}
 
-        <div class="row">
-            {% csrf_token %}
-            {{ form.file }}
-            {{ form.title }}
-        </div>
-        <input type="submit">
-    </form>
+                    <div class="white" style="height:10vh;margin:2%;padding:2%;border-radius:1%;">
+                        <a class="blue-text text-darken-4"
+                           href="{% url  'after:classroom:slides:download' class_name file.id %}"
+                           style="font-size: 30px;">
+                            <i class="material-icons red-text"
+                               style="margin-left:1%;margin-right: 1%;">picture_as_pdf</i>
+                            {{ file.title }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endifequal %}
+
     </div>
-    {% endifequal %}
-    {% ifequal user.registered_user.role 'S' %}
-        <div class="container">
-            {% for file in slides_files %}
-                <a href="{%   url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a>
-            {% endfor %}
-        </div>
-    {% endifequal %}
-
-</div>
 {% endblock content %}

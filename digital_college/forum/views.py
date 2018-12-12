@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-
 from forum.form import ClassPostForm, ClassImageForm, ClassCommentForm, ClassReplyForm, ClassPostUpdateForm
 from forum.models import ClassPost, ClassImage, ClassComment, ClassLike, ClassReply
 from users.models import Courses, Registered_User

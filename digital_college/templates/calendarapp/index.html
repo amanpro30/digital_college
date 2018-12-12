@@ -1,11 +1,22 @@
 {% extends 'after_login/main.html' %}
+
+{% block head %}
+    <style>
+        .onhover:hover {
+            border-bottom: 4px solid darkblue;
+            transition: background-color 1s ease;
+        }
+    </style>
+{% endblock %}
+
 {% block options %}
     <div class="container" style="width:90%;">
         <br>
-        <div class="row">
-            <div class="col-lg-4">
-                <h1 style="color: darkblue">EVENTS</h1>
+        <div style="padding-bottom:1%;border-bottom:2px solid darkblue;margin-bottom: 2%;">
+                <h1 class="left-align" style="color:darkblue;font-size: 40px;font-family: 'Noto Serif';">
+                    Events</h1>
             </div>
+        <div class="row">
             <div class="col-lg-8">
                 <button onclick="window.location='{% url 'after:calendarapp:add' %}'" type="button"
                         class="btn btn-suceess " style="background-color: darkblue;">Add entry
@@ -16,6 +27,9 @@
         <div class="row">
             {% for entry in entries %}
                 {% include 'calendarapp/_calendar_entry.html' %}
+                {% empty %}
+                <br>
+                <h1 class="blue-text text-darken-4">No Plans Yet!</h1>
             {% endfor %}
         </div>
     </div>

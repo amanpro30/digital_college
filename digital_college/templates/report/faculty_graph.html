@@ -2,72 +2,72 @@
 {% load static %}
 
 {% block head %}
-    <style>
-        .stretched {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="{% static 'report/faculty_graph.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-
-    <div class="ct-double-octave" id="chart1"></div>
-    <table class="centered" style="width:50%;margin-left: 25%" >
-        <thead>
+    <a class="center-align waves-effect waves-light btn modal-trigger" style="margin:3% 3% 3% 20%;" href="#exam">Enter
+        Exam Results</a>
+    <div id="exam" class="modal">
+        <div class="modal-content">
+            <form action="{% url 'after:classroom:report:faculty_graph' class_name %}" method="POST"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                Exam Name:{{ examform.exam_name }}
+                Contribution:{{ examform.contribution }}
+                Max Marks:{{ examform.max_marks }}
+                Result File:{{ examform.result_file }}
+                <button class="btn" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% if all_exams %}
+        <div class="ct-double-octave" id="chart1"></div>
+        <table class="centered" style="width:50%;margin-left: 25%">
+            <thead>
             <tr>
                 <th>Line Number</th>
                 <th>Exam Name</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% for exam in all_exams %}
-            <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{exam.exam_name}}</td>
-            </tr>
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ exam.exam_name }}</td>
+                </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    {% endif %}
+
+
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems, {});
+        });
 
-            var data = {
-  labels: [
-      {% for each_student in all_students_name %}
-          "{{ each_student }}",
-      {% endfor %}
-    ],
-  series: [
-      {% for each_exam_marks in all_students_marks %}
-          {{ each_exam_marks }},
-      {% endfor %}
-  ]
-};
+        var data = {
+            labels: [
+                {% for each_student in all_students_name %}
+                    "{{ each_student }}",
+                {% endfor %}
+            ],
+            series: [
+                {% for each_exam_marks in all_students_marks %}
+                    {{ each_exam_marks }},
+                {% endfor %}
+            ]
+        };
 
-var options = {
-  seriesBarDistance: 10
-};
+        var options = {
+            seriesBarDistance: 10
+        };
 
-var responsiveOptions = [
-  ['screen and (max-width: 640px)', {
-    seriesBarDistance: 5,
-    axisX: {
-      labelInterpolationFnc: function (value) {
-        return value[0];
-      }
-    }
-  }]
-];
-
-new Chartist.Bar('#chart1', data, options, responsiveOptions);
-</script>
+        new Chartist.Bar('#chart1', data, options,);
+    </script>
 
 {% endblock %}

@@ -19,8 +19,6 @@
                     <ul id='dropdown{{ post.id }}' class='dropdown-content'>
                         {% if post.userId.user == user %}
                             <li><a href="{% url 'after:clubs:delete' club_name post.id %}">Delete</a></li>
-                        {% else %}
-                            <li><a href="#report">Report</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -42,21 +40,17 @@
                             </a>
                         </div>
                         <div class="card-action">
-                            {% for i in post.like_set.all %}
-                                {% if i.userId.user == user %}
+                            {% if user.registered_user %}
+                                {% if user.registered_user in post.likes %}
                                     <a href="{% url 'clubs:dislike_post' club_name post.id %}">
                                         <i class="material-icons teal-text " style="font-size: 30px">thumb_up</i>
                                     </a>
-                                {% elif forloop.last %}
+                                {% else %}
                                     <a href="{% url 'clubs:like_post' club_name post.id %}">
                                         <i class="material-icons grey-text" style="font-size: 30px">thumb_up</i>
                                     </a>
                                 {% endif %}
-                            {% empty %}
-                                <a href="{% url 'clubs:like_post' club_name post.id %}">
-                                    <i class="material-icons grey-text" style="font-size: 30px">thumb_up</i>
-                                </a>
-                            {% endfor %}
+                            {% endif %}
                             <span>Liked by {{ post.like_set.all.count }}</span>
                             <button class="btn right" id="com_button{{ post.id }}"
                                     onclick="showcomments({{ post.id }});">Comments
@@ -66,13 +60,15 @@
                 </div>
                 <div class="hide" id="comments{{ post.id }}" style="border-bottom:1.7px solid dimgray;">
                     <h5 class="left-align teal-text">Comments</h5>
-                    <div style="padding:1%;">
-                        <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
-                            {% csrf_token %}
-                            {{ commentform.comment }}
-                            <input class="btn" type="submit" value="Post">
-                        </form>
-                    </div>
+                    {% if user.registered_user %}
+                        <div style="padding:1%;">
+                            <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
+                                {% csrf_token %}
+                                {{ commentform.comment }}
+                                <input class="btn" type="submit" value="Post">
+                            </form>
+                        </div>
+                    {% endif %}
                     {% for com in post.comment_set.all|slice:":2" %}
                         <div style="padding:1%;">
                             <div style="margin:1%;">
@@ -85,8 +81,6 @@
                                 <ul id='dropdown{{ com.id }}' class='dropdown-content'>
                                     {% if com.userId.user == user %}
                                         <li><a href="{% url 'after:clubs:delcom' club_name com.id %}">Delete</a></li>
-                                    {% else %}
-                                        <li><a href="#report">Report</a></li>
                                     {% endif %}
                                     <li><a class="teal-text" onclick="showreplies({{ com.id }})">Reply</a></li>
                                 </ul>
@@ -109,8 +103,6 @@
                                                             <a href="{% url 'clubs:delrep' club_name rep.id %}">Delete</a>
                                                         </li>
                                                         <li><a href="#">Update</a></li>
-                                                    {% else %}
-                                                        <li><a href="#report">Report</a></li>
                                                     {% endif %}
                                                 </ul>
                                             </div>

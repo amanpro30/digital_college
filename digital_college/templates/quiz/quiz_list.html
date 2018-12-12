@@ -1,18 +1,20 @@
 {% extends 'quiz/base_classrooms.html' %}
 {% block content %}
-    <div class="container center-align" style="margin:2%;">
-        <div class='row' style="background-color: white;"">
-            {% if message %}
-                <div style='visibility: hidden;' id='msg'>
-                    {{message}}
+    <div class="container" style="width:90%;margin-left:13%;padding:2%;">
+        <h3 class="blue-text text-darken-4"><u>List of Quizzes</u></h3>
+        {% if message %}
+            <div style='visibility: hidden;' id='msg'>
+                {{ message }}
             </div>
-            {% endif %}
-            <p>You have following quizzes listed for you</p>
-            {% for quiz in quizzes %}
-                <a href="{{ quiz }}">{{ quiz }}</a><br>
-                start time:{{ quiz.start_time }}<br>
-                end time: {{ quiz.end_time}}<br>
-            {% endfor %}
-        </div>
+        {% endif %}
+        {% for quiz in quizzes %}
+            <div style="background-color: white;padding:2%;margin:1%;display:inline-block;border-radius:2%;">
+                <a class="blue-text text-darken-4" href="{{ quiz }}"><h5><u>{{ quiz }}</u></h5></a><br>
+                <span style="color:green;font-weight: bold;">Start time:</span>&nbsp;{{ quiz.start_time }}<br>
+                <span style="color:red;font-weight: bold;">End time:</span>&nbsp;{{ quiz.end_time }}<br>
+            </div>
+            {% empty %}
+            <h4 class="green-text text-darken-1" style="font-weight: bold;"> No Quiz!! Great!</h4>
+        {% endfor %}
     </div>
 {% endblock content %}

@@ -16,7 +16,7 @@
     </label>-->
         {{ forms.User_Creation_Form.as_p }}
         {{ forms.User_Registration_Form.as_p }}
-        {{ message }}
+       <div style="color:red">{{ message }}</div>
     <button type="submit">Sign up</button>
 </form>
 {% endblock content %}

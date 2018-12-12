@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from users.forms import ExamForm
 from .models import ExamResult
-from users.models import Exam, Courses, CourseEnrollment
+from users.models import Exam, Courses, CourseEnrollment,Registered_User
 from django.forms.models import model_to_dict
 
 
@@ -14,19 +16,20 @@ def student_graph(request, class_name):
     average = []
     exam_max = []
     exam_total = []
+    max = 0
+    exam_sum_scored = 0
+    username=request.user
+    reg_user_instance=Registered_User.objects.get(user=username)
     for each_exam in all_exams:
         all_exam_result = ExamResult.objects.filter(examId=each_exam)
-        exam_result_personal_instance = ExamResult.objects.get(examId=each_exam, userId=request.user.registered_user.id)
-        exam_sum_scored = 0
+        exam_result_personal_instance = ExamResult.objects.get(examId=each_exam, userId=reg_user_instance)
         exam_total.append(each_exam.max_marks)
-        max = 0
         for ex in all_exam_result:
             exam_sum_scored = exam_sum_scored + ex.marks_obtained
             if ex.marks_obtained > max:
                 max = ex.marks_obtained
         exam_max.append(max)
         average.append(exam_sum_scored / all_exam_result.count())
-
         exam_result_personal.append(exam_result_personal_instance.marks_obtained)
     context = {
         'exams_max': exam_max,
@@ -36,10 +39,6 @@ def student_graph(request, class_name):
         'exams': all_exams,
         'class_name': class_name,
     }
-    print(exam_max)
-    print(average)
-    print(exam_total)
-    print(exam_result_personal)
     return render(request, 'report/student_graph.html', context=context)
 
 
@@ -57,36 +56,24 @@ def faculty_graph(request, class_name):
         for ex in all_exam_result:
             exam_result.append(ex.marks_obtained)
         all_students_marks.append(exam_result)
-    print(all_exams)
-    print(all_students)
-    count1 = 0
-    count2 = 0
-    count3 = 0
-    count4 = 0
-    count5 = 0
-    for ex in range(len(all_exams)):
-        for stud in range(len(all_students)):
-            if all_students_marks[ex][stud] >= 0.8 * all_exams[ex].max_marks:
-                count5 = count5 + 1
-            elif all_students_marks[ex][stud] >= 0.6 * all_exams[ex].max_marks:
-                count4 = count4 + 1
-            elif all_students_marks[ex][stud] >= 0.4 * all_exams[ex].max_marks:
-                count3 = count3 + 1
-            elif all_students_marks[ex][stud] >= 0.2 * all_exams[ex].max_marks:
-                count2 = count2 + 1
-            elif all_students_marks[ex][stud] >= 0.0 * all_exams[ex].max_marks:
-                count1 = count1 + 1
-    count_list = [count1, count2, count3, count4, count5]
+    if request.method == 'POST':
+        examform = ExamForm(request.POST, request.FILES)
+        if examform.is_valid():
+            exam = Exam(course_id=Courses.objects.get(course_name=class_name),
+                        exam_name=examform.cleaned_data['exam_name'],
+                        max_marks=examform.cleaned_data['max_marks'],
+                        contribution=examform.cleaned_data['contribution'],
+                        result_file=request.FILES['result_file'])
+            exam.save()
+            return redirect(request.META.get('HTTP_REFERER'), class_name)
+    else:
+        examform = ExamForm()
+
     context = {
         'all_students_name': all_students_name,
         'all_students_marks': all_students_marks,
         'all_exams': all_exams,
         'class_name': class_name,
-        'count_list': count_list
+        'examform': examform,
     }
-    print(context['all_students_marks'])
-    print(context['all_students_name'])
-    print(context['all_exams'])
-    print(context['class_name'])
-    print(context['count_list'])
     return render(request, 'report/faculty_graph.html', context)

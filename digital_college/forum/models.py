@@ -4,6 +4,7 @@ from users.models import Registered_User, Courses, Registered_College
 from django.utils import timezone
 from notifications.models import Notification
 
+
 class ClassPost(models.Model):
     userId = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=100)
@@ -14,6 +15,14 @@ class ClassPost(models.Model):
 
     def __str__(self):
         return self.subject
+
+    def likes_by(self):
+        likes = []
+        for like in self.classlike_set.all():
+            likes.append(like.userId)
+        return likes
+
+    likes = property(likes_by)
 
 
 class ClassImage(models.Model):
@@ -54,21 +63,25 @@ class ClassLike(models.Model):
     def __str__(self):
         return self.userId.user.username
 
-def Notifications_like(sender,**kwargs):
-    if(kwargs['created']):
-        Notification.objects.create(title='Liked',User=kwargs['instance'].postId.userId,message=kwargs['instance'].userId.First_Name+' liked your post')
 
-def Notifications_comment(sender,**kwargs):
-    if(kwargs['created']):
-        Notification.objects.create(title='Commented',User=kwargs['instance'].postId.userId,message=kwargs['instance'].userId.First_Name+' Commented on your post')
-    
-def Notifications_reply(sender,**kwargs):
-    if(kwargs['created']):
-        Notification.objects.create(title='Replied',User=kwargs['instance'].postId.userId,message=kwargs['instance'].userId.First_Name+' Replied to your comment')
+def Notifications_like(sender, **kwargs):
+    if (kwargs['created']):
+        Notification.objects.create(title='Liked', User=kwargs['instance'].postId.userId,
+                                    message=kwargs['instance'].userId.First_Name + ' liked your post')
 
 
+def Notifications_comment(sender, **kwargs):
+    if (kwargs['created']):
+        Notification.objects.create(title='Commented', User=kwargs['instance'].postId.userId,
+                                    message=kwargs['instance'].userId.First_Name + ' Commented on your post')
 
-post_save.connect(Notifications_comment,sender=ClassComment)
-post_save.connect(Notifications_like,sender=ClassLike)
-post_save.connect(Notifications_reply,sender=ClassReply)
 
+def Notifications_reply(sender, **kwargs):
+    if (kwargs['created']):
+        Notification.objects.create(title='Replied', User=kwargs['instance'].comId.userId,
+                                    message=kwargs['instance'].userId.First_Name + ' Replied to your comment')
+
+
+post_save.connect(Notifications_comment, sender=ClassComment)
+post_save.connect(Notifications_like, sender=ClassLike)
+post_save.connect(Notifications_reply, sender=ClassReply)

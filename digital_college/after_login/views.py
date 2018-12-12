@@ -5,10 +5,10 @@ from users.models import Registered_User, Courses, CourseEnrollment, Registered_
 
 whos_logged = {
     'F': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Calendar', 'date_range', 'after:calendarapp:index'),
+          ('Planner', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile')],
     'S': [('Classrooms', 'format_list_bulleted', 'after:after_login'),
-          ('Calendar', 'date_range', 'after:calendarapp:index'),
+          ('Planner', 'date_range', 'after:calendarapp:index'),
           ('Profile', 'person', 'after:profile'), ('Clubs', 'public', 'after:clubs:cl_list')],
     'Ad': [('Courses', 'import_contacts', 'after:after_login'),
            ('Faculty', 'record_voice_over', 'after:faculty'),
@@ -75,6 +75,7 @@ def faculty(request):
     error = ''
     if request.method == 'POST':
         uploadform = UploadFileForm(request.POST, request.FILES)
+        emailform = EmailForm(request.POST)
         print(uploadform.is_valid())
         print(uploadform.errors)
         if uploadform.is_valid():
@@ -87,13 +88,13 @@ def faculty(request):
                         error = 'yes'
             except:
                 error = 'no'
-    else:
-        uploadform = UploadFileForm()
-    if request.method == 'POST':
-        emailform = EmailForm(request.POST)
         if emailform.is_valid():
             Email.objects.create(email=emailform.cleaned_data['email'], role='F')
+            error ='yes'
+        else:
+            error = 'no'
     else:
+        uploadform = UploadFileForm()
         emailform = EmailForm()
     facultylist = Registered_User.objects.filter(role='F', college_id=user.registered_college.id)
     context = {
@@ -141,6 +142,7 @@ def students(request):
     error = ''
     if request.method == 'POST':
         uploadform = UploadFileForm(request.POST, request.FILES)
+        emailform = EmailForm(request.POST)
         if uploadform.is_valid():
             csv1 = UploadedFiles.objects.create(file=request.FILES['file'])
             try:
@@ -151,13 +153,13 @@ def students(request):
                         error = 'yes'
             except:
                 error = 'no'
-    else:
-        uploadform = UploadFileForm()
-    if request.method == 'POST':
-        emailform = EmailForm(request.POST)
         if emailform.is_valid():
             Email.objects.create(email=emailform.cleaned_data['email'], role='S')
+            error = 'yes'
+        else:
+            error = 'no'
     else:
+        uploadform = UploadFileForm()
         emailform = EmailForm()
     studentslist = Registered_User.objects.filter(role='S', college_id=user.registered_college.id)
     context = {

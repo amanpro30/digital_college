@@ -6,10 +6,12 @@
 {% endblock %}
 
 {% block sidebar %}
-    <li><a href="{% url 'clubs:post_mob' club_name %}">
-        <i class="material-icons" style="margin-left:30px;margin-right:30px;">create</i>
-        <span>Post</span>
-    </a></li>
+    {% if user.registered_user %}
+        <li><a href="{% url 'clubs:post_mob' club_name %}">
+            <i class="material-icons" style="margin-left:30px;margin-right:30px;">create</i>
+            <span>Post</span>
+        </a></li>
+    {% endif %}
     <li><a href="{% url 'clubs:forum' club_name %}">
         <i class="material-icons" style="margin-left:30px;margin-right:30px;">forum</i>
         <span>Forum</span>
@@ -28,29 +30,29 @@
     <div class="slider">
         <ul class="slides">
             <li>
-                <img src="https://lorempixel.com/580/250/nature/1"> <!-- random image -->
+                <img src="/media/photo/folder/14116.jpg"> <!-- random image -->
                 <div class="caption center-align">
-                    <h1>{{ club_name }}</h1>
-                    <h3 class="light grey-text text-lighten-3">A place of Exploration</h3>
+                    <h1 class="blue-text text-darken-4" style="color: darkblue;">{{ club_name }}</h1>
+                    <h3 class="blue-text text-darken-4" style="color: darkblue;">A place of Exploration</h3>
                 </div>
             </li>
             <li>
-                <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+                <img src="/media/photo/Photography/1115.jpg"> <!-- random image -->
                 <div class="caption left-align">
-                    <h2 class="white-text text-lighten-3">You can't wait for inspiration</h2>
+                    <h2 class="blue-text text-darken-4">You can't wait for inspiration</h2>
                 </div>
             </li>
             <li>
-                <img src="https://lorempixel.com/580/250/nature/3"> <!-- random image -->
+                <img src="/media/photo/Photography/26401.jpg"> <!-- random image -->
                 <div class="caption right-align">
-                    <h2 class="white-text text-lighten-3">You have to go after it with a club.</h2>
+                    <h2 class="blue-text text-darken-4" style="color: darkblue;">You have to go after it with a club.</h2>
                 </div>
             </li>
             <li>
-                <img src="https://lorempixel.com/580/250/nature/4"> <!-- random image -->
+                <img src="/media/photo/Photography/452334-PF1GMC-765.jpg"> <!-- random image -->
                 <div class="caption center-align">
-                    <h1>{{ club_name }}</h1>
-                    <h2 class="white-text text-lighten-3">Explore with us.</h2>
+                    <h1 style="color: darkblue;">{{ club_name }}</h1>
+                    <h2 class="blue-text text-darken-4" style="color: darkblue;">Explore with us.</h2>
                 </div>
             </li>
         </ul>
@@ -64,11 +66,13 @@
                style="position:absolute; color: white;display:none;top:40px;border-radius: 5px;">Menu</p>
         </div>
         <ul>
-            <li class="li_float"><a class="btn-floating red anchor modal-trigger" href="#modal1"><i
-                    class="material-icons">create</i></a>
-                <p class="message red lighter-2 right"
-                   style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Post</p>
-            </li>
+            {% if user.registered_user %}
+                <li class="li_float"><a class="btn-floating red anchor modal-trigger" href="#modal1"><i
+                        class="material-icons">create</i></a>
+                    <p class="message red lighter-2 right"
+                       style="position:absolute; color: white;display:none;top:20px;border-radius: 5px;">Post</p>
+                </li>
+            {% endif %}
             <li class="li_float"><a class="btn-floating yellow darken-1 anchor"
                                     href="{% url 'clubs:forum' club_name %}"><i
                     class="material-icons">forum</i></a>
@@ -118,7 +122,66 @@
             </form>
         </div>
     </div>
+    <footer class="footer-distributed">
 
+        <div class="footer-left">
+
+            <h3 style="font-family:Akronim;">Digital<span>College</span></h3>
+
+            <p class="footer-links">
+                <a href="#">Home</a>
+                ·
+                <a href="#">Blog</a>
+                ·
+                <a href="#">About</a>
+                ·
+                <a href="#">Faq</a>
+                ·
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">DIGITAL COLLEGE &copy; 2018</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>IIIT SRI CITY</span> Chittoor, Andhra Pradesh</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+9693314447
+                <p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">support@dc.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>Revolutionising college life!</span>
+                A digital way to go about education and excel in your career...
+            </p>
+
+            <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{% static 'clubs/club_main.js' %}"></script>

@@ -1,26 +1,42 @@
 {% extends 'after_login/main.html' %}
+
+{% block head %}
+    <style>
+        .onhover:hover {
+            border-bottom: 4px solid darkblue;
+            transition: background-color 1s ease;
+        }
+    </style>
+{% endblock %}
+
+
+
 {% block options %}
-<div class="container form-group">
-    <br>
-    <div class="row">
-        <div class="col-lg-4">
-        <h1>Edit your event</h1>
-        </div>
-        <div class="col=lg-8">
-            <button onclick="window.location='{% url 'after:calendarapp:index' %}'" type="button">Back</button>
-        </div>
-    </div>
-
-    <form method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-            <label>{{ field.label }}</label>
-            <input placeholder="{{ field.label }}" name="{{ form.name }}" class="form-control" />
-            {{ field.errors }}
-        {% endfor %}
+    <div class="container form-group" style="background-color: white; padding:2%;">
         <br>
-        <button type="submit" class="btn btn-outline-success">submit</button>
+        <div class="row">
+            <div class="col-lg-4">
+                <h1 class="center blue-text text-darken-4"><u>Edit your event</u></h1>
+            </div>
+        </div>
 
-    </form>
-</div>
+        <form method="POST">
+            {% csrf_token %}
+            Name:{{ form.name }}<br><br>
+            Date:{{ form.date }}<br><br>
+            Description:{{ form.description }}<br>
+
+            {#        {% for field in form %}#}
+            {#            <label>{{ field.label }}</label>#}
+            {#            <input placeholder="{{ field.label }}" name="{{ form.name }}" class="form-control" />#}
+            {#            {{ field.errors }}#}
+            {#        {% endfor %}#}
+            <br>
+            <button class="btn blue darken-4 white-text text-darken-4"
+                    onclick="window.location='{% url 'after:calendarapp:index' %}'">Back
+            </button>
+            <button type="submit" class="btn blue darken-4 white-text text-darken-4">submit</button>
+
+        </form>
+    </div>
 {% endblock %}

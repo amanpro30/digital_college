@@ -2,12 +2,6 @@
 
 
 {% block content %}
-    <form action="{% url 'after:classroom:exam' class_name %}" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-         Exam Name:{{ examform.exam_name }}
-        Contribution:{{ examform.contribution }}
-        Max Marks:{{ examform.max_marks }}
-        Result File:{{ examform.result_file }}
-        <button class="btn" type="submit">Submit</button>
-    </form>
+    <div>
+    </div>
 {% endblock %}

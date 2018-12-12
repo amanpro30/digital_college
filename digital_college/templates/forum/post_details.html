@@ -5,24 +5,21 @@
         <div style="margin:2%;border-bottom:2px solid teal">
             <img class="responsive-img" src="{{ post.userId.image.url }}"
                  style="height:80px;width:80px;border-radius:50%;">
-            <b >{{ post.userId.First_Name|title }}&nbsp;{{ post.userId.Last_Name|title }}</b>&nbsp;
+            <b>{{ post.userId.First_Name|title }}&nbsp;{{ post.userId.Last_Name|title }}</b>&nbsp;
             <span>posted this on <b>{{ post.date }}</b> in <b>&nbsp;<a class="blue-text"
                                                                        href="{% url 'after:classroom:class_forum:cl_forum' class_name %}">{{ class_name }}</a></b></span>
-            {% for i in post.classlike_set.all %}
-                {% if i.userId.user == user %}
-                    <a class="right" href="{% url 'after:classroom:class_forum:cl_dislike' class_name post.id %}">
-                        <i class="material-icons blue-text " style="font-size: 30px">thumb_up</i>
+            {% if user.registered_user %}
+                {% if user.registered_user in post.likes %}
+                    <a href="{% url 'after:classroom:class_forum:cl_dislike' class_name post.id %}">
+                        <i class="material-icons blue-text "
+                           style="font-size: 30px">thumb_up</i>
                     </a>
-                {% elif forloop.last %}
-                    <a class="right" href="{% url 'after:classroom:class_forum:cl_like' class_name post.id %}">
+                {% else %}
+                    <a href="{% url 'after:classroom:class_forum:cl_like' class_name post.id %}">
                         <i class="material-icons grey-text" style="font-size: 30px">thumb_up</i>
                     </a>
                 {% endif %}
-            {% empty %}
-                <a class="right" href="{% url 'after:classroom:class_forum:cl_like' class_name post.id %}">
-                    <i class="material-icons grey-text " style="font-size: 30px">thumb_up</i>
-                </a>
-            {% endfor %}
+            {% endif %}
         </div>
         <div class="left-align" style="width:100%;">
             {% for image in post.classimage_set.all %}
@@ -44,7 +41,8 @@
                 <div class="modal-content">
                     <h2 class="center-align blue-text text-darken-4"><u>Update</u></h2>
                     <form class="container teal-text" style="width:80%;"
-                          action="{% url 'after:classroom:class_forum:cl_updatepost' class_name post.id %}" method="POST"
+                          action="{% url 'after:classroom:class_forum:cl_updatepost' class_name post.id %}"
+                          method="POST"
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="input-field">
@@ -54,10 +52,12 @@
                         </div>
                         {{ p_up_form.content }}
                         <div class="container" style="margin:20px;">
-                            <button class="modal-close waves-effect waves-green blue darken-4 btn white-text" type="button"
+                            <button class="modal-close waves-effect waves-green blue darken-4 btn white-text"
+                                    type="button"
                                     value="">Cancel
                             </button>
-                            <button class="modal-close waves-effect waves-green blue darken-4 btn white-text" type="Submit">Update
+                            <button class="modal-close waves-effect waves-green blue darken-4 btn white-text"
+                                    type="Submit">Update
                             </button>
                         </div>
                     </form>
@@ -67,11 +67,13 @@
         <div style="margin:4%">
             <h2 class="blue-text text-darken-4">Comments</h2>
             <div style="padding:1%;">
-                <form action="{% url 'after:classroom:class_forum:cl_comment' class_name post.id %}" method="POST">
-                    {% csrf_token %}
-                    {{ commentform.comment }}
-                    <input class="blue darken-4 btn" type="submit" value="Post">
-                </form>
+                {% if user.registered_user %}
+                    <form action="{% url 'after:classroom:class_forum:cl_comment' class_name post.id %}" method="POST">
+                        {% csrf_token %}
+                        {{ commentform.comment }}
+                        <input class="blue darken-4 btn" type="submit" value="Post">
+                    </form>
+                {% endif %}
             </div>
             {% for com in post.classcomment_set.all %}
                 <div style="padding:1%;">
@@ -84,7 +86,8 @@
                         <ul id='dropdown{{ com.id }}' class='dropdown-content'>
                             {% if com.userId.user == user %}
                                 <li>
-                                    <a class="blue-text text-darken-4" href="{% url 'after:classroom:class_forum:cl_delcom' class_name com.id %}">Delete</a>
+                                    <a class="blue-text text-darken-4"
+                                       href="{% url 'after:classroom:class_forum:cl_delcom' class_name com.id %}">Delete</a>
                                 </li>
                             {% else %}
                                 <li><a class="blue-text text-darken-4" href="#report">Report</a></li>
@@ -94,14 +97,16 @@
                     </div>
                     <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
                     <div class="hide" id="rep{{ com.id }}">
-                        <div style="margin-left:8%;">
-                            <form action="{% url 'after:classroom:class_forum:cl_reply' class_name com.id %}"
-                                  method="POST">
-                                {% csrf_token %}
-                                {{ replyform.reply }}
-                                <input class="blue darken-4 btn" type="submit" value="Post">
-                            </form>
-                        </div>
+                        {% if user.registered_user %}
+                            <div style="margin-left:8%;">
+                                <form action="{% url 'after:classroom:class_forum:cl_reply' class_name com.id %}"
+                                      method="POST">
+                                    {% csrf_token %}
+                                    {{ replyform.reply }}
+                                    <input class="blue darken-4 btn" type="submit" value="Post">
+                                </form>
+                            </div>
+                        {% endif %}
                         <div style="margin-left:8%;"><br>
                             {% for rep in com.classreply_set.all %}
                                 <div style="padding:1%;">
@@ -114,7 +119,8 @@
                                         <ul id='repl{{ rep.id }}' class='dropdown-content'>
                                             {% if rep.comId.userId.user == user %}
                                                 <li>
-                                                    <a class="blue-text text-darken-4" href="{% url 'after:classroom:class_forum:cl_delreply' class_name rep.id %}">Delete</a>
+                                                    <a class="blue-text text-darken-4"
+                                                       href="{% url 'after:classroom:class_forum:cl_delreply' class_name rep.id %}">Delete</a>
                                                 </li>
                                             {% else %}
                                                 <li><a class="blue-text text-darken-4" href="#report">Report</a></li>

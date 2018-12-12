@@ -1,33 +1,57 @@
 {% extends 'quiz/base_classrooms.html' %}
 {% block content %}
 
-<div class="container">
-    {% ifequal user.registered_user.role 'F' %}
-
     <div class="container">
-        <a href="{%   url  'after:classroom:slides:download' class_name "{{last_assign_file}}" %}">{{ file.title }}</a>
-        <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.file }}
-                {{ form.title }}
-                Deadline:
-                {{ form.deadline }}
-            <input type="submit">
-        </form>
+        {% ifequal user.registered_user.role 'F' %}
+            <div class="container">
+                <div class="white" style="margin:2% 2% 2% -10%;padding:3%;width:120%;">
+                    <h4 class="green-text text-darken-4">Post Assignment</h4>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.file }}
+                        {{ form.title }}<br>
+                        <span class="red-text"><b>Deadline:</b></span>
+                        {{ form.deadline }}
+                        <input class="btn blue darken-4 white-text text-darken-4" type="submit">
+                    </form>
+                </div>
+            </div>
+            <h4 class="green-text text-darken-4" style="margin-left:10%;">Last Assignments</h4>
+            <div class="white" style="margin:2% 2% 2% 10%;padding:2%;width:80%;">
+                <i class="material-icons red-text"
+                   style="margin-left:1%;margin-right: 1%;">picture_as_pdf</i>
+                <a href="{% url  'after:classroom:slides:download' class_name last_assign_file.id %}">{{ last_assign_file.title }}</a>
+            </div>
+            <h4 class="red-text text-darken-4" style="margin-left:10%;">Last Submitted Assignments</h4>
+            {% for assign in assign_solution_files %}
+                <div class="white" style="margin:2% 2% 2% 10%;padding:2%;width:80%;">
+                    <i class="material-icons red-text"
+                       style="margin-left:1%;margin-right: 1%;">picture_as_pdf</i>
+                    <a class="blue-text text-darken-4" style="margin-left:3%;"
+                       href="{% url  'after:classroom:slides:assignsolview' class_name assign.id %}">
+                        {{ assign.student_id.First_Name }}&nbsp;{{ assign.student_id.Last_Name }}</a>
+                </div>
+            {% endfor %}
+        {% endifequal %}
+        {% ifequal user.registered_user.role 'S' %}
+            <div class="white" style="margin:2% 2% 2% 10%;padding:2%;width:80%;">
+                <i class="material-icons red-text"
+                   style="margin-left:1%;margin-right: 1%;">picture_as_pdf</i>
+                <a href="{% url  'after:classroom:slides:download' class_name last_assign_file.id %}">{{ last_assign_file.title }}</a>
+                <br>
+                <span class="red-text"><b>Deadline: {{ last_assign_file.deadline }}</b></span>
+
+            </div>
+            <div style="background: white; padding: 2%; margin-left: 10%; width: 80%;">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ assign_solution_form }}
+                    <input class="btn blue darken-4 white-text text-darken-4" type="submit">
+
+                </form>
+            </div>
+            </div>
+        {% endifequal %}
+
     </div>
-    {% endifequal %}
-    {% ifequal user.registered_user.role 'S' %}
-        <div class="container" >
-            <a href="{%   url  'after:classroom:slides:download' class_name "{{last_assign_file}}" %}">{{ file.title }}</a>
-            Deadline:{{ last_assign_file.deadline }}
-            <form method="POST"  enctype="multipart/form-data">
-                {% csrf_token %}
-                {{assign_solution_form}}
-                <input type="submit" value="submit">
-            </form>
-
-        </div>
-    {% endifequal %}
-
-</div>
 {% endblock content %}

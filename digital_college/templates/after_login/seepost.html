@@ -7,21 +7,18 @@
             <b>{{ post.userId.First_Name|title }}&nbsp;{{ post.userId.Last_Name|title }}</b>&nbsp;
             <span>posted this on <b>{{ post.date }}</b> in <b>&nbsp;<a
                     href="{% url 'after:clubs:forum' club_name %}">{{ club_name }}</a></b></span>
-            {% for i in post.like_set.all %}
-                {% if i.userId.user == user %}
-                    <a class="right" href="{% url 'clubs:dislike_post' club_name post.id %}">
-                        <i class="material-icons blue-text " style="font-size: 30px">thumb_up</i>
+            {% if user.registered_user %}
+                {% if user.registered_user in post.likes %}
+                    <a href="{% url 'clubs:dislike_post' club_name post.id %}">
+                        <i class="material-icons teal-text " style="font-size: 30px">thumb_up</i>
                     </a>
-                {% elif forloop.last %}
-                    <a class="right" href="{% url 'clubs:like_post' club_name post.id %}">
+                {% else %}
+                    <a href="{% url 'clubs:like_post' club_name post.id %}">
                         <i class="material-icons grey-text" style="font-size: 30px">thumb_up</i>
                     </a>
                 {% endif %}
-            {% empty %}
-                <a class="right" href="{% url 'clubs:like_post' club_name post.id %}">
-                    <i class="material-icons grey-text" style="font-size: 30px">thumb_up</i>
-                </a>
-            {% endfor %}
+            {% endif %}
+            <span>Liked by {{ post.like_set.all.count }}</span>
         </div>
         <div class="left-align" style="width:100%;">
             {% for image in post.images_set.all %}
@@ -66,11 +63,13 @@
         <div style="margin:4%">
             <h2 class="teal-text">Comments</h2>
             <div style="padding:1%;">
-                <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
-                    {% csrf_token %}
-                    {{ commentform.comment }}
-                    <input class="btn" type="submit" value="Post">
-                </form>
+                {% if user.registered_user %}
+                    <form action="{% url 'clubs:comment' club_name post.id %}" method="POST">
+                        {% csrf_token %}
+                        {{ commentform.comment }}
+                        <input class="btn" type="submit" value="Post">
+                    </form>
+                {% endif %}
             </div>
             {% for com in post.comment_set.all %}
                 <div style="padding:1%;">
@@ -92,12 +91,14 @@
                     <a class="teal-text right" onclick="showreplies({{ com.id }})" style="margin-right:2%;">Reply</a>
                     <div class="hide" id="rep{{ com.id }}">
                         <div style="margin-left:8%;">
-                            <form action="{% url 'clubs:reply' club_name com.id %}"
-                                  method="POST">
-                                {% csrf_token %}
-                                {{ replyform.reply }}
-                                <input class="btn" type="submit" value="Post">
-                            </form>
+                            {% if user.registered_user %}
+                                <form action="{% url 'clubs:reply' club_name com.id %}"
+                                      method="POST">
+                                    {% csrf_token %}
+                                    {{ replyform.reply }}
+                                    <input class="btn" type="submit" value="Post">
+                                </form>
+                            {% endif %}
                         </div>
                         <div style="margin-left:8%;"><br>
                             {% for rep in com.reply_set.all|slice:":2" %}

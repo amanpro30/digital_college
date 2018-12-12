@@ -143,9 +143,15 @@
         
     </form>
  {% elif is_finished %}
-    <p>The quiz is finished</p>
+    <script>
+        alert("This quiz is finished");
+        window.location.href = "{% url 'after:classroom:quiz:quiz_home' class_name %}";
+    </script>
 {% elif not is_started%}
-    <p>The quiz is not started</p>
+    <script>
+        alert("This quiz has not started");
+        window.location.href = "{% url 'after:classroom:quiz:quiz_home' class_name %}";
+    </script>
 {% endif %}
 
 <script>

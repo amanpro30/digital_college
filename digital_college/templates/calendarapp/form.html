@@ -1,10 +1,23 @@
 {% extends 'after_login/main.html' %}
+
+{% block head %}
+    <style>
+        .onhover:hover {
+            border-bottom: 4px solid darkblue;
+            transition: background-color 1s ease;
+        }
+    </style>
+{% endblock %}
+
+
+
+
 {% block options %}
-    <div class="container form-group" style="width:90%">
+    <div class="container form-group" style="width:90%;background-color: white;padding:2%;">
         <br>
         <div class="row">
             <div class="col-lg-4">
-                <h1 style="color:darkblue">Add A New Event</h1>
+                <h1 class="center" style="color:darkblue"><u>Add A New Event</u></h1>
             </div>
 
 

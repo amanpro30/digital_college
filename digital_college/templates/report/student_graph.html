@@ -10,158 +10,180 @@
 
 
 {% block content %}
-       <div class="ct-chart .ct-square1"></div>
+    <div class="ct-chart .ct-square1"></div>
+    {% if exams %}
+        <table class="centered" style="width:50%;margin-left: 25%">
+            <thead>
+            <tr>
+                <th>Color</th>
+                <th>Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Red</td>
+                <td>Max. marks scored</td>
+            </tr>
+            <tr>
+                <td>Orange</td>
+                <td>Your Score</td>
+            </tr>
+            <tr>
+                <td>Yellow</td>
+                <td>Total Marks in Exam</td>
+            </tr>
+            <tr>
+                <td>Brown</td>
+                <td>Average</td>
+            </tr>
+            </tbody>
+        </table>
+    {% endif %}
 
-        <script>
-             var labels=[];
-             var results=new Array()
-             {% for exam in exams %}
-                labels.push("{{ exam.exam_name }}");
-             {% endfor %}
-             console.log(labels);
-             {% for result in exam_results %}
+    <script>
+        var labels = [];
+        var results = new Array()
+        {% for exam in exams %}
+            labels.push("{{ exam.exam_name }}");
+        {% endfor %}
+        console.log(labels);
+        {% for result in exam_results %}
 
-             {% endfor %}
-             var chart = new Chartist.Line('.ct-chart', {
-  labels: labels,
-  series: [
-      {{ exams_max }},
-      {{ exam_result_personal }},
-      {{ exam_total }},
-      {{ average }},
-  ]
-}, {
+        {% endfor %}
+        var chart = new Chartist.Line('.ct-chart', {
+            labels: labels,
+            series: [
+                {{ exams_max }},
+                {{ exam_result_personal }},
+                {{ exam_total }},
+                {{ average }},
+            ]
+        }, {
 
-  low: 0,
-  height: '300px'
-             });
+            low: 0,
+            height: '300px'
+        });
 
-// Let's put a sequence number aside so we can use it in the event callbacks
-var seq = 0,
-  delays = 20,
-  durations = 1000;
-
-
+        // Let's put a sequence number aside so we can use it in the event callbacks
+        var seq = 0,
+            delays = 20,
+            durations = 1000;
 
 
+        // Once the chart is fully created we reset the sequence
+        chart.on('created', function () {
+            seq = 0;
+        });
 
+        // On each drawn element by Chartist we use the Chartist.Svg API to trigger SMIL animations
+        chart.on('draw', function (data) {
+            seq++;
 
+            if (data.type === 'line') {
+                // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
+                data.element.animate({
+                    opacity: {
+                        // The delay when we like to start the animation
+                        begin: seq * delays + 1000,
+                        // Duration of the animation
+                        dur: durations,
+                        // The value where the animation should start
+                        from: 0,
+                        // The value where it should end
+                        to: 1
+                    }
+                });
+            } else if (data.type === 'label' && data.axis === 'x') {
+                data.element.animate({
+                    y: {
+                        begin: seq * delays,
+                        dur: durations,
+                        from: data.y + 100,
+                        to: data.y,
+                        // We can specify an easing function from Chartist.Svg.Easing
+                        easing: 'easeOutQuart'
+                    }
+                });
+            } else if (data.type === 'label' && data.axis === 'y') {
+                data.element.animate({
+                    x: {
+                        begin: seq * delays,
+                        dur: durations,
+                        from: data.x - 100,
+                        to: data.x,
+                        easing: 'easeOutQuart'
+                    }
+                });
+            } else if (data.type === 'point') {
+                data.element.animate({
+                    x1: {
+                        begin: seq * delays,
+                        dur: durations,
+                        from: data.x - 10,
+                        to: data.x,
+                        easing: 'easeOutQuart'
+                    },
+                    x2: {
+                        begin: seq * delays,
+                        dur: durations,
+                        from: data.x - 10,
+                        to: data.x,
+                        easing: 'easeOutQuart'
+                    },
+                    opacity: {
+                        begin: seq * delays,
+                        dur: durations,
+                        from: 0,
+                        to: 1,
+                        easing: 'easeOutQuart'
+                    }
+                });
+            } else if (data.type === 'grid') {
+                // Using data.axis we get x or y which we can use to construct our animation definition objects
+                var pos1Animation = {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data[data.axis.units.pos + '1'] - 30,
+                    to: data[data.axis.units.pos + '1'],
+                    easing: 'easeOutQuart'
+                };
 
+                var pos2Animation = {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data[data.axis.units.pos + '2'] - 100,
+                    to: data[data.axis.units.pos + '2'],
+                    easing: 'easeOutQuart'
+                };
 
-// Once the chart is fully created we reset the sequence
-chart.on('created', function() {
-  seq = 0;
-});
+                var animations = {};
+                animations[data.axis.units.pos + '1'] = pos1Animation;
+                animations[data.axis.units.pos + '2'] = pos2Animation;
+                animations['opacity'] = {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: 0,
+                    to: 1,
+                    easing: 'easeOutQuart'
+                };
 
-// On each drawn element by Chartist we use the Chartist.Svg API to trigger SMIL animations
-chart.on('draw', function(data) {
-  seq++;
+                data.element.animate(animations);
+            }
+        });
 
-  if(data.type === 'line') {
-    // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
-    data.element.animate({
-      opacity: {
-        // The delay when we like to start the animation
-        begin: seq * delays + 1000,
-        // Duration of the animation
-        dur: durations,
-        // The value where the animation should start
-        from: 0,
-        // The value where it should end
-        to: 1
-      }
-    });
-  } else if(data.type === 'label' && data.axis === 'x') {
-    data.element.animate({
-      y: {
-        begin: seq * delays,
-        dur: durations,
-        from: data.y + 100,
-        to: data.y,
-        // We can specify an easing function from Chartist.Svg.Easing
-        easing: 'easeOutQuart'
-      }
-    });
-  } else if(data.type === 'label' && data.axis === 'y') {
-    data.element.animate({
-      x: {
-        begin: seq * delays,
-        dur: durations,
-        from: data.x - 100,
-        to: data.x,
-        easing: 'easeOutQuart'
-      }
-    });
-  } else if(data.type === 'point') {
-    data.element.animate({
-      x1: {
-        begin: seq * delays,
-        dur: durations,
-        from: data.x - 10,
-        to: data.x,
-        easing: 'easeOutQuart'
-      },
-      x2: {
-        begin: seq * delays,
-        dur: durations,
-        from: data.x - 10,
-        to: data.x,
-        easing: 'easeOutQuart'
-      },
-      opacity: {
-        begin: seq * delays,
-        dur: durations,
-        from: 0,
-        to: 1,
-        easing: 'easeOutQuart'
-      }
-    });
-  } else if(data.type === 'grid') {
-    // Using data.axis we get x or y which we can use to construct our animation definition objects
-    var pos1Animation = {
-      begin: seq * delays,
-      dur: durations,
-      from: data[data.axis.units.pos + '1'] - 30,
-      to: data[data.axis.units.pos + '1'],
-      easing: 'easeOutQuart'
-    };
-
-    var pos2Animation = {
-      begin: seq * delays,
-      dur: durations,
-      from: data[data.axis.units.pos + '2'] - 100,
-      to: data[data.axis.units.pos + '2'],
-      easing: 'easeOutQuart'
-    };
-
-    var animations = {};
-    animations[data.axis.units.pos + '1'] = pos1Animation;
-    animations[data.axis.units.pos + '2'] = pos2Animation;
-    animations['opacity'] = {
-      begin: seq * delays,
-      dur: durations,
-      from: 0,
-      to: 1,
-      easing: 'easeOutQuart'
-    };
-
-    data.element.animate(animations);
-  }
-});
-
- //For the sake of the example we update the chart every time it's created with a delay of 10 seconds
- chart.on('created', function() {
-  if(window.__exampleAnimateTimeout) {
-    clearTimeout(window.__exampleAnimateTimeout);
-    window.__exampleAnimateTimeout = null;
-  }
-  window.__exampleAnimateTimeout = setTimeout(chart.update.bind(chart), 12000);
-});
-        </script>
-  <script>
-      var element = document.getElementById('image_1');
-          style = window.getComputedStyle(element);
+        //For the sake of the example we update the chart every time it's created with a delay of 10 seconds
+        chart.on('created', function () {
+            if (window.__exampleAnimateTimeout) {
+                clearTimeout(window.__exampleAnimateTimeout);
+                window.__exampleAnimateTimeout = null;
+            }
+            window.__exampleAnimateTimeout = setTimeout(chart.update.bind(chart), 12000);
+        });
+    </script>
+    <script>
+        var element = document.getElementById('image_1');
+        style = window.getComputedStyle(element);
         console.log(style.getPropertyValue('top'));
 
-  </script>
+    </script>
 {% endblock %}
