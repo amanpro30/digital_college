@@ -1,11 +1,25 @@
 from django.shortcuts import render, redirect
 from clubs.models import Post, Images, Like, Comment, Reply
 from .form import PostForm, ImageForm, CommentForm, PostUpdateForm, ImageUpdateForm, ReplyForm
-from users.models import Registered_User, Clubs
+from users.models import Registered_User, Clubs, ClubEnrollment
 
 
 def contacts(request, club_name):
-    pass
+    user = request.user
+    club_id = ''
+    try:
+        if user.registered_user.role:
+            club_id = Clubs.objects.get(club_name=club_name, college_id=user.registered_user.college_id)
+    except Registered_User.DoesNotExist:
+        club_id = Clubs.objects.get(club_name=club_name, college_id=user.registered_college.id)
+    club_members = ClubEnrollment.objects.filter(club_id=club_id)
+    context = {
+        'club_name': club_name,
+        'club_members': club_members,
+        'club_head': club_id.club_head,
+        'user': user,
+    }
+    return render(request, 'after_login/club_members.html', context)
 
 
 def gallery(request, club_name):
@@ -146,4 +160,39 @@ def reply(request, club_name, com_id):
 
 def delrep(request, club_name, rep_id):
     Reply.objects.get(id=rep_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'), club_name)
+
+
+def remStudent(request, club_name, user_id):
+    club_id = Clubs.objects.get(club_name=club_name)
+    ClubEnrollment.objects.get(student_id=Registered_User.objects.get(id=user_id), club_id=club_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'), club_name)
+
+
+def addStudents(request, club_name):
+    user = request.user
+    club_id = Clubs.objects.get(club_name=club_name, college_id=user.registered_college.id)
+    clubstuds = ClubEnrollment.objects.filter(club_id=club_id)
+    list_of_student_in_club = []
+    for st in clubstuds:
+        list_of_student_in_club.append(st.student_id.id)
+    print(list_of_student_in_club)
+    students = Registered_User.objects.filter(role='S', college_id=user.registered_college.id)
+    student_list = []
+    for stud in students:
+        if stud.id not in list_of_student_in_club:
+            student_list.append(stud)
+    print(student_list)
+    context = {
+        'club_name': club_name,
+        'Students': student_list,
+        'user': user,
+    }
+    return render(request, 'after_login/addstudents_club.html', context)
+
+
+def addStud(request, club_name, stud_id):
+    user = request.user
+    club_id = Clubs.objects.get(club_name=club_name, college_id=user.registered_college.id)
+    ClubEnrollment.objects.create(student_id=Registered_User.objects.get(id=stud_id), club_id=club_id)
     return redirect(request.META.get('HTTP_REFERER'), club_name)

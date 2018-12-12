@@ -1,0 +1,54 @@
+{% extends 'clubs/club_basic.html' %}
+
+{% block head %}
+    <style>
+        .onhover:hover {
+            border-bottom: 4px solid darkblue;
+            transition: 0.5s ease;
+
+        }
+
+        td {
+            color: darkblue;
+        }
+
+        tr {
+            margin-bottom: 2%;
+        }
+
+        table {
+            margin: 5%;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <h2 class="center blue-text text-darken-4"><u>Student</u></h2>
+    <div class="center">
+    {% if Students %}
+        <table class="centered white" style="width:90%;">
+            <thead>
+            <tr>
+                <th>Members</th>
+                <th>email</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for  stu in Students %}
+                <tr class="onhover">
+                    <td>{{ stu.First_Name }}&nbsp;{{ stu.Last_Name }}</td>
+                    <td>{{ stu.email }}</td>
+                    <td><a class="blue darken-4 btn" href="{% url 'after:clubs:club_add' club_name stu.id %}">Add</a></td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    {% else %}
+        <h1 class="center-align" style="color:darkblue;margin:5%;">Every Member is already a part of this club.</h1>
+    {% endif %}
+    </div>
+{% endblock %}

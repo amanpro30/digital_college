@@ -1,14 +1,14 @@
 {% extends 'after_login/main.html' %}
 {% block options %}
-    <div class="container">
+    <div class="container" style="width:90%;">
         <br>
         <div class="row">
             <div class="col-lg-4">
-                <h1>EVENTS</h1>
+                <h1 style="color: darkblue">EVENTS</h1>
             </div>
             <div class="col-lg-8">
                 <button onclick="window.location='{% url 'after:calendarapp:add' %}'" type="button"
-                        class="btn btn-suceess">Add entry
+                        class="btn btn-suceess " style="background-color: darkblue;">Add entry
                 </button>
             </div>
         </div>

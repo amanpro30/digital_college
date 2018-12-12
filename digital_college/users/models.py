@@ -13,7 +13,7 @@ class Registered_College(models.Model):
     College_Registration_Number = models.IntegerField()
     City = models.CharField(max_length=25)
     State = models.CharField(max_length=25)
-    image = models.ImageField(default='user.png', upload_to='profile_pics',blank=True)
+    image = models.ImageField(default='user.png', upload_to='profile_pics', blank=True)
 
     def __str__(self):
         return self.Name_Of_College
@@ -31,7 +31,8 @@ class Registered_User(models.Model):
     ]
     role = models.CharField(max_length=1, choices=ROLE_CHOICES)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE, default=0)
-    image = models.ImageField(default='user.png', upload_to='profile_pics',blank=True)
+    image = models.ImageField(default='user.png', upload_to='profile_pics', blank=True)
+
     # mobile_no = models.CharField(max_length=10)
 
     def __str__(self):
@@ -76,11 +77,12 @@ class CourseEnrollment(models.Model):
 
 
 class Exam(models.Model):
-    course_id = models.ForeignKey(Courses,on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
     exam_name = models.CharField(max_length=100)
     max_marks = models.IntegerField()
     contribution = models.IntegerField()
     result_file = models.FileField(blank=True, upload_to='report')
+
 
 class Email(models.Model):
     email = models.EmailField(blank=False, max_length=100)
@@ -97,16 +99,19 @@ class Email(models.Model):
 class UploadedFiles(models.Model):
     file = models.FileField(upload_to='faculty')
 
+
 class Assignment(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
     contribution = models.IntegerField()
     max_marks = models.IntegerField()
-    assingment_name=models.CharField(max_length=100)
+    assingment_name = models.CharField(max_length=100)
     result_file = models.FileField(blank=True, upload_to='assignment')
 
+
 class Content(models.Model):
-    course_id = models.OneToOneField(Courses,on_delete=models.CASCADE)
+    course_id = models.OneToOneField(Courses, on_delete=models.CASCADE)
     content_text = models.CharField(max_length=500)
+
 
 class Topics(models.Model):
     course_id = models.OneToOneField(Courses, on_delete=models.CASCADE)

@@ -1,8 +1,48 @@
 {% extends 'after_login/main.html' %}
 
+{% block head %}
+    <style>
+        .onhover:hover {
+            border-bottom: 4px solid darkblue;
+            transition: background-color 1s ease;
+        }
+    </style>
+{% endblock %}
 
 {% block options %}
-    <h1>Profile</h1>
+    <div class="container" style="width:90%;">
+        <div style="padding-bottom:1%;border-bottom:2px solid darkblue;margin-bottom: 2%;">
+            <h1 class="left-align blue-text text-darken-4" style="font-size: 40px;font-family: 'Noto Serif';">
+                Profile</h1>
+        </div>
+        {% if user.registered_user %}
+            <div class="center-align">
+                <img class="circle materialboxed" src="{{ profile.image.url }}" alt='profile_pic'
+                     style="height:15vh;width:15%;text-align: center;">
+            </div>
+            <div class="blue-text text-darken-4">
+                Name: {{ profile.First_Name }}
+            </div>
+        {% else %}
+            <div class="center-align">
+                <img class="circle materialboxed" src="{{ profile.image.url }}" alt='profile_pic'
+                     style="height:15vh;width:15%;text-align: center;">
+            </div>
+            <div class="blue-text text-darken-4">
+                Name: {{ user.registered_college.Name_Of_College }}<br>
+                Email: {{ user.registered_college.email }}<br>
+                College Registration No: {{ user.registered_college.College_Registration_Number }}
+                City : {{ user.registered_college }}
+    State
 
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.materialboxed');
+            M.Materialbox.init(elems, {});
+        });
 
+    </script>
 {% endblock %}

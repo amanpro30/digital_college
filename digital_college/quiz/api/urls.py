@@ -4,6 +4,6 @@ from . import views
 app_name = 'api'
 
 urlpatterns = [
-    path('', views.QuizView.as_view(), name="api_get"),
+    path('<int:quiz_id>/', views.QuizView.as_view(), name="api_get"),
 ]
 

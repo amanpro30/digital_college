@@ -1,0 +1,79 @@
+{% extends 'clubs/club_basic.html' %}
+
+{% block head %}
+    <style>
+        .onhover:hover {
+            border-bottom: 4px solid darkblue;
+            transition: 0.5s ease;
+
+        }
+
+        td {
+            color: darkblue;
+        }
+
+        table {
+            margin: 5%;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <h4 class="center blue-text text-darken-4"><u>Head</u></h4>
+    <div class="center">
+        <table class="centered white" style="width:90%;">
+            <thead>
+            <tr>
+                <th>Members</th>
+                <th>email</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="onhover">
+                <td>{{ club_head.First_Name }}&nbsp;{{ club_head.Last_Name }}</td>
+                <td>{{ club_head.email }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <h3 class="center blue-text text-darken-4"><u>Students</u></h3>
+    {% if user.registered_college %}
+        <a class="btn-floating red btn-large right" href="{% url 'after:clubs:club_addStud' club_name %}"
+           style="margin-right:5%;"><i class="material-icons">add</i></a>
+    {% endif %}
+    <table class="centered white" style="width: 90%;">
+        <thead>
+        <tr>
+            <th>Members</th>
+            <th>email</th>
+            {% if user.registered_college %}
+                <th></th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for st in club_members %}
+            <tr class="onhover">
+                <td>{{ st.student_id.First_Name }}&nbsp;{{ st.student_id.Last_Name }}</td>
+                <td>{{ st.student_id.email }}</td>
+                {% if user.registered_college %}
+                    <td>
+                        <a class="btn red"
+                           href="{% url 'after:clubs:club_remStud' club_name st.student_id.id %}">Remove</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <script>
+
+    </script>
+{% endblock %}
+
+

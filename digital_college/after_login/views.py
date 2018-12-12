@@ -51,7 +51,23 @@ def after_login(request):
 
 
 def profile(request):
-    return render(request, 'after_login/profile.html')
+    user = request.user
+    role = ''
+    profile_info = ''
+    try:
+        if user.registered_user.role:
+            role = user.registered_user.role
+            profile_info = Registered_College.objects.get(user=user)
+    except Registered_User.DoesNotExist:
+        role = 'Ad'
+        profile_info = Registered_College.objects.get(user=user)
+    print(profile_info)
+    context = {
+        'whos_logged': whos_logged[role],
+        'logged_in': user,
+        'profile': profile_info,
+    }
+    return render(request, 'after_login/profile.html', context)
 
 
 def faculty(request):

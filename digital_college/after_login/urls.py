@@ -15,5 +15,6 @@ urlpatterns = [
     path('newclub', views.new_club, name='new_club'),
     path('newcourse/', views.new_course, name="new_course"),
     path('deleteclub/<int:club_id>', views.deleteclub, name='delclub'),
-    path('deleteclass/<int:class_id>', views.deleteclass, name='delclass')
+    path('deleteclass/<int:class_id>', views.deleteclass, name='delclass'),
+    path('deletestudent/<int:stu_id>', views.deletestudent, name='delstu'),
 ]

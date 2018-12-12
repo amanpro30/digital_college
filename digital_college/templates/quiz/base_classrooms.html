@@ -162,11 +162,9 @@
 
 
 <script>
-    // $( window ).on( "load", function() {
-    //     $('.link-formset2').hide();
-    //     $('.link-formset3').hide();
-    //     $('.link-formset4').hide();
-    // })
+    $( window ).on( "load", function() {
+        initialize_select();
+    })
     function initialize_select() {
         $('select').formSelect();
     }

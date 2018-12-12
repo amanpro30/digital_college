@@ -13,7 +13,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
- 
+
         /* .addcss1{
             visibility: hidden; 
         }
@@ -64,9 +64,11 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{% url 'after:after_login' %}">Home</a></li>
                     {% if user.registered_user.notification.count %}
-                        <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications_active</i></a></li>
+                        <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications_active</i></a>
+                        </li>
                     {% else %}
-                        <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications</i></a></li>
+                        <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications</i></a>
+                        </li>
                     {% endif %}
                     <li><a href="#">
                         {% if user.registered_user.image.url %}
@@ -76,47 +78,55 @@
                             <img class="responsive-img" src="/media/profile_pics/user.png"
                                  style="border-radius:50%;width:40px;height:40px;object-fit:fill;">
                         {% endif %}
+                        {% if user.registered_college.image.url %}
+                            <img class="responsive-img" src="{{ user.registered_user.image.url }}"
+                                 style="border-radius:50%;width:40px;height:40px;object-fit:fill;">
+                        {% elif user.registered_college.image.url %}
+                            <img class="responsive-img" src="/media/profile_pics/user.png"
+                                 style="border-radius:50%;width:40px;height:40px;object-fit:fill;">
+                        {% endif %}
                     </a></li>
                     <li><a href="#" style="font-family: Arbutus Slab;">Welcome&nbsp;{{ user|title }}</a></li>
                     <li><a href="{% url 'website_logout' %}">Logout</a></li>
                 </ul>
                 <ul id='dropdownnot' class='dropdown-content' style="margin-top: 100px;">
                     {% for notif in user.registered_user.notification %}
-                    <li>
-                        
-                        {{notif.title}}
-                        <a href='{% url 'after:notifications:delete_notifications' notif.id %}' >{{notif.message}}</a>
-                    </li>
+                        <li>
+
+                            {{ notif.title }}
+                            <a href='{% url 'after:notifications:delete_notifications' notif.id %}'>{{ notif.message }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
     </nav>
 </div>
-    <ul class="sidenav" id="mobile-nav">
-        <li><a href="#dashboard">Home</a></li>visibility: hidden;
-        <li><a href="#classroom">
-            <div class="valign-wrapper">
-                <i class="material-icons" style="margin-left:30px;margin-right:30px;">format_list_bulleted</i>
-                <span>Classrooms</span>
-            </div>
-        <li><a href="{% url 'after:after_login' %}">
-            <i class="material-icons" style="margin-left:30px;margin-right:30px;">dashboard</i>
-            <span>Home</span>
-        </a></li>
-        {% block sidebar %}
-        {% endblock %}
-        <li><a href="{% url 'website_logout' %}">
-            <i class="material-icons" style="margin-left:30px;margin-right:30px;">subdirectory_arrow_right</i>
-            <span>Logout</span>
-        </a></li>
-    </ul>
+<ul class="sidenav" id="mobile-nav">
+    <li><a href="#dashboard">Home</a></li>
+    visibility: hidden;
+    <li><a href="#classroom">
+        <div class="valign-wrapper">
+            <i class="material-icons" style="margin-left:30px;margin-right:30px;">format_list_bulleted</i>
+            <span>Classrooms</span>
+        </div>
+    <li><a href="{% url 'after:after_login' %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">dashboard</i>
+        <span>Home</span>
+    </a></li>
+    {% block sidebar %}
+    {% endblock %}
+    <li><a href="{% url 'website_logout' %}">
+        <i class="material-icons" style="margin-left:30px;margin-right:30px;">subdirectory_arrow_right</i>
+        <span>Logout</span>
+    </a></li>
+</ul>
 
 {% block body %}
 
 {% endblock %}
 
-    
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -124,8 +134,8 @@
 <script src="{% static 'classrooms/js/quiz.js' %}"></script>
 <script>
 
-    function initialize_select(){
-    $('select').formSelect();
+    function initialize_select() {
+        $('select').formSelect();
     }
 </script>
 
@@ -135,8 +145,8 @@
         addText: '<i class="close material-icons medium left">add_circle</i>Single Choice',
         deleteText: '<i class="close material-icons medium">delete</i>',
         added: initialize_select,
-        addCssClass:'addcss1 waves-effect waves-light btn green col s2 offset-s1',
-        deleteCssClass:'delcss1'
+        addCssClass: 'addcss1 waves-effect waves-light btn green col s2 offset-s1',
+        deleteCssClass: 'delcss1'
     });
 </script>
 <script>
@@ -145,8 +155,8 @@
         addText: '<i class="close material-icons medium left">add_circle</i>Multiple Choice',
         deleteText: '<i class="close material-icons medium">delete</i>',
         added: initialize_select,
-        addCssClass:'addcss2 waves-effect waves-light btn red col s2 offset-s1',
-        deleteCssClass:'delcss2'
+        addCssClass: 'addcss2 waves-effect waves-light btn red col s2 offset-s1',
+        deleteCssClass: 'delcss2'
     });
 </script>
 <script>
@@ -155,8 +165,8 @@
         addText: '<i class="close material-icons medium left">add_circle</i>True False',
         deleteText: '<i class="close material-icons medium">delete</i>',
         added: initialize_select,
-        addCssClass:'addcss3 waves-effect waves-light btn amber col s2 offset-s1',
-        deleteCssClass:'delcss3'
+        addCssClass: 'addcss3 waves-effect waves-light btn amber col s2 offset-s1',
+        deleteCssClass: 'delcss3'
     });
 </script>
 <script>
@@ -164,8 +174,8 @@
         prefix: '{{matching_form.prefix}}',
         addText: '<i class="close material-icons medium left">add_circle</i>Matching',
         deleteText: '<i class="close material-icons medium">delete</i>',
-        addCssClass:'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
-        deleteCssClass:'delcss4'
+        addCssClass: 'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
+        deleteCssClass: 'delcss4'
     });
 
 

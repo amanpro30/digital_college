@@ -20,4 +20,7 @@ urlpatterns = [
     path('<str:club_name>/postDetail/<int:post_id>/', views.postdetail, name="postdetails"),
     path('<str:club_name>/reply/<int:com_id>/', views.reply, name="reply"),
     path('<str:club_name>/delrep/<int:rep_id>/', views.delrep, name="delrep"),
+    path('<str:club_name>/contacts/delstud/<int:user_id>/', views.remStudent, name="club_remStud"),
+    path('<str:club_name>/contacts/addstudent/', views.addStudents, name="club_addStud"),
+    path('<str:club_name>/contacts/addstudent/<int:stud_id>', views.addStud, name="club_add"),
 ]
