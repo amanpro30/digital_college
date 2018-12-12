@@ -17,12 +17,14 @@ class User_Registration_Form(ModelForm):
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
     college_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
+
     class Meta:
         model = Registered_User
-        fields = ['role', 'email', 'First_Name', 'Last_Name', 'college_id','image', ]
+        fields = ['role', 'email', 'First_Name', 'Last_Name', 'college_id', 'image', ]
+
 
 class College_Registration_Form(ModelForm):
-    STATE_CHOICES=(
+    STATE_CHOICES = (
         ('AP', 'Andhra Pradesh'),
         ('AC', 'Arunchal Pradesh'),
         ('AS', 'Assam'),
@@ -54,6 +56,7 @@ class College_Registration_Form(ModelForm):
         ('WB', 'West Bengal')
     )
     State = forms.ChoiceField(choices=STATE_CHOICES)
+
     class Meta:
         model = Registered_College
         fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', 'image', ]
@@ -61,34 +64,43 @@ class College_Registration_Form(ModelForm):
 
 def Sign_Up_Form(UserCreationForm):
     email = forms.CharField(widget=forms.EmailInput)
+
     class Meta:
         model = UserCreationForm
         fields = ['username', 'email', 'password1', 'password2']
 
+
+class User_reset_form(ModelForm):
+    username = forms.CharField(widget=forms.HiddenInput(), required=False)
+    class Meta:
+        model = User
+        fields = ['username', 'password', ]
+
+
 class Course_Forms(forms.ModelForm):
     faculty_id = forms.ModelChoiceField(queryset=Registered_User.objects.all())
     college_id = forms.ModelChoiceField(queryset=Registered_College.objects.all())
+
     class Meta:
         model = Courses
         fields = ['course_name', 'college_id', 'faculty_id']
 
 
 class Edit_Registered_User_Form(forms.ModelForm):
-
     class Meta:
         model = Registered_User
-        fields = ['email', 'First_Name', 'Last_Name', 'college_id', 'image', ]
+        fields = ['First_Name', 'Last_Name', 'college_id', 'image', ]
+
 
 class Edit_Registered_College_Form(forms.ModelForm):
-
     class Meta:
         model = Registered_College
-        fields = ['Name_Of_College', 'email', 'College_Registration_Number', 'City', 'State', 'image', ]
-
+        fields = ['Name_Of_College', 'City', 'State', 'image', ]
 
 
 class ResetForm(forms.Form):
     enter_email = forms.EmailField()
+
 
 class ResetDoneForm(forms.Form):
     Password = forms.CharField(widget=forms.PasswordInput())

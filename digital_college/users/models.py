@@ -13,7 +13,7 @@ class Registered_College(models.Model):
     College_Registration_Number = models.IntegerField()
     City = models.CharField(max_length=25)
     State = models.CharField(max_length=25)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default='user.png', upload_to='profile_pics',blank=True)
 
     def __str__(self):
         return self.Name_Of_College
@@ -31,7 +31,7 @@ class Registered_User(models.Model):
     ]
     role = models.CharField(max_length=1, choices=ROLE_CHOICES)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE, default=0)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default='user.png', upload_to='profile_pics',blank=True)
     # mobile_no = models.CharField(max_length=10)
 
     def __str__(self):
@@ -83,7 +83,7 @@ class Exam(models.Model):
     result_file = models.FileField(blank=True, upload_to='report')
 
 class Email(models.Model):
-    email = models.EmailField(blank=False,max_length=100)
+    email = models.EmailField(blank=False, max_length=100)
     ROLE_CHOICES = [
         ('F', 'faculty'),
         ('S', 'student'),

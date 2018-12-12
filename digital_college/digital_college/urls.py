@@ -33,7 +33,7 @@ urlpatterns = [
     path('base/', user_views.base),
     path('club/', include('clubs.urls')),
     path('after_login/', include('after_login.urls')),
-    path('announcements/',include('announcements.urls')),
+    path('announcements/', include('announcements.urls')),
 ]
 
 if settings.DEBUG:
