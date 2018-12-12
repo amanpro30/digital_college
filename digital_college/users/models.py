@@ -13,6 +13,7 @@ class Registered_College(models.Model):
     College_Registration_Number = models.IntegerField()
     City = models.CharField(max_length=25)
     State = models.CharField(max_length=25)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
         return self.Name_Of_College
@@ -30,11 +31,11 @@ class Registered_User(models.Model):
     ]
     role = models.CharField(max_length=1, choices=ROLE_CHOICES)
     college_id = models.ForeignKey(Registered_College, on_delete=models.CASCADE, default=0)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     # mobile_no = models.CharField(max_length=10)
 
     def __str__(self):
         return self.user.username
-    image = models.ImageField(default='profile_pics/user.png', upload_to='profile_pics')
 
     def notifications(self):
         return self.notification_set.filter(viewed=False)

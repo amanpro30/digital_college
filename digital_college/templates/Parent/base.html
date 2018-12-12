@@ -62,15 +62,12 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#home">Home</a></li>
+                    <li><a href="{% url 'after:after_login' %}">Home</a></li>
                     {% if user.registered_user.notification.count %}
                         <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications_active</i></a></li>
                     {% else %}
                         <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications</i></a></li>
                     {% endif %}
-                    
-                    <li><a href="#"><img class="responsive-img" src="/media/profile_pics/user.png"
-                                         style="border-radius:50%;width:40px;height:40px;object-fit:fill;"></a></li>
                     <li><a href="#">
                         {% if user.registered_user.image.url %}
                             <img class="responsive-img" src="{{ user.registered_user.image.url }}"

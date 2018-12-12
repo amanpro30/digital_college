@@ -55,6 +55,13 @@
                                 <i class="material-icons" style="margin-left:30px;margin-right:30px;">filter_b_and_w</i><br>
                                 <span>{{ cl.classpost_set.count }}&nbsp;posts</span>
                             </div>
+                            <div style="display: inline-block;">
+                                <a class="dropdown-trigger" data-target="del_class{{ cl.id }}"><i class="material-icons"
+                                                                                                  style="margin-left:30px;margin-right:30px;">more_vert</i></a>
+                                <ul id='del_class{{ cl.id }}' class='dropdown-content'>
+                                    <li><a href="{% url 'after:delclass' cl.id %}">delete</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -68,4 +75,11 @@
             </div>
         {% endif %}
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(elems, {});
+        });
+
+    </script>
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'users/base_login_signup.html' %}
+{% csrf_token %}
+{% block content %}
+  <p>
+    This reset link is invalid now.
+  </p>
+  <p>
+      <a href="{% url 'users:reset' %}">Click here</a> to reset your password
+  </p>
+{% endblock %}

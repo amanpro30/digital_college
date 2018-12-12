@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from after_login.forms import ClubForm, CourseForm, EmailForm, UploadFileForm
 from users.models import Registered_User, Courses, CourseEnrollment, Registered_College, Clubs, ClubEnrollment, Email, \
     UploadedFiles
@@ -227,3 +227,18 @@ def new_course(request):
         'courseform': courseform,
     }
     return render(request, 'after_login/course_setup.html', context)
+
+
+def deleteclub(request, club_id):
+    Clubs.objects.get(id=club_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def deleteclass(request, class_id):
+    Courses.objects.get(id=class_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def deletestudent(request, stu_id):
+    Registered_User.objects.get(id=stu_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'))

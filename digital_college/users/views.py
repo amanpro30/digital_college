@@ -1,6 +1,6 @@
 from django.contrib.auth import login
-
-from .forms import Course_Forms
+from django.contrib.auth.decorators import login_required
+from .forms import Course_Forms, Edit_Registered_User_Form, Edit_Registered_College_Form
 from .forms import ResetForm
 from .forms import ResetDoneForm
 from .models import Registered_User, Courses
@@ -26,8 +26,8 @@ def College_Home(request):
 def College_Registration(request):
     forms = {}
     if request.method == 'POST':
-        forms['User_Creation_Form'] = UserCreationForm(request.POST)
-        forms['College_Registration_Form'] = College_Registration_Form(request.POST)
+        forms['User_Creation_Form'] = UserCreationForm(request.POST, request.FILES)
+        forms['College_Registration_Form'] = College_Registration_Form(request.POST, request.FILES)
         if forms['College_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
             current_user = forms['User_Creation_Form'].save(commit=False)
             username = forms['User_Creation_Form'].cleaned_data.get('username')
@@ -56,9 +56,10 @@ def College_Registration(request):
             College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get('College_Registration_Number')
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
+            img = request.FILES['image']
             current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
                                               College_Registration_Number=College_Registration_Number, City=City,
-                                              State=State)
+                                              State=State,image=img,)
             current_user.save()
             return render(request, 'users/email_verification.html')
 
@@ -82,14 +83,15 @@ def activate(request, uidb64, token):
         return redirect('/users/User_Home')
 
     else:
-        return HttpResponse('Activation link is invalid')
+        return render(request,'users/invalid_activation_link.html')
+        # return HttpResponse('Activation link is invalid')
 
 
 def User_Registration(request):
     forms = {}
     if request.method == 'POST':
         forms['User_Creation_Form'] = UserCreationForm(request.POST)
-        forms['User_Registration_Form'] = User_Registration_Form(request.POST)
+        forms['User_Registration_Form'] = User_Registration_Form(request.POST,request.FILES)
         if forms['User_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
             email = forms['User_Registration_Form'].cleaned_data.get('email')
             username = forms['User_Creation_Form'].cleaned_data.get('username')
@@ -115,8 +117,9 @@ def User_Registration(request):
             last_name = forms['User_Registration_Form'].cleaned_data.get('Last_Name')
             role = forms['User_Registration_Form'].cleaned_data.get('role')
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
+            image = request.FILES['image']
             current_user = Registered_User(user=current_user, email=email, First_Name=first_name, Last_Name=last_name,
-                                           role=role, college_id=college_id,)
+                                           role=role, college_id=college_id, image=image, )
             current_user.save()
             return render(request, 'users/email_verification.html')
 
@@ -144,7 +147,7 @@ def add_courses(request):
         return render(request, 'users/Add_Course.html', {'forms': forms})
 
 def website_homepage(request):
-    return render(request, 'users/website_homepage.html')
+    return render(request, 'users/web_home.html')
 
 
 def website_register(request):
@@ -160,7 +163,10 @@ def PasswordReset(request):
         forms = ResetForm(request.POST)
         if forms.is_valid():
             email = forms.cleaned_data.get('enter_email')
-            current_user = User.objects.get(email=email)
+            try:
+                current_user = User.objects.get(email=email)
+            except:
+                current_user = False
             if current_user:
                 socket.getaddrinfo('localhost', 8080)
                 current_site = get_current_site(request)
@@ -176,13 +182,19 @@ def PasswordReset(request):
                     mail_subject, message, to=[to_email]
                 )
                 email.send()
-                # message = "Please confirm your email address to complete the registration"
-                # return HttpResponse('Please confirm your email address to complete the registration')
                 return render(request, 'users/password_reset_done.html')
             else:
-                return HttpResponse('Email does not exist')
+                context = {
+                    'forms': forms,
+                    'message': "This e-mail does not exist",
+                }
+                return render(request, 'users/password_reset_form.html', context)
+                # return HttpResponse('Email does not exist')
         else:
-            return HttpResponse('Please enter a valid email')
+            context = {
+                'forms': forms,
+            }
+            return render(request, 'users/password_reset_form.html', context)
     else:
         forms = ResetForm()
         return render(request, 'users/password_reset_form.html', {'forms': forms})
@@ -215,6 +227,44 @@ def reset(request, uidb64, token):
         forms = ResetDoneForm()
         return render(request, 'users/Reset_done.html', {'forms': forms})
 
+
+def reset2(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        current_user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError):
+        current_user = None
+    if current_user is not None and account_activation_token.check_token(current_user, token):
+        if request.method == 'POST':
+            forms = ResetDoneForm(request.POST)
+            if forms.is_valid():
+                password1 = forms.cleaned_data.get('Password')
+                password2 = forms.cleaned_data.get('Confirm_Password')
+                if password1 == password2:
+                    current_user.set_password(password1)
+                    current_user.save()
+                    login(request, current_user)
+                    return redirect('/users/User_Home')
+                    # return HttpResponse('Changed')
+                else:
+                    context={
+                        'forms': forms,
+                        'message': "Your password does't match"
+                    }
+                    return render(request, 'users/Reset_done.html', context)
+            else:
+                return render(request, 'users/Reset_done.html', {'forms': forms})
+        else:
+            forms = ResetDoneForm()
+            return render(request, 'users/Reset_done.html', {'forms': forms})
+        current_user.set_password(password1)
+        current_user.save()
+        return HttpResponse('Changed')
+    else:
+        return render(request, 'users/invalid_reset_link.html')
+        # return HttpResponse('Invalid reset link')
+
+
 whos_logged = {
     'F': {'classrooms', 'Progress Report', 'Calender', 'profile'},
     'S': {'classroom', 'Progress Report', 'Calender', 'clubs', 'profile'},
@@ -231,6 +281,33 @@ def after_login(request):
         'whos_logged': role,
     }
     return render(request, 'users/../templates/after_login/main.html', context)
+
+
+@login_required()
+def profile_update(request):
+    if request.method == 'POST':
+        forms = Edit_Registered_User_Form(request.POST, instance=request.user.registered_user)
+        if forms.is_valid():
+            forms.save()
+            return HttpResponse('Edited')
+    else:
+        forms = Edit_Registered_User_Form(instance=request.user.registered_user)
+        args = {'forms': forms}
+        return render(request, 'users/editprofile.html', args)
+
+
+@login_required()
+def profile_update2(request):
+    if request.method == 'POST':
+        forms = Edit_Registered_College_Form(request.POST, instance=request.user.registered_college)
+        if forms.is_valid():
+            forms.save()
+            return HttpResponse('Edited')
+    else:
+        forms = Edit_Registered_User_Form(instance=request.user.registered_college)
+        args = {'forms': forms}
+        return render(request, 'users/editprofile.html', args)
+
 
 
 def progress_report(request):

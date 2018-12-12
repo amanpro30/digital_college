@@ -1,0 +1,13 @@
+{% extends 'users/base_login_signup.html' %}
+{% csrf_token %}
+{% block content %}
+  <p>
+    This activation link is invalid now.
+  </p>
+    <p>
+        Maybe you are already registered
+    </p>
+  <p>
+      <a href="{% url 'website_login' %}">Click here</a> to login
+  </p>
+{% endblock %}

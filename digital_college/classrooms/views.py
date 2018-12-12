@@ -1,8 +1,5 @@
 from django.shortcuts import render, redirect
-from users.models import Registered_User, Courses, CourseEnrollment, Registered_College
-
-
-# Create your views here.
+from users.models import Registered_User, Courses, CourseEnrollment
 
 def class_home(request, class_name):
     return render(request, 'quiz/base_classrooms.html', {'class_name': class_name}, {'class_name': class_name})
