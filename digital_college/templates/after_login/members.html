@@ -7,12 +7,14 @@
             transition: 0.5s ease;
 
         }
-    td{
-        color:darkblue;
-    }
-    table{
-        margin:5%;
-    }
+
+        td {
+            color: darkblue;
+        }
+
+        table {
+            margin: 5%;
+        }
     </style>
 {% endblock %}
 
@@ -20,25 +22,28 @@
 {% block content %}
     <h4 class="center blue-text text-darken-4"><u>Faculty</u></h4>
     <div class="center">
-    <table class="centered white" style="width:90%;">
-        <thead>
-        <tr>
-            <th>Members</th>
-            <th>email</th>
-        </tr>
-        </thead>
-        <tbody>
+        <table class="centered white" style="width:90%;">
+            <thead>
+            <tr>
+                <th>Members</th>
+                <th>email</th>
+            </tr>
+            </thead>
+            <tbody>
 
-        <tr class="onhover">
-            <td>{{ faculty.First_Name }}&nbsp;{{ faculty.Last_Name }}</td>
-            <td>{{ faculty.email }}</td>
-        </tr>
+            <tr class="onhover">
+                <td>{{ faculty.First_Name }}&nbsp;{{ faculty.Last_Name }}</td>
+                <td>{{ faculty.email }}</td>
+            </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     </div>
     <h4 class="center blue-text text-darken-4"><u>Students</u></h4>
-    <a class="btn-floating red btn-large right" href="{% url 'after:classroom:addStud' class_name %}" style="margin-right:5%;"><i class="material-icons">add</i></a>
+    {% if user.registered_college %}
+        <a class="btn-floating red btn-large right" href="{% url 'after:classroom:addStud' class_name %}"
+           style="margin-right:5%;"><i class="material-icons">add</i></a>
+    {% endif %}
     <table class="centered white" style="width: 90%;">
         <thead>
         <tr>
@@ -56,7 +61,8 @@
                 <td>{{ st.student_id.email }}</td>
                 {% if user.registered_college %}
                     <td>
-                        <a class="btn red" href="{% url 'after:classroom:remStud' class_name st.student_id.id %}">Remove</a>
+                        <a class="btn red"
+                           href="{% url 'after:classroom:remStud' class_name st.student_id.id %}">Remove</a>
                     </td>
                 {% endif %}
             </tr>

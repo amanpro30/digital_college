@@ -39,13 +39,12 @@
                              style="height:40px;width:40px;">
                         <span style="font-weight: bold;">{{ post.userId.user.registered_user.First_Name|title }}</span>&nbsp;<span>posted this</span>
                         <a class='dropdown-trigger right' data-target='dropdown{{ post.id }}'><i
-                                class="material-icons">more_vert</i></a>
+                                class="material-icons blue-text text-darken-4">more_vert</i></a>
                         <ul id='dropdown{{ post.id }}' class='dropdown-content'>
                             {% if post.userId.user == user %}
                                 <li>
-                                    <a href="{% url 'after:classroom:class_forum:cl_delete' class_name post.id %}">Delete</a>
+                                    <a class="blue-text text-darken-4" href="{% url 'after:classroom:class_forum:cl_delete' class_name post.id %}">Delete</a>
                                 </li>
-                                <li><a href="#">Update</a></li>
                             {% else %}
                                 <li><a href="#report">Report</a></li>
                             {% endif %}
@@ -74,7 +73,6 @@
                                 </a>
                             </div>
                             <div class="card-action">
-                                {% if i.userId.user %}
                                     {% for i in post.classlike_set.all %}
                                         {% if i.userId.user == user %}
                                             <a href="{% url 'after:classroom:class_forum:cl_dislike' class_name post.id %}">
@@ -91,7 +89,6 @@
                                             <i class="material-icons grey-text " style="font-size: 30px">thumb_up</i>
                                         </a>
                                     {% endfor %}
-                                {% endif %}
                                 <span>Liked by {{ post.classlike_set.all.count }}</span>
                                 <button class="btn right blue darken-4" id="com_button{{ post.id }}"
                                         onclick="showcomments({{ post.id }});">Comments
@@ -100,8 +97,8 @@
 
                         </div>
                     </div>
-                    <div class="hide" id="comments{{ post.id }}" style="border-bottom:1.7px solid dimgray;">
-                        <h6 class="left-align blue-text text-darken-4">Comments</h6>
+                    <div class="hide white" id="comments{{ post.id }}" style="border-bottom:1.7px solid dimgray;">
+                        <h4 class="left-align blue-text text-darken-4">Comments</h4>
                     {% if user.registered_user %}
                         <div style="padding:1%;">
                             <form action="{% url 'after:classroom:class_forum:cl_comment' class_name post.id %}"
@@ -160,7 +157,7 @@
                                 </div>
                             </div>
                         {% endfor %}
-                        <a href="{% url 'after:classroom:class_forum:cl_post' class_name post.id %}">load the
+                        <a class="grey-text" href="{% url 'after:classroom:class_forum:cl_post' class_name post.id %}">load the
                             complete post></a>
                     </div>
                 </div>

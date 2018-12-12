@@ -1,11 +1,11 @@
 {% extends 'Parent/base.html' %}
 
 {% block body %}
-    <div class="container" style="width:90%;">
+    <div class="container white blue-text text-darken-4" style="width:90%;padding:3%;">
         <div style="margin:2%;border-bottom:2px solid teal">
             <img class="responsive-img" src="{{ post.userId.image.url }}"
                  style="height:80px;width:80px;border-radius:50%;">
-            <b>{{ post.userId.First_Name|title }}&nbsp;{{ post.userId.Last_Name|title }}</b>&nbsp;
+            <b >{{ post.userId.First_Name|title }}&nbsp;{{ post.userId.Last_Name|title }}</b>&nbsp;
             <span>posted this on <b>{{ post.date }}</b> in <b>&nbsp;<a class="blue-text"
                                                                        href="{% url 'after:classroom:class_forum:cl_forum' class_name %}">{{ class_name }}</a></b></span>
             {% for i in post.classlike_set.all %}
@@ -32,17 +32,17 @@
             {% endfor %}
         </div>
         <div style="margin:4%;">
-            <h1 class="teal-text"><b>{{ post.subject }}</b></h1>
+            <h1 class="blue-text text-darken-4"><b>{{ post.subject }}</b></h1>
             <p>{{ post.content }}</p>
             {% if post.userId.user == user %}
-                <a class="waves-effect waves-light btn modal-trigger" href="#post">Update</a>
+                <a class="waves-effect waves-light blue darken-4 btn modal-trigger" href="#post">Update</a>
             {% endif %}
             <br>
         </div>
         {% if post.userId.user == user %}
             <div id="post" class="modal" style="border-radius: 4px;">
                 <div class="modal-content">
-                    <h2 class="center-align teal-text"><u>Update</u></h2>
+                    <h2 class="center-align blue-text text-darken-4"><u>Update</u></h2>
                     <form class="container teal-text" style="width:80%;"
                           action="{% url 'after:classroom:class_forum:cl_updatepost' class_name post.id %}" method="POST"
                           enctype="multipart/form-data">
@@ -54,10 +54,10 @@
                         </div>
                         {{ p_up_form.content }}
                         <div class="container" style="margin:20px;">
-                            <button class="modal-close waves-effect waves-green btn white-text" type="button"
+                            <button class="modal-close waves-effect waves-green blue darken-4 btn white-text" type="button"
                                     value="">Cancel
                             </button>
-                            <button class="modal-close waves-effect waves-green btn white-text" type="Submit">Update
+                            <button class="modal-close waves-effect waves-green blue darken-4 btn white-text" type="Submit">Update
                             </button>
                         </div>
                     </form>
@@ -65,12 +65,12 @@
             </div>
         {% endif %}
         <div style="margin:4%">
-            <h2 class="teal-text">Comments</h2>
+            <h2 class="blue-text text-darken-4">Comments</h2>
             <div style="padding:1%;">
                 <form action="{% url 'after:classroom:class_forum:cl_comment' class_name post.id %}" method="POST">
                     {% csrf_token %}
                     {{ commentform.comment }}
-                    <input class="btn" type="submit" value="Post">
+                    <input class="blue darken-4 btn" type="submit" value="Post">
                 </form>
             </div>
             {% for com in post.classcomment_set.all %}
@@ -84,12 +84,12 @@
                         <ul id='dropdown{{ com.id }}' class='dropdown-content'>
                             {% if com.userId.user == user %}
                                 <li>
-                                    <a href="{% url 'after:classroom:class_forum:cl_delcom' class_name com.id %}">Delete</a>
+                                    <a class="blue-text text-darken-4" href="{% url 'after:classroom:class_forum:cl_delcom' class_name com.id %}">Delete</a>
                                 </li>
                             {% else %}
-                                <li><a href="#report">Report</a></li>
+                                <li><a class="blue-text text-darken-4" href="#report">Report</a></li>
                             {% endif %}
-                            <li><a class="teal-text" onclick="showreplies({{ com.id }})">Reply</a></li>
+                            <li><a class="blue-text text-darken-4" onclick="showreplies({{ com.id }})">Reply</a></li>
                         </ul>
                     </div>
                     <div style="margin:1%; margin-right: 4%; margin-left:4%;">{{ com.comment }}</div>
@@ -99,7 +99,7 @@
                                   method="POST">
                                 {% csrf_token %}
                                 {{ replyform.reply }}
-                                <input class="btn" type="submit" value="Post">
+                                <input class="blue darken-4 btn" type="submit" value="Post">
                             </form>
                         </div>
                         <div style="margin-left:8%;"><br>
@@ -109,15 +109,15 @@
                                         <img class="circle" src="{{ rep.comId.postId.userId.image.url }}"
                                              style="border:1px solid dimgray;height:50px;width:50px;border-radius: 50px;">&nbsp;&nbsp;
                                         <span style="font-weight: bold;">{{ rep.comId.userId.user.username|title }}&nbsp;posted this:</span>
-                                        <a class='dropdown-trigger right' data-target='rep{{ rep.id }}'><i
+                                        <a class='dropdown-trigger right' data-target='repl{{ rep.id }}'><i
                                                 class="material-icons">more_vert</i></a>
-                                        <ul id='rep{{ rep.id }}' class='dropdown-content'>
+                                        <ul id='repl{{ rep.id }}' class='dropdown-content'>
                                             {% if rep.comId.userId.user == user %}
                                                 <li>
-                                                    <a href="{% url 'after:classroom:class_forum:cl_delreply' class_name rep.id %}">Delete</a>
+                                                    <a class="blue-text text-darken-4" href="{% url 'after:classroom:class_forum:cl_delreply' class_name rep.id %}">Delete</a>
                                                 </li>
                                             {% else %}
-                                                <li><a href="#report">Report</a></li>
+                                                <li><a class="blue-text text-darken-4" href="#report">Report</a></li>
                                             {% endif %}
                                         </ul>
                                     </div>

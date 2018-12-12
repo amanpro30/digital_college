@@ -47,10 +47,10 @@ INSTALLED_APPS = [
     'quiz',
     'announcements',
     'slides',
-    'checkboxselectmultiple',
     'notifications',
     'report',
     'forum.apps.ForumConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -93,10 +93,9 @@ DATABASES = {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'test',
             'USER': 'root',
-            'PASSWORD': 'ravish11',
-            'HOST':'localhost',
-            'PORT':'',
-gi
+            'PASSWORD': '12345',
+            'HOST': 'localhost',
+            'PORT': '',
         }
 }
 # DATABASES = {
@@ -105,7 +104,6 @@ gi
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-
 
 
 # Password validation
@@ -153,7 +151,6 @@ MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/users/User_Home/'
 
-
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'digital.classroom247@gmail.com'
@@ -171,3 +168,10 @@ EMAIL_USE_SSL = False
 #         'ROUTING': 'example_channels.routing.channel_routing',
 #     }
 # }
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+}
