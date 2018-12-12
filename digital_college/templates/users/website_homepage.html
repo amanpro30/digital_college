@@ -1,267 +1,452 @@
+<!DOCTYPE html>
+
 {% load static %}
 
-<!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  
- 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href={% static 'users/css/style_home.css' %}>
-    <link rel="stylesheet" type="text/css" href={% static 'users/css/particle.css' %}>
 
-    <link href="https://fonts.googleapis.com/css?family=Spicy+Rice" rel="stylesheet">
 
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'home/homepage.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'home/particle.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'home/aos.css' %}">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script src={% static 'users/js/jquery.fullpage.js' %}></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'>
+
+    <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+    <!-- <script src="jquery.fullpage.js"></script> -->
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet"> -->
 
-    <script src="https://cdjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
 
-    <script type="text/javascript">
-      $(window).on('scroll',function(){
-        if($(window).scrollTop()){
-          $('nav').addClass('black');
-        }
-        else{
-          $('nav').removeClass('black')
-        }
-      })
-    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.13/css/mdb.min.css" rel="stylesheet">
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-* {
-  box-sizing: border-box;
-}
 
 
-/* Float four columns side by side */
-.column {
-  float: left;
-  width: 25%;
-  padding: 0 5px;
-}
+  </head>
 
-.row 
-{
-  width: 100px;
-  margin: 0 -5px;
-}
+  <body>
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both  width: 100%;
-};
+    <section class="sec1">
+      <nav class="nav" style="width: 100%;">
 
-
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 10px;
-  }
-}
-
-/* Style the counter cards */
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 16px;
-  text-align: center;
-  background-color: #000;
-  opacity: 0.8;
-  color: white;
-}
-
-.fa {font-size:50px;}
-</style>
-</head>
-
-<body>
- <div id="fullpage">
-  
-  <section> 
-  <div id="particles-js" style="height: 100vh;">
-      
-   
-  
-          <p class="heading" style="width: 50%">
-      <h1>REVOLUTIONISING<br> COLLEGE LIFE</h1>
-      A common platform for academic and co-curricular activities..
+       <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+        <a class="navbar-brand white-text" href="#" style="font-size: 32px;"><b>DIGITAL COLLEGE</b></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="float: right; margin-left: 50%;">
+          <li class="nav-item">
+            <a class="nav-link white-text" href="#">Home <!-- <span class="sr-only">(current)</span> --></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link white-text" href="{% url 'users:website_login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link white-text" href="{% url 'users:registration_choice' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link white-text" href="#contact">Contact Us</a>
+          </li>
 
 
-      <script type="text/javascript" src={% static 'users/js/particles.js' %}></script>
-      <script type="text/javascript" src={% static 'users/js/app.js' %}></script>
-
-   </div>
-   </section>
-
-    <div class="wrapper">
-    <nav>
-      <div class="logo1">
-        DIGITAL COLLEGE
+        </ul>
       </div>
-      <ul>
-        <li><a href="{% url 'website_homepage' %}">Home</a></li>
-        <!--<li><a href="{% url 'website_register' %}">Register</a></li>-->
-        <li><a href="{% url 'users:User_Registration' %}">User Register</a></li>
-        <li><a href="{% url 'users:College_Registration' %}">Admin Register</a></li>
-        <li><a class="active" href="{% url 'website_login' %}">Log In</a></li>
-      </ul>
-    </nav>  
-  </div>
-
-    
-    
-  </div>   
+    </nav>
 
 
-  
-  
-    <div class="second">
-      <section>
+    <div id="particles-js"  style="height: 100vh;">
+      <img src='{% static "home/st32.png" %}' style="height: 95vh; width: 50%; padding-top: 7%; float: left;">
 
-      <!-- carousel with 50%height of the page -->
+      <p class="heading" data-aos="fade-left">
+        "REVOLUTIONISING<br> COLLEGE LIFE<br>E-LEARNING"<br>...
+      </p>
 
-      <!-- 4-PICTURED ACHIEVEMENT LIST-->
-          
-            <div class="row" style="width: 100%;">
-              <div class="column">
-                <div class="card">
-                  <p><i class="fa fa-user"></i></p>
-                  <h3>11+</h3>
-                  <p>Partners</p>
-                </div>
-              </div>
 
-              <div class="column">
-                <div class="card">
-                  <p><i class="fa fa-check"></i></p>
-                  <h3>55+</h3>
-                  <p>Projects</p>
-                </div>
-              </div>
-              
-              <div class="column">
-                <div class="card">
-                  <p><i class="fa fa-smile-o"></i></p>
-                  <h3>100+</h3>
-                  <p>Happy Clients</p>
-                </div>
-              </div>
-              
-              <div class="column">
-                <div class="card">
-                  <p><i class="fa fa-coffee"></i></p>
-                  <h3>100+</h3>
-                  <p>Meetings</p>
-                </div>
-              </div>         
-          </div>    
-          </section>
+      <div class="button">
+        <a href="#"><b> Get Started
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+      </div>
+
+
+      <script type="text/javascript" src="{% static 'home/js/particles.js' %}"></script>
+      <script type="text/javascript" src="{% static 'home/js/app.js' %}"></script>
+
+
     </div>
 
 
-    <div class="display">
-      <section>
-          <div class="logo">
-              Digital College
+  </section>
+
+  <section class="sec3">
+   <div class="features" style="width: 100%;">
+
+    <section id="section-services" class="no-top no-bottom text-light" data-stellar-background-ratio=".2">
+      <div class="overlay-bg t90" data-aos="fade-up">
+        <div class="container">
+
+          <div class="row sequence" style="padding-top: 5%; padding-right: 9%;">
+            <div class="col-md-12 text-center">
+              <h2><span class="uptitle"></span>Why Digital College?</h2>
             </div>
 
-          <div class="med" style="width: 100%; display: flex; align-items: center; justify-content: center;">
-                      
-          <ul>
-            <li><a href="#">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span class="fa fa-google-plus" aria-hidden="true"></span>
-              </a>
-            </li>
-            <li><a href="#">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span class="fa fa-facebook-official" aria-hidden="true"></span>
-              </a>
-            </li>
-            <li><a href="#">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span class="fa fa-twitter" aria-hidden="true"></span>
-              </a>
-            </li>
-            <li><a href="#">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span class="fa fa-instagram" aria-hidden="true"></span>
-              </a>
-            </li>
-            <li><a href="#">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span class="fa fa-linkedin" aria-hidden="true"></span>
-              </a>
-            </li>
-          </ul>
+            <!-- feature box begin -->
+            <div class="col-md-6 col-sm-6 feature-box left mb30 sq-item wow" style="margin-top:5%;" data-aos="fade-right">
+             <span style="float:left; margin-right: 3%;">
+              <i class="fa fa-handshake-o id-color" style="color: #e9692e !important; font-size: 72px;"></i>
+            </span>
+            <h3>Networking</h3>
+            <div class="text">
+             <p style="font-size: 15px !important;  padding-left: 3%;"> We help you to connect with the modern education system and also to the best in the field.</p>
+           </div>
+         </div>
+         <!-- feature box close -->
 
+         <!-- feature box begin -->
+         <div class="col-md-6 col-sm-6 feature-box left mb30 sq-item wow" style="margin-top:5%;" data-aos="fade-left">
+          <span style="float:left; margin-right: 3%;">
+            <i class=" fa fa-wrench id-color " style="color: #e9692e !important; font-size: 72px;"></i>
+          </span>
+          <div class="text">
+            <h3>Collaboration</h3>
+
+            <p style="font-size: 15px !important;">Developing a sense of teamwork and refining your thought process is one of our primary motives.</p>                         </div>
           </div>
+          <!-- feature box close -->
 
-          <div class="links" style="width: 33%; float: left; align-items: center; padding-left: 250px; font-size: 30px">
-            <UL><b style="font-size: 50px;  text-decoration-color: white;"> LINKS </b><br>
-                <li>Home</li>
-                <li>About us</li>
-                  <br>
-                <li>Register</li>
-                <li>Login</li>
-             </UL>
+          <!-- feature box begin -->
+          <div class="col-md-6 col-sm-6 feature-box left mb30 sq-item wow" style="margin-top:5%;" data-aos="fade-right">
+            <span style="float:left; margin-right: 3%;">
+              <i class="fa fa-balance-scale id-color " style="color: #e9692e !important; font-size: 72px;"></i>
+            </span>
+            <div class="text">
+              <h3>Experience</h3>
+              <p style="font-size: 15px !important;">Networking with faculty would help you gain a practical experience of how things function in real world.</p>                               </div>
+            </div>
+            <!-- feature box close -->
+
+            <!-- feature box begin -->
+            <div class="col-md-6 col-sm-6 feature-box left mb30 sq-item wow" style="margin-top:5%;" data-aos="fade-left">
+              <span style="float:left; margin-right: 3%;">
+                <i class="fa fa-users id-color" style="color: #e9692e !important; font-size: 72px;"></i>
+              </span>
+              <div class="text">
+                <h3>Mentorship</h3>
+                <p style="font-size: 15px !important;"> Interacting with experienced Mentors will help you to convert your dream to reality.</p>
+              </div>
+            </div>
+            <!-- feature box close -->
           </div>
+        </div>
+      </div>
+    </section>
 
-          <DIV class="Contact" style="width: 33%;  float: left; align-items: center;padding-left: 90px; font-size: 30px">
-             <UL style="list-style-type: none;"><b style="font-size: 50px;  text-decoration-color: white;">Contact Us</b><br>
-                <li>630 Gnan Marg,</li>
-                <li>Sri City,</li>
-                <li>Andhra Pradesh</li>
-                <li>PIN 517646</li>
-                <li>Email: support@digitalcollege.com</li>
+  </div>
 
-             </UL> 
-          </DIV>
+</section>
 
-          <DIV class="follow" style="width: 33%;  float: left; align-items: center; padding-left: 50px; font-size: 30px">
-             <UL><b style="font-size: 50px;  text-decoration-color: white;">Follow Us</b><br>
-                <li>Google+</li>
-                <li>Facebook</li>
-                <li>Twitter</li>
 
-             </UL> 
-          </DIV>
+<div class="sec" style="padding-top: 5%; font-size: 45px; text-align: center; width: 100%;">
+
+  <!-- Card deck -->
+  <div class="card-deck" style=" margin: 0 2%; height: 85vh;">
+
+    <!-- Card -->
+    <div class="card mb-4">
+
+      <!--Card image-->
+      <div class="view overlay">
+        <img class="card-img-top" src='{% static "home/st34.jpg" %}' alt="Card image cap" style="height: 90%;">
+        <a href="#!">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+
+      <!--Card content-->
+      <div class="card-body">
+
+       <!--Title-->
+       <h4 class="card-title">Course content</h4>
+       <!--Text-->
+       <p class="card-text">All study material at your disposal for all the courses you're enrolled in.</p>
+       <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+
+       <button type="button" class="btn btn-light-blue btn-md">Read more</button>
+
+     </div>
+
+   </div>
+   <!-- Card -->
+
+   <!-- Card -->
+   <div class="card mb-4">
+
+    <!--Card image-->
+    <div class="view overlay">
+      <img class="card-img-top" src='{% static "home/st35.jpg" %}' alt="Card image cap"  style="height: 90%;">
+      <a href="#!">
+        <div class="mask rgba-white-slight"></div>
+      </a>
+    </div>
+
+    <!--Card content-->
+    <div class="card-body">
+
+
+      <!--Title-->
+      <h4 class="card-title">Study from home</h4>
+      <!--Text-->
+      <p class="card-text">Leave behind the fear of missing out by missing classes. It is all at your disposal</p>
+      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+
+
+      <button type="button" class="btn btn-light-blue btn-md">Read more</button>
 
     </div>
 
-    </section>
-  </div> 
+  </div>
+  <!-- Card -->
+
+  <!-- Card -->
+  <div class="card mb-4">
+
+    <!--Card image-->
+    <div class="view overlay">
+      <img class="card-img-top" src='{% static "home/st36.jpg" %}' alt="Card image cap"  style="height: 90%;">
+      <a href="#!">
+        <div class="mask rgba-white-slight"></div>
+      </a>
+    </div>
+
+    <!--Card content-->
+    <div class="card-body">
+
+      <!--Title-->
+      <h4 class="card-title">Forum</h4>
+      <!--Text-->
+      <p class="card-text">Common platform for discussion amongst your peers to discuss upcoming activities.</p>
+      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      <button type="button" class="btn btn-light-blue btn-md">Read more</button>
+
+    </div>
+
+  </div>
+  <!-- Card -->
+
+</div>
+<!-- Card deck -->
+</div>
 
 
-   <script type="text/javascript">
-      FastClick.attach(document.body);
-      $('#fullpage').fullpage();
-    </script>
+<!-- 4-PICTURED ACHIEVEMENT LIST-->
+<div class="second">
+  <div class="back" data-aos="fade-up">
+
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <p><i class="fa fa-user"></i></p>
+          <h3>11+</h3>
+          <p>Partners</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <p><i class="fa fa-check"></i></p>
+          <h3>55+</h3>
+          <p>Projects</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <p><i class="fa fa-smile-o"></i></p>
+          <h3>100+</h3>
+          <p>Happy Clients</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <p><i class="fa fa-coffee"></i></p>
+          <h3>100+</h3>
+          <p>Meetings</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 4-PICTURED ACHIEVEMENT LIST end-->
+
+</div>
+
+
+<section class="sec4">
+  <div class="display" id="contact">
+    <div class="med" data-aos="fade-up">
+      <ul>
+        <li><a href="#">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span class="fa fa-google-plus" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li><a href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="fa fa-facebook-official" aria-hidden="true"></span>
+      </a>
+    </li>
+    <li><a href="#">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span class="fa fa-twitter" aria-hidden="true"></span>
+    </a>
+  </li>
+  <li><a href="#">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span class="fa fa-instagram" aria-hidden="true"></span>
+  </a>
+</li>
+<li><a href="#">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span class="fa fa-linkedin" aria-hidden="true"></span>
+</a>
+</li>
+</ul>
+
+</div>
+<div class="links" style="float: left; align-items: center; margin-left: 20%; font-size: 20px;" data-aos="fade-right">
+  <UL><b style="font-size:30px;  text-decoration-color: white;"> LINKS </b><br>
+    <li>Home</li>
+    <li>About us</li>
+    <br>
+    <li>Register</li>
+    <li>Login</li>
+  </UL>
+</div>
+
+<DIV class="Contact" style="margin-left: 5%; float: left; align-items: center;padding-left: 90px; font-size: 20px;">
+ <UL style="list-style-type: none;" data-aos="fade-up"><b style="font-size: 30px;  text-decoration-color: white;">Contact Us</b><br>
+  <li>630 Gnan Marg,</li>
+  <li>Sri City,</li>
+  <li>Andhra Pradesh</li>
+  <li>PIN 517646</li>
+  <li>Email: support@dc.com</li>
+
+</UL>
+</DIV>
+
+<DIV class="follow" style="margin-left: 5%;  float: left; align-items: center; padding-left: 50px; font-size: 20px;" data-aos="fade-left">
+ <UL><b style="font-size: 30px;  text-decoration-color: white;" >Follow Us</b><br>
+  <li>Google+</li>
+  <li>Facebook</li>
+  <li>Twitter</li>
+  <li>Instagram</li>
+  <li>LinkedIn</li>
+
+</UL>
+</DIV>
+
+</div>
+
+</section>
+
+
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.13/js/mdb.min.js"></script>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+
+
+    <script type="text/javascript" src="{% static 'home/js/aos.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery-3.2.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.ripples.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/bootstrap.js' %}></script>
+    <script type="text/javascript" src="{% static 'home/js/mdb.js' %}></script>
+    <script type="text/javascript" src="{% static 'home/js/popper.min.js' %}></script>
+<script type="text/javascript">
+  $('#particles-js').ripples({
+    resolution: 512,
+      dropRadius: 20, //px
+      perturbance: 0.04,
+    });
+
+    // Automatic drops
+    setInterval(function() {
+      var $el = $('#particles-js');
+      var x = Math.random() * $el.outerWidth();
+      var y = Math.random() * $el.outerHeight();
+      var dropRadius = 20;
+      var strength = 0.04 + Math.random() * 0.04;
+
+      $el.ripples('drop', x, y, dropRadius, strength);
+    }, 200);
+
+
+
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127043318-2"></script>
+  <script type="text/javascript">AOS.init();</script>
+
+  <script>
+    $(".close-modal, .modal-sandbox, #close-btn").click(function(){
+      $(".modal").css({"display":"none"});
+            $("body").css({"overflow-y": "auto"}); //Prevent double scrollbar.
+          });
+
+  $(window).on('load', function() { // makes sure the whole site is loaded
+  $('#status').fadeOut(); // will first fade out the loading animation
+  $('#preloader').delay(350).fadeOut('slow'); })
+</script>
+
 
 </body>
 </html>

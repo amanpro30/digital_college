@@ -1,0 +1,13 @@
+{% extends 'users/base_login_signup.html' %}
+
+{% block content %}
+{% csrf_token %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<form method="POST" >
+    {% csrf_token %}
+    <div style="display: inline; text-align: center; margin-top: 5%; font-size: 20px; "}
+        {{ forms.as_p }}
+    </div>
+        <button type="submit" value="Select" style="margin-top: 10%;">Submit</button>
+</form>
+{% endblock content %}
