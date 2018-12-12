@@ -5,8 +5,6 @@ from django.test.client import Client
 from django.urls import reverse
 from users.models import Registered_College, Registered_User, Courses, CourseEnrollment, Clubs, ClubEnrollment, Exam
 
-# Create your tests here.
-
 
 #Model Testing
 class TestUserModel(TestCase):

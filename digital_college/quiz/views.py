@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import quiz_detail_form,single_correct_form,multi_correct_form,truefalse_form,response_single_form,response_multiple_form,response_true_form,answer_form
-from .models import quiz as qz,singlechoice,multiplechoice,truefalse,answers,respo_single,respo_multiple,respo_true,result
+from .models import quiz as qz,singlechoice,multiplechoice,truefalse,answers,respo_single,respo_multiple,respo_true,result,test_given
 from datetime import datetime
 from django.contrib.auth.models import User
 import pytz
@@ -20,73 +20,79 @@ def take_quiz(request,class_name,quiz_name):
     college_instance=Registered_College.objects.get(Name_Of_College=college_name)
     course_instance=Courses.objects.get(course_name=class_name)
     quiz_instance = qz.objects.get(name_of_quiz=quiz_name)
-    question_single=singlechoice.objects.filter(college_id=college_instance,class_id=course_instance,quiz_id=quiz_instance)
-    question_multiple=multiplechoice.objects.filter(college_id=college_instance,class_id=course_instance,quiz_id=quiz_instance)
-    question_true=truefalse.objects.filter(college_id=college_instance,class_id=course_instance,quiz_id=quiz_instance)
-    response_single_FormSet=formset_factory(response_single_form,extra=question_single.count())
-    response_multiple_FormSet=formset_factory(response_multiple_form,extra=question_multiple.count())
-    response_true_FormSet=formset_factory(response_true_form,extra=question_true.count())
     username=request.user
     user_instance=User.objects.get(username=username)
     reg_user_instance=Registered_User.objects.get(user=user_instance)
-    if request.method=="POST":
-        response_single_sets=response_single_FormSet(request.POST,prefix='fs1')
-        response_multiple_sets=response_multiple_FormSet(request.POST,prefix='fs2')
-        response_true_sets=response_true_FormSet(request.POST,prefix='fs3')
-        if response_single_sets.is_valid() and response_multiple_sets.is_valid() and response_true_sets.is_valid():
-            i=0
-            for (each_question,each_respo) in zip(question_single,response_single_sets):
-                each_respo_instance=each_respo.save(commit=False)
-                each_respo_instance.user_id=reg_user_instance
-                each_respo_instance.question_id=each_question
-                each_respo_instance.quiz_id=quiz_instance
-                each_respo.save()
-                i=i+1
-            i=0
-            for (each_question,each_respo) in zip(question_multiple,response_multiple_sets):
-                each_respo_instance=each_respo.save(commit=False)
-                each_respo_instance.user_id=reg_user_instance
-                each_respo_instance.question_id=each_question
-                each_respo_instance.quiz_id=quiz_instance
-                each_respo.save()
-                i=i+1
-            i=0
-            for (each_question,each_respo) in zip(question_true,response_true_sets):
-                each_respo_instance=each_respo.save(commit=False)
-                each_respo_instance.user_id=reg_user_instance
-                each_respo_instance.question_id=each_question
-                each_respo_instance.quiz_id=quiz_instance
-                each_respo.save()
-                i=i+1
-            i=0
-            return redirect('after:classroom:quiz:quiz_result',quiz_name=quiz_instance.name_of_quiz,class_name=course_instance)
-    else:    
-        response_single_sets=response_single_FormSet(prefix='fs1')
-        response_multiple_sets=response_multiple_FormSet(prefix='fs2')
-        response_true_sets=response_true_FormSet(prefix='fs3')
-    def is_started(quiz):
-        present=datetime.utcnow()
-        present = pytz.utc.localize(present)
-        return quiz.start_time < present
-    def is_finished(quiz):
-        present=datetime.utcnow()
-        present = pytz.utc.localize(present)
-        return quiz.end_time < present
-    started=is_started(quiz_instance)
-    finished=is_finished(quiz_instance)
-    
-    context={
-        'question_single':question_single,
-        'question_multiple':question_multiple,
-        'question_true':question_true,
-        'respo_single':response_single_sets,
-        'respo_multi':response_multiple_sets,
-        'respo_true':response_true_sets,
-        'is_started':started,
-        'is_finished':finished,
-        'class_name': class_name,
-    }
-    return render(request,'quiz/take_quiz.html',context)
+    print('h1',test_given.objects.filter(student_id=reg_user_instance,quiz_id=quiz_instance).exists())
+    if(test_given.objects.filter(student_id=reg_user_instance,quiz_id=quiz_instance).exists()):
+        quizzes = qz.objects.filter(class_id=course_instance,college_id=college_instance)
+        return render(request,'quiz/quiz_list.html',{'quizzes':quizzes, 'class_name': class_name,'message':'You cannot take this quiz again!'})
+    else:
+        question_single=singlechoice.objects.filter(college_id=college_instance,class_id=course_instance,quiz_id=quiz_instance)
+        question_multiple=multiplechoice.objects.filter(college_id=college_instance,class_id=course_instance,quiz_id=quiz_instance)
+        question_true=truefalse.objects.filter(college_id=college_instance,class_id=course_instance,quiz_id=quiz_instance)
+        response_single_FormSet=formset_factory(response_single_form,extra=question_single.count())
+        response_multiple_FormSet=formset_factory(response_multiple_form,extra=question_multiple.count())
+        response_true_FormSet=formset_factory(response_true_form,extra=question_true.count())
+        if request.method=="POST":
+            response_single_sets=response_single_FormSet(request.POST,prefix='fs1')
+            response_multiple_sets=response_multiple_FormSet(request.POST,prefix='fs2')
+            response_true_sets=response_true_FormSet(request.POST,prefix='fs3')
+            if response_single_sets.is_valid() and response_multiple_sets.is_valid() and response_true_sets.is_valid():
+                i=0
+                for (each_question,each_respo) in zip(question_single,response_single_sets):
+                    each_respo_instance=each_respo.save(commit=False)
+                    each_respo_instance.user_id=reg_user_instance
+                    each_respo_instance.question_id=each_question
+                    each_respo_instance.quiz_id=quiz_instance
+                    each_respo.save()
+                    i=i+1
+                i=0
+                for (each_question,each_respo) in zip(question_multiple,response_multiple_sets):
+                    each_respo_instance=each_respo.save(commit=False)
+                    each_respo_instance.user_id=reg_user_instance
+                    each_respo_instance.question_id=each_question
+                    each_respo_instance.quiz_id=quiz_instance
+                    each_respo.save()
+                    i=i+1
+                i=0
+                for (each_question,each_respo) in zip(question_true,response_true_sets):
+                    each_respo_instance=each_respo.save(commit=False)
+                    each_respo_instance.user_id=reg_user_instance
+                    each_respo_instance.question_id=each_question
+                    each_respo_instance.quiz_id=quiz_instance
+                    each_respo.save()
+                    i=i+1
+                i=0
+                test_given.objects.create(student_id=reg_user_instance,quiz_id=quiz_instance)
+                return redirect('after:classroom:quiz:quiz_result',quiz_name=quiz_instance.name_of_quiz,class_name=course_instance)
+        else:    
+            response_single_sets=response_single_FormSet(prefix='fs1')
+            response_multiple_sets=response_multiple_FormSet(prefix='fs2')
+            response_true_sets=response_true_FormSet(prefix='fs3')
+        def is_started(quiz):
+            present=datetime.utcnow()
+            present = pytz.utc.localize(present)
+            return quiz.start_time < present
+        def is_finished(quiz):
+            present=datetime.utcnow()
+            present = pytz.utc.localize(present)
+            return quiz.end_time < present
+        started=is_started(quiz_instance)
+        finished=is_finished(quiz_instance)
+
+        context={
+            'question_single':question_single,
+            'question_multiple':question_multiple,
+            'question_true':question_true,
+            'respo_single':response_single_sets,
+            'respo_multi':response_multiple_sets,
+            'respo_true':response_true_sets,
+            'is_started':started,
+            'is_finished':finished,
+            'class_name': class_name,
+        }
+        return render(request,'quiz/take_quiz.html',context)
 
 
 
