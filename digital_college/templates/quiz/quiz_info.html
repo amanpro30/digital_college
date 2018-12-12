@@ -1,17 +1,21 @@
 {% extends 'quiz/base_classrooms.html' %}
-    {% block content %}
-<div class="container">
-    <form method="POST" >
-            {% csrf_token %}
-    <div class="col s12 m7">
-        <div class="card horizontal" >
-            <div class="card-stacked" style="width:100%">
-                <p>Quiz Details</p>
+{% block content %}
+
+<div style="margin-bottom:6%;background-color: white;padding:1%;">
+    <h5 class="blue-text text-darken-4 center"><u>Make a Quiz</u></h5>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container blue-text text-darken-4">
+            <div class="center-align file-field input-field">
                 {{form.as_p}}
-                <button type="submit">Add Question</button>
+            </div>
+        <button class="waves-effect waves-green btn blue darken-4 text-white" type="Submit" style="z-index:0">
+            Add Question
+        </button>
             </div>
         </div>
-    </div>
     </form>
 </div>
-    {% endblock content %}
+
+
+{% endblock content %}

@@ -3,6 +3,8 @@ from .models import quiz,singlechoice,multiplechoice,truefalse,respo_single,resp
 from django import forms
 from django.contrib.admin import widgets
 from djangoformsetjs.utils import formset_media_js
+from django.contrib.admin.widgets import AdminDateWidget
+from django.utils import timezone
 # from .forms import 
 
 ANSWER_CHOICES=(
@@ -29,6 +31,8 @@ ANSWER_TRUE_CHOICES=(
 class quiz_detail_form(ModelForm):
     name_of_quiz = forms.CharField( widget = forms.TextInput(attrs={'class':'validate','placeholder':'Enter the name of the quiz'}))
     instructions = forms.CharField( widget = forms.Textarea(attrs={'style':'height:100px','class':'input-fields col s7'}))
+    start_time = forms.DateTimeField(initial=timezone.now)
+    end_time = forms.DateTimeField(initial=timezone.now)
     class Meta:
         model=quiz
         fields=['name_of_quiz','instructions','start_time','end_time']

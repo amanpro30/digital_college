@@ -2,8 +2,9 @@ from django.db import models
 from users.models import Registered_User, Clubs, Registered_College
 from django.contrib.auth.models import User
 from django.utils import timezone
-from notifications.models import Notification
 from django.db.models.signals import post_save
+from notifications.models import Notification
+
 class Post(models.Model):
     clubId = models.ForeignKey(Clubs, on_delete=models.CASCADE)
     collegeId = models.ForeignKey(Registered_College, on_delete=models.CASCADE)
@@ -61,17 +62,18 @@ class ClubSlideShowInfo(models.Model):
     heading = models.CharField(max_length=40, blank=True)
     caption = models.CharField(max_length=100, blank=True)
 
+
 def Notifications_like(sender,**kwargs):
     if(kwargs['created']):
-        Notification.objects.create(title='Liked',User=kwargs['instance'].userId,message=kwargs['instance'].userId+'liked your post')
+        Notification.objects.create(title='Liked',User=kwargs['instance'].postId.userId,message=kwargs['instance'].userId.First_Name+' liked your post')
 
 def Notifications_comment(sender,**kwargs):
     if(kwargs['created']):
-        Notification.objects.create(title='Commented',User=kwargs['instance'].userId,message=kwargs['instance'].userId+'Commented on your post')
+        Notification.objects.create(title='Commented',User=kwargs['instance'].postId.userId,message=kwargs['instance'].userId.First_Name+' Commented on your post')
     
 def Notifications_reply(sender,**kwargs):
     if(kwargs['created']):
-        Notification.objects.create(title='Replied',User=kwargs['instance'].userId,message=kwargs['instance'].userId+'Replied to your comment')
+        Notification.objects.create(title='Replied',User=kwargs['instance'].postId.userId,message=kwargs['instance'].userId.First_Name+' Replied to your comment')
 
 
 
