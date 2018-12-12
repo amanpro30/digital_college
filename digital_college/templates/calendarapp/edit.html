@@ -1,0 +1,26 @@
+{% extends 'after_login/main.html' %}
+{% block options %}
+<div class="container form-group">
+    <br>
+    <div class="row">
+        <div class="col-lg-4">
+        <h1>Edit your event</h1>
+        </div>
+        <div class="col=lg-8">
+            <button onclick="window.location='{% url 'after:calendarapp:index' %}'" type="button">Back</button>
+        </div>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <label>{{ field.label }}</label>
+            <input placeholder="{{ field.label }}" name="{{ form.name }}" class="form-control" />
+            {{ field.errors }}
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-outline-success">submit</button>
+
+    </form>
+</div>
+{% endblock %}

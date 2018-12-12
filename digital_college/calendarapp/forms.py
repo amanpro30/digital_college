@@ -13,3 +13,4 @@ class EntryUpdateForm(ModelForm):
     class Meta:
         model = Entry
         fields = ['name', 'date', 'description']
+

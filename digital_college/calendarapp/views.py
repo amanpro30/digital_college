@@ -98,6 +98,7 @@ def edit(request, entry_id):
     else:
         form = EntryUpdateForm(instance=entry)
         template = 'calendarapp/form.html'
+        # template = 'calendarapp/edit.html'
         context = {
             'whos_logged': whos_logged[role],
             'logged_in': user,
