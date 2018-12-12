@@ -1,10 +1,9 @@
+# Create your tests here.
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.test.client import Client
 from django.urls import reverse
-from users.models import Registered_College,Registered_User,Courses,CourseEnrollment,Clubs,ClubEnrollment,Exam
-
-# Create your tests here.
+from users.models import Registered_College, Registered_User, Courses, CourseEnrollment, Clubs, ClubEnrollment, Exam
 
 
 #Model Testing
