@@ -1,36 +1,52 @@
+{% extends 'quiz/base_classrooms.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+
+
+{% block head %}
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-      <script src={% static 'report/faculty_graph.js' %}></script>
-  </head>
-  <body>
-       <div class="ct-chart .ct-minor-second"></div>
+    <script src={% static 'report/faculty_graph.js' %}></script>
+{% endblock %}
+
+
+{% block content %}
+       <div class="ct-chart .ct-square1"></div>
 
         <script>
-            {#var exam_name = [];#}
-            {#var exam=""#}
-            {#for (exam in {{ exams }}) {#}
-            {#    labels.push('{{ exam.exam_name }}');#}
-            {#}#}
-                console.log({{ exams.exam_name}})
-            var chart = new Chartist.Line('.ct-chart', {
-  labels: "{{ exams }}",
+             var labels=[];
+             var results=new Array()
+             {% for exam in exams %}
+                labels.push("{{ exam.exam_name }}");
+             {% endfor %}
+             console.log(labels);
+             {% for result in exam_results %}
+
+             {% endfor %}
+             var chart = new Chartist.Line('.ct-chart', {
+  labels: labels,
   series: [
-    [10],
-    [4],
-    [3]
+      {{ exams_max }},
+      {{ exam_result_personal }},
+      {{ exam_total }},
+      {{ average }},
   ]
 }, {
-  low: 0
-});
+
+  low: 0,
+  height: '300px'
+             });
 
 // Let's put a sequence number aside so we can use it in the event callbacks
 var seq = 0,
   delays = 20,
   durations = 1000;
+
+
+
+
+
+
+
 
 // Once the chart is fully created we reset the sequence
 chart.on('created', function() {
@@ -142,5 +158,10 @@ chart.on('draw', function(data) {
   window.__exampleAnimateTimeout = setTimeout(chart.update.bind(chart), 12000);
 });
         </script>
-  </body>
-</html>
+  <script>
+      var element = document.getElementById('image_1');
+          style = window.getComputedStyle(element);
+        console.log(style.getPropertyValue('top'));
+
+  </script>
+{% endblock %}

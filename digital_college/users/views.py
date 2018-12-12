@@ -172,7 +172,7 @@ def add_courses(request):
         return render(request, 'users/Add_Course.html', {'forms': forms})
 
 def website_homepage(request):
-    return render(request, 'users/website_homepage.html')
+    return render(request, 'users/web_home.html')
 
 
 def website_register(request):

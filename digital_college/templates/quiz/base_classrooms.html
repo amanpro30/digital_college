@@ -13,9 +13,9 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
-    /* #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-    #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-    #sortable li span { position: absolute; margin-left: -1.3em; } */
+        /* #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+        #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+        #sortable li span { position: absolute; margin-left: -1.3em; } */
         /* .addcss1{
             visibility: hidden; 
         }
@@ -120,6 +120,16 @@
                     <li class="tab"><a class="white-text" href="#test2">Assignment</a></li>
                     <li class="tab"><a class="white-text"
                                        href="{% url 'after:classroom:quiz:quiz_home' class_name %}">Quiz</a></li>
+                    {% ifequal user.registered_user.role 'F' %}
+                        <li class="tab"><a class="white-text"
+                                           href="{% url 'after:classroom:report:faculty_graph' class_name %}">Report</a>
+                        </li>
+                    {% else %}
+                        <li class="tab"><a class="white-text"
+                                           href="{% url 'after:classroom:report:student_graph' class_name %}">Report</a>
+                        </li>
+
+                    {% endifequal %}
                 {% endif %}
                 <li class="tab"><a class="white-text"
                                    href="{% url 'after:classroom:class_forum:cl_forum' class_name %}">Forum</a></li>
@@ -157,12 +167,10 @@
     //     $('.link-formset3').hide();
     //     $('.link-formset4').hide();
     // })
-    function initialize_select(){
-    $('select').formSelect();
+    function initialize_select() {
+        $('select').formSelect();
     }
 </script>
-
-
 
 
 <script>
@@ -171,8 +179,8 @@
         addText: '<i class="close material-icons medium left">add_circle</i>Single Choice',
         deleteText: '<i class="close material-icons medium">delete</i>',
         added: initialize_select,
-        addCssClass:'addcss1 waves-effect waves-light btn green col s2 offset-s1',
-        deleteCssClass:'delcss1'
+        addCssClass: 'addcss1 waves-effect waves-light btn green col s2 offset-s1',
+        deleteCssClass: 'delcss1'
     });
 </script>
 <script>
@@ -181,8 +189,8 @@
         addText: '<i class="close material-icons medium left">add_circle</i>Multiple Choice',
         deleteText: '<i class="close material-icons medium">delete</i>',
         added: initialize_select,
-        addCssClass:'addcss2 waves-effect waves-light btn red col s2 offset-s1',
-        deleteCssClass:'delcss2'
+        addCssClass: 'addcss2 waves-effect waves-light btn red col s2 offset-s1',
+        deleteCssClass: 'delcss2'
     });
 </script>
 <script>
@@ -191,8 +199,8 @@
         addText: '<i class="close material-icons medium left">add_circle</i>True False',
         deleteText: '<i class="close material-icons medium">delete</i>',
         added: initialize_select,
-        addCssClass:'addcss3 waves-effect waves-light btn amber col s2 offset-s1',
-        deleteCssClass:'delcss3'
+        addCssClass: 'addcss3 waves-effect waves-light btn amber col s2 offset-s1',
+        deleteCssClass: 'delcss3'
     });
 </script>
 <script>
@@ -200,13 +208,13 @@
         prefix: '{{matching_form.prefix}}',
         addText: '<i class="close material-icons medium left">add_circle</i>Matching',
         deleteText: '<i class="close material-icons medium">delete</i>',
-        addCssClass:'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
-        deleteCssClass:'delcss4'
+        addCssClass: 'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
+        deleteCssClass: 'delcss4'
     });
-//     $( function() {
-//     $( "#sortable" ).sortable();
-//     $( "#sortable" ).disableSelection();
-//   } );
+    //     $( function() {
+    //     $( "#sortable" ).sortable();
+    //     $( "#sortable" ).disableSelection();
+    //   } );
 </script>
 
 </body>
