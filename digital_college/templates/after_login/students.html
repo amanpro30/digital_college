@@ -67,10 +67,10 @@
                 <div class="modal-content">
                     <p>Upload the email of the faculty. Note that the faculty will update his profile at the time of
                         signup.</p>
-                    {% csrf_token %}
                     <div class="row">
                         <form class="col s12" method="POST" action="{% url 'after:faculty' %}"
                               enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="input-field col s12">
                                     {{ emailform.email }}

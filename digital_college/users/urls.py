@@ -11,7 +11,7 @@ urlpatterns = [
     path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
     path('add_courses/', user_views.add_courses, name='add_courses'),
     path('reset/', user_views.PasswordReset, name='reset'),
-    path('reset/<uidb64>/<token>/', user_views.reset2, name='reset'),
+    path('reset/<uidb64>/<token>/', user_views.reset2, name='reset2'),
     path('edit/', user_views.profile_update, name='edit'),
     path('edit2/', user_views.profile_update2, name='edit2'),
 ]

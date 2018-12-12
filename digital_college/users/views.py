@@ -1,9 +1,9 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import Course_Forms, Edit_Registered_User_Form, Edit_Registered_College_Form
+from .forms import Course_Forms, Edit_Registered_User_Form, Edit_Registered_College_Form, User_reset_form
 from .forms import ResetForm
 from .forms import ResetDoneForm
-from .models import Registered_User, Courses
+from .models import Registered_User, Courses, Email
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
 from .forms import User_Registration_Form, College_Registration_Form
@@ -56,10 +56,12 @@ def College_Registration(request):
             College_Registration_Number = forms['College_Registration_Form'].cleaned_data.get('College_Registration_Number')
             City = forms['College_Registration_Form'].cleaned_data.get('City')
             State = forms['College_Registration_Form'].cleaned_data.get('State')
-            img = request.FILES['image']
             current_user = Registered_College(user=current_user, Name_Of_College=Name_Of_College, email=email,
                                               College_Registration_Number=College_Registration_Number, City=City,
-                                              State=State,image=img,)
+                                              State=State,)
+            if 'image' in request.FILES:
+                image = request.FILES['image']
+                current_user.image = request.FILES
             current_user.save()
             return render(request, 'users/email_verification.html')
 
@@ -94,6 +96,26 @@ def User_Registration(request):
         forms['User_Registration_Form'] = User_Registration_Form(request.POST,request.FILES)
         if forms['User_Registration_Form'].is_valid() and forms['User_Creation_Form'].is_valid():
             email = forms['User_Registration_Form'].cleaned_data.get('email')
+            role = forms['User_Registration_Form'].cleaned_data.get('role')
+            try:
+                obj = Email.objects.get(email=email)
+                print(obj.email)
+                print(obj.role)
+                if role != obj.role:
+                    obj = False
+                    context = {
+                        'message': "Please select correct role",
+                        'forms': forms
+                    }
+                    return render(request, 'users/User_Registration.html', context)
+            except:
+                obj = False
+                context = {
+                    'message': "You are not registered by your college. Please contact your college",
+                    'forms': forms
+                }
+                return render(request, 'users/User_Registration.html', context)
+
             username = forms['User_Creation_Form'].cleaned_data.get('username')
             password = forms['User_Creation_Form'].cleaned_data.get('password1')
             current_user = User(username=username, email=email)
@@ -115,11 +137,14 @@ def User_Registration(request):
             email.send()
             first_name = forms['User_Registration_Form'].cleaned_data.get('First_Name')
             last_name = forms['User_Registration_Form'].cleaned_data.get('Last_Name')
-            role = forms['User_Registration_Form'].cleaned_data.get('role')
+
             college_id = forms['User_Registration_Form'].cleaned_data.get('college_id')
-            image = request.FILES['image']
+
             current_user = Registered_User(user=current_user, email=email, First_Name=first_name, Last_Name=last_name,
-                                           role=role, college_id=college_id, image=image, )
+                                           role=role, college_id=college_id, )
+            if 'image' in request.FILES:
+                image = request.FILES['image']
+                current_user.image = request.FILES
             current_user.save()
             return render(request, 'users/email_verification.html')
 
@@ -202,7 +227,7 @@ def PasswordReset(request):
 
 def reset(request, uidb64, token):
     if request.method == 'POST':
-        forms = ResetDoneForm(request.POST)
+        forms = User_reset_form(request.POST)
         if forms.is_valid():
             password1 = forms.cleaned_data.get('Password')
             password2 = forms.cleaned_data.get('Confirm_Password')
@@ -210,6 +235,7 @@ def reset(request, uidb64, token):
                 try:
                     uid = urlsafe_base64_decode(uidb64).decode()
                     current_user = User.objects.get(pk=uid)
+                    print(current_user)
                 except(TypeError, ValueError, OverflowError):
                     current_user = None
                 if current_user is not None and account_activation_token.check_token(current_user, token):
@@ -217,14 +243,23 @@ def reset(request, uidb64, token):
                     current_user.save()
                     return HttpResponse('Changed')
                 else:
-                    return HttpResponse('Invalid reset link')
+                    context = {
+                        'forms': forms,
+                        'message': "This link is invalid now"
+                    }
+                    return render(request, 'users/Reset_done.html', context)
+                    # return HttpResponse('Invalid reset link')
             else:
-                raise Exception('password does not match')
+                context = {
+                    'forms': forms,
+                    'message': "Your password does't match"
+                }
+                return render(request, 'users/Reset_done.html', context)
                 # return HttpResponse('Password does not match')
         else:
             return render(request, 'users/Reset_done.html', {'forms': forms})
     else:
-        forms = ResetDoneForm()
+        forms = User_reset_form()
         return render(request, 'users/Reset_done.html', {'forms': forms})
 
 
@@ -232,6 +267,7 @@ def reset2(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         current_user = User.objects.get(pk=uid)
+        print(current_user)
     except(TypeError, ValueError, OverflowError):
         current_user = None
     if current_user is not None and account_activation_token.check_token(current_user, token):
@@ -304,7 +340,7 @@ def profile_update2(request):
             forms.save()
             return HttpResponse('Edited')
     else:
-        forms = Edit_Registered_User_Form(instance=request.user.registered_college)
+        forms = Edit_Registered_College_Form(instance=request.user.registered_college)
         args = {'forms': forms}
         return render(request, 'users/editprofile.html', args)
 

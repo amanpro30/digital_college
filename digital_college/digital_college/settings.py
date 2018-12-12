@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'quiz',
     'announcements',
     'slides',
-    'checkboxselectmultiple',
     'notifications',
     'report',
     'forum.apps.ForumConfig',
@@ -95,10 +94,10 @@ DATABASES = {
             'USER': 'root',
             'PASSWORD': 'ravish11',
             'HOST':'localhost',
-            'PORT':'',
-gi
+
         }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
