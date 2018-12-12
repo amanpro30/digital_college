@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import Course_Forms, Edit_Registered_User_Form, Edit_Registered_College_Form, User_reset_form
+from .forms import Course_Forms, Edit_Registered_User_Form, Edit_Registered_College_Form, User_reset_form, Choice_Form
 from .forms import ResetForm
 from .forms import ResetDoneForm
 from .models import Registered_User, Courses, Email
@@ -61,7 +61,7 @@ def College_Registration(request):
                                               State=State,)
             if 'image' in request.FILES:
                 image = request.FILES['image']
-                current_user.image = request.FILES
+                current_user.image = request.FILES['image']
             current_user.save()
             return render(request, 'users/email_verification.html')
 
@@ -99,8 +99,15 @@ def User_Registration(request):
             role = forms['User_Registration_Form'].cleaned_data.get('role')
             try:
                 obj = Email.objects.get(email=email)
-                print(obj.email)
-                print(obj.role)
+                try:
+                    obj2 = User.objects.get(email=email)
+                    context = {
+                        'message': "This email-id is already registered with us",
+                        'forms': forms
+                    }
+                    return render(request, 'users/User_Registration.html', context)
+                except:
+                    obj2 = True
                 if role != obj.role:
                     obj = False
                     context = {
@@ -144,7 +151,7 @@ def User_Registration(request):
                                            role=role, college_id=college_id, )
             if 'image' in request.FILES:
                 image = request.FILES['image']
-                current_user.image = request.FILES
+                current_user.image = image
             current_user.save()
             return render(request, 'users/email_verification.html')
 
@@ -172,7 +179,7 @@ def add_courses(request):
         return render(request, 'users/Add_Course.html', {'forms': forms})
 
 def website_homepage(request):
-    return render(request, 'users/web_home.html')
+    return render(request, 'users/website_homepage.html')
 
 
 def website_register(request):
@@ -317,6 +324,21 @@ def after_login(request):
         'whos_logged': role,
     }
     return render(request, 'users/../templates/after_login/main.html', context)
+
+
+def Registration_Choice(request):
+    if request.method == 'POST':
+        forms = Choice_Form(request.POST)
+        if forms.is_valid():
+            role = forms.cleaned_data.get('Please_Select_Your_Role')
+            print(role)
+            if role == 'A':
+                return redirect('/users/College_Registration')
+            else:
+                return redirect('/users/User_Registration')
+    else:
+        forms = Choice_Form()
+        return render(request, 'users/registration_choice.html', {'forms': forms})
 
 
 @login_required()

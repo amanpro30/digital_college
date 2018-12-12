@@ -43,7 +43,6 @@ class EmailForm(ModelForm):
     class Meta:
         model = Email
         fields = ['email']
-    def clean(self):
         
 
 

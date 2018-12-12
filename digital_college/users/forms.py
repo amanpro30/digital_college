@@ -23,6 +23,7 @@ class User_Registration_Form(ModelForm):
         fields = ['role', 'email', 'First_Name', 'Last_Name', 'college_id', 'image', ]
 
 
+
 class College_Registration_Form(ModelForm):
     STATE_CHOICES = (
         ('AP', 'Andhra Pradesh'),
@@ -105,3 +106,11 @@ class ResetForm(forms.Form):
 class ResetDoneForm(forms.Form):
     Password = forms.CharField(widget=forms.PasswordInput())
     Confirm_Password = forms.CharField(widget=forms.PasswordInput())
+
+
+class Choice_Form(forms.Form):
+    ROLE_CHOICES = (
+        ('A', 'ADMIN'),
+        ('U', 'USER')
+    )
+    Please_Select_Your_Role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
