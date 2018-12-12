@@ -84,14 +84,23 @@ def delete(request, entry_id):
 
 
 def edit(request, entry_id):
-    Entry.objects.get(id=entry_id)
+    entry = Entry.objects.get(id=entry_id)
     user = request.user
     role = user.registered_user.role
-    entries = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
-    context = {
-        'whos_logged': whos_logged[role],
-        'logged_in': user,
-        'entries': entries
-    }
-
-    return render(request, 'calendarapp/index.html', context)
+    # entry = Entry.objects.filter(userId=Registered_User.objects.get(user=user)).order_by('-date')
+    if request.method == 'POST':
+        form = EntryUpdateForm(request.POST, instance=entry)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            entry.author = request.user
+            entry.save()
+            return redirect('after:calendarapp:index')
+    else:
+        form = EntryUpdateForm(instance=entry)
+        template = 'calendarapp/edit.html'
+        context = {
+            'whos_logged': whos_logged[role],
+            'logged_in': user,
+            'form': form,
+        }
+        return render(request, template, context)
