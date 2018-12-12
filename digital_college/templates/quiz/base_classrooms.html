@@ -57,7 +57,12 @@
             position: sticky;
             top: 0;
         }
-
+    #toast-container {
+    top: auto !important;
+    right: auto !important;
+    bottom: 10%;
+    left:7%;  
+    }
     </style>
 </head>
 <body style="background-color:#f0f5f5;">
@@ -145,27 +150,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="{% static 'Parent/base_js.js' %}"></script>
-<script src="{% static 'classrooms/    function initialize_select(){
-    $('select').formSelect();
-    }
-</script>js/quiz.js' %}"></script>
+
 
 
 <script>
-    // $( window ).on( "load", function() {
-    //     $('.link-formset2').hide();
-    //     $('.link-formset3').hide();
-    //     $('.link-formset4').hide();
-    // })
-    function initialize_select(){
-    $('select').formSelect();
-    }
+    $( window ).on( "load", function() {
+        initialize_select();
+    })
+
 </script>
 
 
 
 
 <script>
+    function initialize_select(){
+    $('select').formSelect();
+    }
     $('.link-formset1').formset({
         prefix: '{{single_choice_form.prefix}}',
         addText: '<i class="close material-icons medium left">add_circle</i>Single Choice',
@@ -207,6 +208,19 @@
 //     $( "#sortable" ).sortable();
 //     $( "#sortable" ).disableSelection();
 //   } );
+
+    
+    // function MsgLoad(message) {
+    // alert(message);
+    // }
+    // if (document.getElementById('msg').innerHTML){
+    //     MsgLoad('{{message}}');
+    // }
+    if ( $('#msg').text().length != 0 ) {
+        alert('You cannot take this test');
+    }
+    </script>
+
 </script>
 
 </body>

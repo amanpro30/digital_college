@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import quiz,multiplechoice,singlechoice,answers,truefalse,respo_single,respo_multiple,respo_true,result
+from .models import quiz,multiplechoice,singlechoice,answers,truefalse,respo_single,respo_multiple,respo_true,result,test_given
 # Register your models here.
 admin.site.register(quiz)
 admin.site.register(multiplechoice)
@@ -12,3 +12,4 @@ admin.site.register(respo_multiple)
 #admin.site.register(respo_match)
 admin.site.register(respo_true)
 admin.site.register(result)
+admin.site.register(test_given)

@@ -103,11 +103,3 @@ class Assignment(models.Model):
     assingment_name=models.CharField(max_length=100)
     result_file = models.FileField(blank=True, upload_to='assignment')
 
-class Content(models.Model):
-    course_id = models.OneToOneField(Courses,on_delete=models.CASCADE)
-    content_text = models.CharField(max_length=500)
-
-class Topics(models.Model):
-    course_id = models.OneToOneField(Courses, on_delete=models.CASCADE)
-    topic_name = models.CharField(max_length=100)
-    lectures_alloted = models.IntegerField()
