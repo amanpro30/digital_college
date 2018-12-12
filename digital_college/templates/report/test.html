@@ -2,132 +2,176 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/materialize/0.98.0/js/materialize.min.js"></script>
-    <script src="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/gallery.min.opt.js?5466258059227121248" crossOrigin="anonymous"></script>
-    <style>
-            div.secondnav {
-              position: -webkit-sticky;
-              position: sticky;
-              top: 0;
-            }
-    </style>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+      <script src={% static 'report/faculty_graph.js' %}></script>
+      <style>
+          .ct-series-a .ct-line {
+            /* Set the colour of this series line */
+            stroke: red;
+            /* Control the thikness of your lines */
+            stroke-width: 5px;
+            /* Create a dashed line with a pattern */
+            stroke-dasharray: 10px 20px;
+              stroke-linecap: square;
+          }
+
+      </style>
   </head>
   <body>
-        <nav class="teal nav-extended">
-                <div class="nav-background">
-                        <div class="ea k" style="background-image: url('/static/report/1.jpg')"></div>
-                </div>
-                <div class="nav-wrapper db">
-                    <a href="#" class="brand-logo" style="font-family:Akronim;font-size: 40px;">DigitalCollege </a>
-                    <a href="#" data-target="mobile-nav" class="sidenav-trigger">
-                        <i class="material-icons">menu</i>
-                    </a>
-                    <ul class="right hide-on-med-and-down">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">notifications</i></a>
-                        </li>
-                        <li><a href="#"><img class="responsive-img" src="/media/profile_pics/user.png"
-                                                style="border-radius:50%;width:40px;height:40px;object-fit:fill;"></a></li>
-                        <li><a href="#" style="font-family: Arbutus Slab;">Welcome&nbsp;{{ user|title }}</a></li>
-                        <li><a href="{% url 'website_logout' %}">Logout</a></li>
-                    </ul>
-                    <ul id='dropdown1' class='dropdown-content' style="margin-top: 100px;">
-                        <li><a href="#">Prof. Subu added a comment.</a></li>
-                        <li><a href="#">Aman replied to your comment.</a></li>
-                    </ul>
-                    
-                </div>
-                <div class="nav-content de">
-                        <h1>BLOG</h1>
-                        <div class="ge">My life</div>
-                </div>
-        </nav>
-        <div class="navbar secondnav">
-        <nav class="teal">
-            
-            <div class="nav-wrapper-">
-                            <ul class="tabs tabs-transparent">
-                              <li class="tab"><a href="#test1">Test 1</a></li>
-                              <li class="tab"><a class="active" href="#test2">Test 2</a></li>
-                              <li class="tab"><a href="#test4">Test 4</a></li>
-                            </ul>
-                      
-            </div>
+       <div class="ct-chart .ct-square1"></div>
 
-        </nav>
-        </div>
-        <ul class="sidenav" id="mobile-nav">
-            <li><a href="#dashboard">Home</a></li>
-            <li><a href="#classroom">
-                <div class="valign-wrapper">
-                    <i class="material-icons" style="margin-left:30px;margin-right:30px;">format_list_bulleted</i>
-                    <span>Classrooms</span>
-                </div>
-            </a></li>
-            <li>
-                <a href="#about">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="margin-left:30px;margin-right:30px;">group</i>
-                        <span>Progress Report</span>
-                    </div>
-                </a></li>
-            <li><a href="#classroom">
-                <div class="valign-wrapper">
-                    <i class="material-icons" style="margin-left:30px;margin-right:30px;">date_range</i>
-                    <span>Planner</span>
-                </div>
-                </a>
-        </ul>
-</div>
-    <p>hello <br>
-        whss   <br>
-        sf      <br>
-        ffsdf<br>
-        fsf<br>
-        sf<br>
-        fsfa<br>
-        sdf<br>
-        sf<br>
-        fsfsd<br>
-    </p>
-    <p>hello <br>
-        whss   <br>
-        sf      <br>
-        ffsdf<br>
-        fsf<br>
-        sf<br>
-        fsfa<br>
-        sdf<br>
-        sf<br>
-        fsfsd<br>
-    </p>
-    <p>hello <br>
-        whss   <br>
-        sf      <br>
-        ffsdf<br>
-        fsf<br>
-        sf<br>
-        fsfa<br>
-        sdf<br>
-        sf<br>
-        fsfsd<br>
-    </p>
-    <p>hello <br>
-        whss   <br>
-        sf      <br>
-        ffsdf<br>
-        fsf<br>
-        sf<br>
-        fsfa<br>
-        sdf<br>
-        sf<br>
-        fsfsd<br>
-    </p>
+        <script>
+             var labels=[];
+             var results=new Array()
+             {% for exam in exams %}
+                labels.push("{{ exam.exam_name }}");
+             {% endfor %}
+             console.log(labels);
+             {% for result in exam_results %}
 
-</body>
+             {% endfor %}
+             var chart = new Chartist.Line('.ct-chart', {
+  labels: labels,
+  series: [
+      {{ exams_max }},
+      {{ exam_result_personal }},
+      {{ exam_total }},
+      {{ average }},
+  ]
+}, {
+
+  low: 0,
+  height: '300px'
+             });
+
+// Let's put a sequence number aside so we can use it in the event callbacks
+var seq = 0,
+  delays = 20,
+  durations = 1000;
+
+
+
+
+
+
+
+
+// Once the chart is fully created we reset the sequence
+chart.on('created', function() {
+  seq = 0;
+});
+
+// On each drawn element by Chartist we use the Chartist.Svg API to trigger SMIL animations
+chart.on('draw', function(data) {
+  seq++;
+
+  if(data.type === 'line') {
+    // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
+    data.element.animate({
+      opacity: {
+        // The delay when we like to start the animation
+        begin: seq * delays + 1000,
+        // Duration of the animation
+        dur: durations,
+        // The value where the animation should start
+        from: 0,
+        // The value where it should end
+        to: 1
+      }
+    });
+  } else if(data.type === 'label' && data.axis === 'x') {
+    data.element.animate({
+      y: {
+        begin: seq * delays,
+        dur: durations,
+        from: data.y + 100,
+        to: data.y,
+        // We can specify an easing function from Chartist.Svg.Easing
+        easing: 'easeOutQuart'
+      }
+    });
+  } else if(data.type === 'label' && data.axis === 'y') {
+    data.element.animate({
+      x: {
+        begin: seq * delays,
+        dur: durations,
+        from: data.x - 100,
+        to: data.x,
+        easing: 'easeOutQuart'
+      }
+    });
+  } else if(data.type === 'point') {
+    data.element.animate({
+      x1: {
+        begin: seq * delays,
+        dur: durations,
+        from: data.x - 10,
+        to: data.x,
+        easing: 'easeOutQuart'
+      },
+      x2: {
+        begin: seq * delays,
+        dur: durations,
+        from: data.x - 10,
+        to: data.x,
+        easing: 'easeOutQuart'
+      },
+      opacity: {
+        begin: seq * delays,
+        dur: durations,
+        from: 0,
+        to: 1,
+        easing: 'easeOutQuart'
+      }
+    });
+  } else if(data.type === 'grid') {
+    // Using data.axis we get x or y which we can use to construct our animation definition objects
+    var pos1Animation = {
+      begin: seq * delays,
+      dur: durations,
+      from: data[data.axis.units.pos + '1'] - 30,
+      to: data[data.axis.units.pos + '1'],
+      easing: 'easeOutQuart'
+    };
+
+    var pos2Animation = {
+      begin: seq * delays,
+      dur: durations,
+      from: data[data.axis.units.pos + '2'] - 100,
+      to: data[data.axis.units.pos + '2'],
+      easing: 'easeOutQuart'
+    };
+
+    var animations = {};
+    animations[data.axis.units.pos + '1'] = pos1Animation;
+    animations[data.axis.units.pos + '2'] = pos2Animation;
+    animations['opacity'] = {
+      begin: seq * delays,
+      dur: durations,
+      from: 0,
+      to: 1,
+      easing: 'easeOutQuart'
+    };
+
+    data.element.animate(animations);
+  }
+});
+
+ //For the sake of the example we update the chart every time it's created with a delay of 10 seconds
+ chart.on('created', function() {
+  if(window.__exampleAnimateTimeout) {
+    clearTimeout(window.__exampleAnimateTimeout);
+    window.__exampleAnimateTimeout = null;
+  }
+  window.__exampleAnimateTimeout = setTimeout(chart.update.bind(chart), 12000);
+});
+        </script>
+  <script>
+      var element = document.getElementById('image_1');
+          style = window.getComputedStyle(element);
+        console.log(style.getPropertyValue('top'));
+
+  </script>
+  </body>
 </html>

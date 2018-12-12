@@ -1,0 +1,40 @@
+body
+{
+	margin:0;
+	padding:0;
+	//height:300vh;
+	//overflow:hidden;
+}
+
+#particles-js
+{
+	height: 100%;
+	/*background-image: url(st14.jpg);*/
+	/*background-color: #0277bd;*/
+	background-image: linear-gradient(to bottom right, #0277bd, #fff); 
+	background-attachment: fixed;
+	width: 100%;
+	/*opacity: 0.7;*/
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+}
+
+
+#particles-js .heading
+{
+	float: right;
+	width: 50%;
+	padding-top: 10%;
+	font-family: 'Allerta Stencil', sans-serif;
+	padding-right: 75px;
+	padding-bottom: 5%; 
+	text-align: right;
+	align-self: right;
+	color: white;
+	font-size: 55px;
+	
+	
+	justify-content: center;
+	
+}
