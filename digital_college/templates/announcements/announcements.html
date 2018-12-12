@@ -1,16 +1,23 @@
 {% extends 'after_login/main.html' %}
 {% block content %}
-{% ifequal user.registered_user.role ='F' or user.registered_user.role ='S' %}
+{% if user.registered_user %}
     {% for announce in announcments %}
-        {{ announce.message }}
-        {{ announce.date }}
+    <div class="card">
+        <div class="card-content white-text">
+            {{ announce.message }}
+        </div>
+        <div class="card-action">
+            {{ announce.date }}
+        </div>
+    </div>
     {% endfor %}
-{% endifequal %}
-{% ifequal user.registered_college %}
+{% endif %}
+{% if user.registered_college %}
 <form method="POST"></form>
 {% csrf_token %}
-{{form}}
-<button type="submit">Make Announcments</button>
+    
+    {{form}}
+    <button type="submit">Make Announcments</button>
 </form>
-{% endifequal %}
-{% endcontent block%}
+{% endif %}
+{% endblock%}

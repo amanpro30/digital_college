@@ -94,7 +94,7 @@ DATABASES = {
             'NAME': 'test',
             'USER': 'root',
             'PASSWORD': '12345',
-            'HOST':'localhost',
+            'HOST': 'localhost',
         }
 }
 

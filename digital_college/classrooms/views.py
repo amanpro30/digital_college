@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
-from users.models import Registered_User, Courses, CourseEnrollment
+
+from users.forms import ExamForm
+from users.models import Registered_User, Courses, CourseEnrollment, Exam
+
 
 def class_home(request, class_name):
     return render(request, 'quiz/base_classrooms.html', {'class_name': class_name}, {'class_name': class_name})
@@ -52,3 +55,23 @@ def addStud(request, class_name, stud_id):
     course_id = Courses.objects.get(course_name=class_name, college_id=user.registered_college.id)
     CourseEnrollment.objects.create(student_id=Registered_User.objects.get(id=stud_id), course_id=course_id)
     return redirect(request.META.get('HTTP_REFERER'), class_name)
+
+
+def exam(request, class_name):
+    if request.method == 'POST':
+        examform = ExamForm(request.POST, request.FILES)
+        if examform.is_valid():
+            Exam.objects.create(course_id=Courses.objects.get(course_name=class_name),
+                                exam_name=examform.cleaned_data['exam_name'],
+                                max_marks=examform.cleaned_data['max_marks'],
+                                contribution=examform.cleaned_data['contribution'],
+                                result_file=examform.cleaned_data['result_file'])
+            return redirect(request.META.get('HTTP_REFERER'), class_name)
+    else:
+        examform = ExamForm()
+    context = {
+        'class_name': class_name,
+        'user': request.user,
+        'examform': examform,
+    }
+    return render(request, 'after_login/exam.html', context)

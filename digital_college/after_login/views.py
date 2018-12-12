@@ -57,7 +57,7 @@ def profile(request):
     try:
         if user.registered_user.role:
             role = user.registered_user.role
-            profile_info = Registered_College.objects.get(user=user)
+            profile_info = Registered_User.objects.get(user=user)
     except Registered_User.DoesNotExist:
         role = 'Ad'
         profile_info = Registered_College.objects.get(user=user)

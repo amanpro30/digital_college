@@ -1,13 +1,14 @@
-body{
-	margin:0;
-	padding: 0;
-	background-size: cover;
-	background-image: url(pictures/login.jpg);
-	background-repeat: no-repeat;
-	font-family: Tahoma, sans-seriff;
-	color: white;
+body {
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-image: url(pictures/st43.jpg);
+    background-repeat: no-repeat;
+    font-family: Tahoma, sans-seriff;
+    color: white;
 
 }
+
 /* width */
 ::-webkit-scrollbar {
     width: 15px;
@@ -30,89 +31,93 @@ body{
     background: cyan;
 }
 
-.form-area{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	width: 40%;
-	height: 500px;
-	box-sizing: border-box;
-	background: rgba(0,0,0,0.5);
-	padding: 40px;
-	overflow:auto;
-	//border: inset;
-	color: white;
+.form-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 500px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    overflow: auto;
+/ / border: inset;
+    color: white;
 }
 
-.radio{
+.radio {
 
-	text-align: right;
-	padding: 10px;
+    text-align: right;
+    padding: 10px;
 
 }
-h2{
-	margin: 0;
-	padding: 0 0 20px;
-	font-weight: bold;
-	color: #ffffff;
-	text-align: center;
+
+h2 {
+    margin: 0;
+    padding: 0 0 20px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
 }
 
-.form-area p{
-	margin: 5px;
-	padding: 0;
-	font-weight: bold;
-	color: #ffffff;
+.form-area p {
+    margin: 5px;
+    padding: 0;
+    font-weight: bold;
+    color: #ffffff;
 }
 
-.form-area input, select{
-	margin-bottom: 20px;
-	width: 100%;
-}
-
-.form-area input[type=email],.form-area input[type=password], .form-area input[type=text], .form-area input[type=College_Registration_Number]
-{border: none;
-border-bottom: 1px solid #ffffff;
-background-color: transparent;
-outline: none;
-height: 23px;
-padding-top: 10px;
-border-radius: 5px;
-color: white;
-/*display: 12px;*/
-}
-
-::placeholder{color: #ffffff;}
-
-
-
-.form-area button[type=submit], input[type=submit]
-{
-	border: none;
-	margin-top: 10px;
-	height: 40px;
-	outline: none;
-	color: #ffffff;
-	font-size: 15px;
-	background-color: tomato;
-	cursor: pointer;
-	border-radius: 20px;
+.form-area input, select {
+    margin-bottom: 20px;
     width: 100%;
 }
 
-.form-area button[type=submit]:hover{background-color: cyan;
-	color: #ffffff}
+.form-area input[type=email], .form-area input[type=password], .form-area input[type=text], .form-area input[type=College_Registration_Number] {
+    border: none;
+    border-bottom: 1px solid #ffffff;
+    background-color: transparent;
+    outline: none;
+    height: 23px;
+    padding-top: 10px;
+    border-radius: 5px;
+    color: white;
+    /*display: 12px;*/
+}
 
-.form-area input[type=submit]:hover{background-color: cyan;
-	color: #ffffff}
+::placeholder {
+    color: #ffffff;
+}
 
-.form-area a{
-	color: #ffffff;
-	text-decoration: none;
-	font-size: 14px;
-	font-weight: bold;
-	}
+.form-area button[type=submit], input[type=submit] {
+    border: none;
+    margin-top: 10px;
+    height: 40px;
+    outline: none;
+    color: #ffffff;
+    font-size: 15px;
+    background-color: tomato;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.form-area button[type=submit]:hover {
+    background-color: cyan;
+    color: #ffffff
+}
+
+.form-area input[type=submit]:hover {
+    background-color: cyan;
+    color: #ffffff
+}
+
+.form-area a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 /* The container */
 .container {
@@ -172,14 +177,15 @@ color: white;
 
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
- 	top: 9px;
-	left: 9px;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: white;
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
 }
-input{
-	padding-left:10px;
+
+input {
+    padding-left: 10px;
 }
 

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Registered_User, Registered_College, Courses
+from .models import Registered_User, Registered_College, Courses, Exam
 from django.contrib.auth.models import User
 from django import forms
 from django.shortcuts import HttpResponseRedirect, HttpResponse
@@ -72,6 +72,7 @@ def Sign_Up_Form(UserCreationForm):
 
 class User_reset_form(ModelForm):
     username = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     class Meta:
         model = User
         fields = ['username', 'password', ]
@@ -105,3 +106,17 @@ class ResetForm(forms.Form):
 class ResetDoneForm(forms.Form):
     Password = forms.CharField(widget=forms.PasswordInput())
     Confirm_Password = forms.CharField(widget=forms.PasswordInput())
+
+
+class Choice_Form(forms.Form):
+    ROLE_CHOICES = (
+        ('A', 'ADMIN'),
+        ('U', 'USER')
+    )
+    Please_Select_Your_Role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect())
+
+
+class ExamForm(ModelForm):
+    class Meta:
+        model = Exam
+        fields = ['exam_name', 'max_marks', 'contribution', 'result_file']

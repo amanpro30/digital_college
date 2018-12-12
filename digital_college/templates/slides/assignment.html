@@ -1,0 +1,33 @@
+{% extends 'quiz/base_classrooms.html' %}
+{% block content %}
+
+<div class="container">
+    {% ifequal user.registered_user.role 'F' %}
+
+    <div class="container">
+        <a href="{%   url  'after:classroom:slides:download' class_name "{{last_assign_file}}" %}">{{ file.title }}</a>
+        <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.file }}
+                {{ form.title }}
+                Deadline:
+                {{ form.deadline }}
+            <input type="submit">
+        </form>
+    </div>
+    {% endifequal %}
+    {% ifequal user.registered_user.role 'S' %}
+        <div class="container" >
+            <a href="{%   url  'after:classroom:slides:download' class_name "{{last_assign_file}}" %}">{{ file.title }}</a>
+            Deadline:{{ last_assign_file.deadline }}
+            <form method="POST"  enctype="multipart/form-data">
+                {% csrf_token %}
+                {{assign_solution_form}}
+                <input type="submit" value="submit">
+            </form>
+
+        </div>
+    {% endifequal %}
+
+</div>
+{% endblock content %}

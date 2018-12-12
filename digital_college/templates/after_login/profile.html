@@ -6,6 +6,8 @@
             border-bottom: 4px solid darkblue;
             transition: background-color 1s ease;
         }
+
+        span
     </style>
 {% endblock %}
 
@@ -17,24 +19,36 @@
         </div>
         {% if user.registered_user %}
             <div class="center-align">
-                <img class="circle materialboxed" src="{{ profile.image.url }}" alt='profile_pic'
-                     style="height:15vh;width:15%;text-align: center;">
+                <img class="circle materialboxed" src="{{ user.registered_user.image.url }}" alt='profile_pic'
+                     style="height:15vh;width:15%;text-align: center;margin-left:45%;">
             </div>
-            <div class="blue-text text-darken-4">
-                Name: {{ profile.First_Name }}
+            <div class="blue-text text-darken-4 left-align"
+                 style="font-size:larger; margin:5%; background-color: white;padding:2% 2% 2% 30%;">
+                <span>Name: {{ user.registered_user.First_Name }}&nbsp;{{ user.registered_user.Last_Name }}</span><br><br>
+                <span>Email: {{ user.registered_user.email }}</span><br><br>
+                <span>Role:
+                    {% ifequal user.registered_user.role 'F' %}
+                        Faculty
+                    {% else %}
+                        Student
+                    {% endifequal %}
+                </span><br><br>
+                <span>College : {{ user.registered_user.college_id.Name_Of_College }}</span><br><br>
+                <a class="btn blue darken-4 white-text text-darken-4" href="{% url 'users:edit' %}">Edit</a>
             </div>
         {% else %}
             <div class="center-align">
-                <img class="circle materialboxed" src="{{ profile.image.url }}" alt='profile_pic'
-                     style="height:15vh;width:15%;text-align: center;">
+                <img class="circle materialboxed" src="{{ user.registered_college.image.url }}" alt='profile_pic'
+                     style="height:15vh;width:15%;margin-left:40%;">
             </div>
-            <div class="blue-text text-darken-4">
-                Name: {{ user.registered_college.Name_Of_College }}<br>
-                Email: {{ user.registered_college.email }}<br>
-                College Registration No: {{ user.registered_college.College_Registration_Number }}
-                City : {{ user.registered_college }}
-    State
-
+            <div class="blue-text text-darken-4 left-align"
+                 style="font-size:larger; margin:5%; background-color: white;padding:2% 2% 2% 30%;">
+                <span>Name: {{ user.registered_college.Name_Of_College }}</span><br><br>
+                <span>Email: {{ user.registered_college.email }}</span><br><br>
+                <span>College Registration No: {{ user.registered_college.College_Registration_Number }}</span><br><br>
+                <span>City : {{ user.registered_college.City }}</span><br><br>
+                <span>State: {{ user.registered_college.State }}</span><br><br>
+                <a class="btn blue darken-4 white-text text-darken-4" href="{% url 'users:edit2' %}">Edit</a>
             </div>
         {% endif %}
     </div>

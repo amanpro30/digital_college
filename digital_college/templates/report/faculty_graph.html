@@ -1,7 +1,6 @@
 {% extends 'quiz/base_classrooms.html' %}
 {% load static %}
 
-
 {% block head %}
     <style>
         .stretched {
@@ -19,10 +18,25 @@
     <script src="{% static 'report/faculty_graph.js' %}"></script>
 {% endblock %}
 
-
-
 {% block content %}
+
     <div class="ct-double-octave" id="chart1"></div>
+    <table class="centered" style="width:50%;margin-left: 25%" >
+        <thead>
+            <tr>
+                <th>Line Number</th>
+                <th>Exam Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exam in all_exams %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{exam.exam_name}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <script>
 
             var data = {
@@ -54,7 +68,6 @@ var responsiveOptions = [
 ];
 
 new Chartist.Bar('#chart1', data, options, responsiveOptions);
-
-    </script>
+</script>
 
 {% endblock %}

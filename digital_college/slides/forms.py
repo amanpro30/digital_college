@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import assign
+from .models import assign,assign_solution
 
 class add_assign(forms.ModelForm):
     file = forms.FileField(widget=forms.FileInput())
@@ -8,5 +8,12 @@ class add_assign(forms.ModelForm):
     class Meta:
         model = assign
         fields=[
-            'title','file'
+            'title','file','deadline',
+        ]
+
+class add_assign_solution(forms.ModelForm):
+    class Meta:
+        model=assign_solution
+        fields=[
+            'file'
         ]

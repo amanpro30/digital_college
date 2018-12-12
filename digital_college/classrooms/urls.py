@@ -16,5 +16,6 @@ urlpatterns = [
     path('<str:class_name>/members/delstud/<int:user_id>/', views.remStudent, name="remStud"),
     path('<str:class_name>/members/addstudent/', views.addStudents, name="addStud"),
     path('<str:class_name>/members/addstudent/<int:stud_id>', views.addStud, name="add"),
+    path('<str:class_name>/exam', views.exam, name='exam'),
     # path('<str:class_name>/report',include('report.urls')),
 ]

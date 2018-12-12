@@ -12,43 +12,6 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <style>
-        /* #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-        #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-        #sortable li span { position: absolute; margin-left: -1.3em; } */
-        /* .addcss1{
-            visibility: hidden; 
-        }
-        .delcss1{
-            visibility: hidden;
-            display: none;
-        }
-        .addcss2{
-            visibility: hidden;
-            display: none;
-        }
-        .delcss2{
-            visibility: hidden;
-            display: none;
-        }
-        .addcss3{
-            visibility: hidden;
-            display: none;
-        }
-        .delcss3{
-            visibility: hidden;
-            display: none;
-        }
-        .addcss4{
-            visibility: hidden;
-            display: none;
-        }
-        .delcss4{
-            visibility: hidden;
-            display: none;  
-        } */
-
-    </style>
     {% block head %}
     {% endblock %}
     <style>
@@ -57,10 +20,15 @@
             position: sticky;
             top: 0;
         }
-
+    #toast-container {
+    top: auto !important;
+    right: auto !important;
+    bottom: 10%;
+    left:7%;  
+    }
     </style>
 </head>
-<body style="background-color:#f0f5f5;">
+<body style="background:#f0f5f5;">
 <nav class="nav-extended blue darken-4">
     <div class="container">
         <div class="nav-wrapper">
@@ -70,9 +38,11 @@
             </a>
             <ul class="right hide-on-med-and-down valign-wrapper">
                 <li><a href="{% url 'after:after_login' %}">Home</a></li>
-                <li><a href="#" class="dropdown-trigger" data-target='dropdown2'><i
-                        class="material-icons">notifications</i></a>
-                </li>
+                {% if user.registered_user.notification.count %}
+                    <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications_active</i></a></li>
+                {% else %}
+                    <li><a href="#" class="dropdown-trigger" data-target='dropdownnot'><i class="material-icons">notifications</i></a></li>
+                {% endif %}
                 <li><a href="#">
                     {% if user.registered_user.image.url %}
                         <img class="responsive-img" src="{{ user.registered_user.image.url }}"
@@ -85,9 +55,14 @@
                 <li><a href="#" style="font-family: Arbutus Slab;">Welcome&nbsp;{{ user|title }}</a></li>
                 <li><a href="{% url 'website_logout' %}">Logout</a></li>
             </ul>
-            <ul id='dropdown2' class='dropdown-content' style="margin-top: 100px;">
-                <li><a href="#">Prof. Subu added a comment.</a></li>
-                <li><a href="#">Aman replied to your comment.</a></li>
+            <ul id='dropdownnot' class='dropdown-content' style="margin-top: 100px;">
+                {% for notif in user.registered_user.notification %}
+                <li>
+                    
+                    {{notif.title}}
+                    <a href='{% url 'after:notifications:delete_notifications' notif.id %}' >{{notif.message}}</a>
+                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
@@ -117,7 +92,6 @@
                     <li class="tab onhover"><a class="white-text"
                                                href="{% url 'after:classroom:slides:add' class_name %}">Slides</a>
                     </li>
-                    <li class="tab"><a class="white-text" href="#test2">Assignment</a></li>
                     <li class="tab"><a class="white-text"
                                        href="{% url 'after:classroom:quiz:quiz_home' class_name %}">Quiz</a></li>
                     {% ifequal user.registered_user.role 'F' %}
@@ -155,16 +129,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="{% static 'Parent/base_js.js' %}"></script>
-<script src="{% static 'classrooms/    function initialize_select(){
-    $('select').formSelect();
-    }
-</script>js/quiz.js' %}"></script>
+
 
 
 <script>
     $( window ).on( "load", function() {
         initialize_select();
-    })
+    });
+
     function initialize_select() {
         $('select').formSelect();
     }
@@ -172,6 +144,9 @@
 
 
 <script>
+    function initialize_select(){
+    $('select').formSelect();
+    }
     $('.link-formset1').formset({
         prefix: '{{single_choice_form.prefix}}',
         addText: '<i class="close material-icons medium left">add_circle</i>Single Choice',
@@ -202,18 +177,20 @@
     });
 </script>
 <script>
-    $('.link-formset4').formset({
-        prefix: '{{matching_form.prefix}}',
-        addText: '<i class="close material-icons medium left">add_circle</i>Matching',
-        deleteText: '<i class="close material-icons medium">delete</i>',
-        addCssClass: 'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
-        deleteCssClass: 'delcss4'
-    });
-    //     $( function() {
-    //     $( "#sortable" ).sortable();
-    //     $( "#sortable" ).disableSelection();
-    //   } );
-</script>
+    // $('.link-formset4').formset({
+    //     prefix: '{{matching_form.prefix}}',
+    //     addText: '<i class="close material-icons medium left">add_circle</i>Matching',
+    //     deleteText: '<i class="close material-icons medium">delete</i>',
+    //     addCssClass: 'addcss4 waves-effect waves-light btn indigo col s2 offset-s1',
+    //     deleteCssClass: 'delcss4'
+    // });
+
+    if ( $('#msg').text().length != 0 ) {
+        alert('You cannot take this test again');
+    }
+    </script>
+
+
 
 </body>
 </html>

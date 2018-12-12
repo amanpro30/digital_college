@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Registered_User, Registered_College, Courses, Clubs, CourseEnrollment, ClubEnrollment, Exam, \
-    Assignment, Content, Topics, Email, UploadedFiles
+    Assignment, Email, UploadedFiles
 
 # Register your models here.
 
@@ -12,7 +12,5 @@ admin.site.register(CourseEnrollment)
 admin.site.register(ClubEnrollment)
 admin.site.register(Exam)
 admin.site.register(Assignment)
-admin.site.register(Content)
-admin.site.register(Topics)
 admin.site.register(Email)
 admin.site.register(UploadedFiles)

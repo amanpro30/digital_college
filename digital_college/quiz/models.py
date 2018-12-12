@@ -98,3 +98,7 @@ class result(models.Model):
     student_id = models.ForeignKey(Registered_User, on_delete=models.CASCADE)
     marks_obtained = models.IntegerField()
     total_marks = models.IntegerField()
+
+class test_given(models.Model):
+    student_id=models.ForeignKey(Registered_User,on_delete=models.CASCADE)
+    quiz_id=models.ForeignKey(quiz,on_delete=models.CASCADE)

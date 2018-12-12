@@ -56,16 +56,37 @@ def faculty_graph(request, class_name):
         all_exam_result = ExamResult.objects.filter(examId=each_exam)
         for ex in all_exam_result:
             exam_result.append(ex.marks_obtained)
-            if ex.marks_obtained:
-                all_students_marks.append(exam_result)
+        all_students_marks.append(exam_result)
+    print(all_exams)
+    print(all_students)
+    count1 = 0
+    count2 = 0
+    count3 = 0
+    count4 = 0
+    count5 = 0
+    for ex in range(len(all_exams)):
+        for stud in range(len(all_students)):
+            if all_students_marks[ex][stud] >= 0.8 * all_exams[ex].max_marks:
+                count5 = count5 + 1
+            elif all_students_marks[ex][stud] >= 0.6 * all_exams[ex].max_marks:
+                count4 = count4 + 1
+            elif all_students_marks[ex][stud] >= 0.4 * all_exams[ex].max_marks:
+                count3 = count3 + 1
+            elif all_students_marks[ex][stud] >= 0.2 * all_exams[ex].max_marks:
+                count2 = count2 + 1
+            elif all_students_marks[ex][stud] >= 0.0 * all_exams[ex].max_marks:
+                count1 = count1 + 1
+    count_list = [count1, count2, count3, count4, count5]
     context = {
         'all_students_name': all_students_name,
         'all_students_marks': all_students_marks,
         'all_exams': all_exams,
         'class_name': class_name,
+        'count_list': count_list
     }
     print(context['all_students_marks'])
     print(context['all_students_name'])
     print(context['all_exams'])
     print(context['class_name'])
+    print(context['count_list'])
     return render(request, 'report/faculty_graph.html', context)

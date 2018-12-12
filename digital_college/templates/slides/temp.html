@@ -1,0 +1,120 @@
+{% extends 'quiz/base_classrooms.html' %}
+{% block content %}
+<script type="text/javascript" src="https://api.clipchamp.com/7AJjIsYCgyrMvDXTH9ZNkq_YMvg/button.js"></script>
+<div class="container">
+    {% ifequal user.registered_user.role 'F' %}
+
+                <div class="container">
+           <form enctype="multipart/form-data" method="POST" action="...YOUR_FORM_ENDPOINT...">
+      <p>
+        <input type="text" name="title" placeholder="video title">
+      </p>
+    </form>
+
+                   {% for file in assign_files_a %}
+            <a href="{%   url  'after:classroom:slides:download' class_name file.id %}">{{ file.title }}</a>
+            <a href="{% url 'after:classroom:slides:delete' class_name file.id %}"><i class="material-icons" id="{{ file.id }}">delete</i><br></a>
+        {% endfor %}
+
+
+           <div id="clipchamp-button"></div>
+<script type="text/javascript">
+  var el = document.querySelector("#clipchamp-button");
+  // For more customization options refer to our Documentation.
+  var options = {
+      output: "gdrive",
+       style: {
+           url:   "https://api.clipchamp.com/static/button/themes/modern-education.css"
+       }
+  };
+  clipchamp(el, options);
+</script>
+        </div>
+
+    <div class="container">
+
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            {% csrf_token %}
+            {{ form.file }}
+            {{ form.title }}
+        </div>
+        <input type="submit">
+    </form>
+    </div>
+    {% endifequal %}
+
+
+                 <script>
+      document.getElementById('launch-clipchamp').onclick = function() {
+        clipchamp({
+          output: 'blob',
+          onVideoCreated: function(blob) {
+            return new Promise(function(resolve, reject) {
+              var reader = new FileReader();
+              reader.onload = function() {
+                var match = /^data:[^;]+;base64\,(.*)$/.exec(reader.result);
+                if (match) {
+                  document.getElementById('file-input').value = match[1];
+                  document.getElementById('form-submit').removeAttribute('disabled');
+                  resolve();
+                } else {
+                  reject();
+                }
+            };
+            reader.onerror = reject;
+            reader.onabort = reject;
+            reader.readAsDataURL(blob);
+          });
+         }
+        }).open();
+      };
+    </script>
+
+
+
+
+
+
+    {% ifequal user.registered_user.role 'S' %}
+
+
+                            <div class="container">
+                                 <h><b>Hi Folks! Take Your assignments....!!!! :):)</b></h><br>
+
+                                    <a href="{%   url  'after:classroom:slides:download' class_name last_ass.id %}">{{ last_ass.title }}</a><br>
+
+                            </div>
+                            <div class="container">
+                                <form method="POST" enctype="multipart/form-data">
+                            <div class="row">
+                                {% csrf_token %}
+                                {{ form.file }}
+                                {{ form.title }}
+                            </div>
+
+                                <input type="submit">
+                                </form>
+                                </div>
+        {% endifequal %}
+        {% ifequal user.registered_user.role 'F' %}
+                                            {% for file in assign_files_q %}
+                                            Questions
+                                                <div class="valign-wrapper hoverable">
+                                                    <a href="{% url  'after:classroom:slides:download' class_name file.id %}">
+                                                        <i class="material-icons" style="margin-left:30px;margin-right:30px;">navigate_next</i>
+                                                        <span style="color:teal;">{{ file.title }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </a>
+
+                                                        <a href="{% url 'after:classroom:slides:delete' class_name file.id %}">
+                                                            <i class="material-icons" id="{{ file.id }}">delete</i>
+                                                        </a>
+
+                                                </div>
+
+                                            {% endfor %}
+        {% endifequal %}
+
+</div>
+{% endblock content %}
