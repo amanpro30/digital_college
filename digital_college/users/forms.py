@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Registered_User, Registered_College
+from .models import Registered_User, Registered_College,Announcement
 
 
 class User_Registration_Form(ModelForm):
@@ -107,6 +107,11 @@ class ResetDoneForm(forms.Form):
     Password = forms.CharField(widget=forms.PasswordInput())
     Confirm_Password = forms.CharField(widget=forms.PasswordInput())
 
+
+class Announcement_Form(ModelForm):
+    class Meta:
+        model = Announcement
+        fields = ['Title', 'Description', 'Date',]
 
 class Choice_Form(forms.Form):
     ROLE_CHOICES = (

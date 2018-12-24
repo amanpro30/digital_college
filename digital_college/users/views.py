@@ -1,9 +1,10 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import Course_Forms, Edit_Registered_User_Form, Edit_Registered_College_Form, User_reset_form, Choice_Form
+from .forms import Course_Forms, Edit_Registered_User_Form, Edit_Registered_College_Form, User_reset_form, Choice_Form, \
+    Announcement_Form
 from .forms import ResetForm
 from .forms import ResetDoneForm
-from .models import Registered_User, Courses, Email
+from .models import Registered_User, Courses, Email, Announcement
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
 from .forms import User_Registration_Form, College_Registration_Form
@@ -85,7 +86,7 @@ def activate(request, uidb64, token):
         return redirect('/users/User_Home')
 
     else:
-        return render(request,'users/invalid_activation_link.html')
+        return render(request, 'users/invalid_activation_link.html')
         # return HttpResponse('Activation link is invalid')
 
 
@@ -193,6 +194,7 @@ def base(request):
 def PasswordReset(request):
     if request.method == 'POST':
         forms = ResetForm(request.POST)
+        print(forms)
         if forms.is_valid():
             email = forms.cleaned_data.get('enter_email')
             try:
@@ -367,6 +369,24 @@ def profile_update2(request):
         return render(request, 'users/editprofile.html', args)
 
 
+def announce(request):
+    if request.method == 'POST':
+        forms=Announcement_Form(request.POST)
+        if forms.is_valid():
+            # forms2 = Announcement.objects.all()
+            # context = {
+            #     'forms': forms,
+            #     'forms2': forms2
+            # }
+            forms.save()
+            return redirect('/users/announcements/')
+    else:
+        forms = Announcement_Form()
+        return render(request, 'users/announcement_fill.html', {'forms': forms})
+
+def list_announce(request):
+    forms = Announcement.objects.all()
+    return render(request, 'users/announcement.html', {'forms': forms})
 
 def progress_report(request):
     return None

@@ -104,3 +104,8 @@ class Assignment(models.Model):
     assingment_name=models.CharField(max_length=100)
     result_file = models.FileField(blank=True, upload_to='assignment')
 
+
+class Announcement(models.Model):
+    Title = models.CharField(max_length=50)
+    Description = models.CharField(max_length=200)
+    Date = models.DateField()

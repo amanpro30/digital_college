@@ -16,6 +16,8 @@ urlpatterns = [
     path('edit/', user_views.profile_update, name='edit'),
     path('edit2/', user_views.profile_update2, name='edit2'),
     path('choose/', user_views.Registration_Choice, name='registration_choice'),
-    path('login/', auth_views.LoginView.as_view(template_name='users/website_loginpage.html'), name='website_login')
+    path('login/', auth_views.LoginView.as_view(template_name='users/website_loginpage.html'), name='website_login'),
+    path('announce/', user_views.announce, name='announce'),
+    path('announcements/', user_views.list_announce, name='announcements'),
 ]
 
