@@ -1,5 +1,3 @@
 # digital_college
-This is a web application for the college related work and for student to check their progress
-this is created by pratyush
-ravish kumar
-aman kumar
+A Web Application made on Django as ASE-1  Project under the guidence of Prof. Subu Kandaswamy, Prof. Ravi and Prof. Prabhat Padey.
+It's a learning management system which probides a lot of functionalities. 
