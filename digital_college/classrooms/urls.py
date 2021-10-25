@@ -4,6 +4,8 @@ from after_login import views as login_view
 
 app_name = 'classroom'
 
+app_name1 = '1classroom'
+
 urlpatterns = [
     path('', login_view.after_login, name='after_login'),
     path('<str:class_name>/', views.class_home, name='class_home'),
